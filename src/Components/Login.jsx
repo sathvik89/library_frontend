@@ -35,8 +35,10 @@ function Login() {
       });
 
       const data = await res.json();
+
       if (res.ok) {
-        localStorage.setItem("token", data.token);
+        console.log(data);
+        localStorage.setItem("token", data.token);//storing it in local storage
         toast.success(`Logged in as: ${identifier}`);
         navigate("/home");
       } else {
