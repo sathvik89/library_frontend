@@ -28,7 +28,7 @@ function Login() {
         ? { username: identifier, password }
         : { email: identifier, password };
 
-      const res = await fetch("http://localhost:3000/auth/login", {
+      const res = await fetch("https://library-backend-t3r9.onrender.com/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)

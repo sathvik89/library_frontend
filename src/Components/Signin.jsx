@@ -34,7 +34,7 @@ function Signup() {
         ...(role && { role })
       };
 
-      const response = await axios.post("http://localhost:3000/auth/register", body);
+      const response = await axios.post("https://library-backend-t3r9.onrender.com/auth/register", body);
 
       toast.success(response.data.message || "Signup successful!");
       navigate("/home"); 
