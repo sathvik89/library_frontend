@@ -2,7 +2,7 @@ import styles from "../Styles/PresentDay.module.css";
 export default function PresentDay() {
   const d = new Date();
   return (
-    <div className={styles.mainPresentday}>
+    <time className={styles.mainPresentday}>
       <span className={styles.date}>
         Date: {`${d.getDate()} / ${d.getMonth()} / ${d.getFullYear()}`}
       </span>
@@ -22,6 +22,6 @@ export default function PresentDay() {
           ? "Saturday"
           : "Sunday"}
       </span>
-    </div>
+    </time>
   );
 }

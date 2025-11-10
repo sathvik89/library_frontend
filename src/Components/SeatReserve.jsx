@@ -13,22 +13,24 @@ export default function ReserveSeat({ onClick, reserve }) {
     }
   }
   return (
-    <div className={styles.mainreserve}>
-      <img src={RU} alt="" className={styles.imagemin} />
-      <div className={styles.reserveInner}>
-        You can only reserve 1 seat ‼️
-        {reserve ? (
-          <h1 className={styles.reserveTitle}>
-            🎉You have confirmed your seat in the library 🥳
-          </h1>
-        ) : (
-          <div className={styles.nonReserveTitle}>
-            <p>click below to reserve ur seat !!</p>
-            <button onClick={handleReserve}>Reserve seat</button>
-          </div>
-        )}
-      </div>
-      <PreviousButton />
-    </div>
+    <main className={styles.mainreserve}>
+      <section>
+        <img src={RU} alt="" className={styles.imagemin} />
+        <div className={styles.reserveInner}>
+          You can only reserve 1 seat ‼️
+          {reserve ? (
+            <h1 className={styles.reserveTitle}>
+              🎉You have confirmed your seat in the library 🥳
+            </h1>
+          ) : (
+            <div className={styles.nonReserveTitle}>
+              <p>click below to reserve ur seat !!</p>
+              <button onClick={handleReserve}>Reserve seat</button>
+            </div>
+          )}
+        </div>
+        <PreviousButton />
+      </section>
+    </main>
   );
 }

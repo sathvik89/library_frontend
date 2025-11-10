@@ -42,39 +42,41 @@ export default function App() {
         <SearchProvider>
           <Navi />
           <ProfileContext>
-            <Routes>
-              <Route path="/" element={<Mainpage />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/signin" element={<Signin />} />
+            <main>
+              <Routes>
+                <Route path="/" element={<Mainpage />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signin" element={<Signin />} />
 
-              <Route path="/home" element={<Home />} />
-              <Route
-                path="/occupancy"
-                element={<Seating available={available} />}
-              />
-              <Route
-                path="/reserveseat"
-                element={
-                  <ReserveSeat
-                    reserve={reserve}
-                    onClick={(handleSeatcount, handleSeat)}
-                  />
-                }
-              />
-              <Route path="/feedback" element={<FeedBack />} />
-              <Route path="/MenuList" element={<ProfileList />} />
+                <Route path="/home" element={<Home />} />
+                <Route
+                  path="/occupancy"
+                  element={<Seating available={available} />}
+                />
+                <Route
+                  path="/reserveseat"
+                  element={
+                    <ReserveSeat
+                      reserve={reserve}
+                      onClick={(handleSeatcount, handleSeat)}
+                    />
+                  }
+                />
+                <Route path="/feedback" element={<FeedBack />} />
+                <Route path="/MenuList" element={<ProfileList />} />
 
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/profileEdit" element={<ProfileEdit />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/profileEdit" element={<ProfileEdit />} />
 
-              <Route path="/billings" element={<Billings />} />
-              <Route path="/history" element={<Historyy />} />
-              <Route path="/settings" element={<Settings />} />
-              <Route path="/settings/account" element={<AccountSettings />} />
-              <Route path="/settings/subscription" element={<SubscriptionDetails />} />
-              <Route path="/settings/notifications" element={<Notifications />} />
-              <Route path="/settings/privacy" element={<PrivacyPassword />} />
-            </Routes>
+                <Route path="/billings" element={<Billings />} />
+                <Route path="/history" element={<Historyy />} />
+                <Route path="/settings" element={<Settings />} />
+                <Route path="/settings/account" element={<AccountSettings />} />
+                <Route path="/settings/subscription" element={<SubscriptionDetails />} />
+                <Route path="/settings/notifications" element={<Notifications />} />
+                <Route path="/settings/privacy" element={<PrivacyPassword />} />
+              </Routes>
+            </main>
           </ProfileContext>
           <RightsReserved />
         </SearchProvider>

@@ -27,7 +27,7 @@ export default function Navi() {
   }
 
   return (
-    <div className={styles.NaviMain}>
+    <nav className={styles.NaviMain}>
       <div>
         {/* //link to link the login page with the button  */}
         <Link to="/login">
@@ -38,6 +38,6 @@ export default function Navi() {
           <button className={styles.signUp}>SignUp</button>
         </Link>
       </div>
-    </div>
+    </nav>
   );
 }

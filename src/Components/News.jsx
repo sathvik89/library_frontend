@@ -16,11 +16,11 @@ export default function News() {
   ];
 
   return (
-    <div className={styles.newsMain}>
+    <section className={styles.newsMain}>
       <h2 className={styles.titleNews}>Today's Top Headlines</h2>
       <div className={styles.newsList}>
         {newstoday.map((item, index) => (
-          <div key={index} className={styles.newsItem}>
+          <article key={index} className={styles.newsItem}>
             <p className={styles.newsToday}>{item.title}</p>
             <p className={styles.newsReadMore}>
               Read more:{" "}
@@ -33,9 +33,9 @@ export default function News() {
                 {item.source}
               </a>
             </p>
-          </div>
+          </article>
         ))}
       </div>
-    </div>
+    </section>
   );
 }

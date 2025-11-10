@@ -6,16 +6,16 @@ import styles from "../Styles/Settings.module.css";
 export default function AccountSettings() {
   const navi = useNavigate();
   return (
-    <div className={styles.mainContainer}>
+    <main className={styles.mainContainer}>
       <div className={styles.logoContainer}>
         <img src={logo} alt="logo" className={styles.logo} />
       </div>
-      <div className={styles.card}>
-        <div className={styles.header}>
+      <section className={styles.card}>
+        <header className={styles.header}>
           <img src={icon} alt="profile" className={styles.icon} />
           <h2 className={styles.title}>Your Account</h2>
-        </div>
-        <div className={styles.infoList}>
+        </header>
+        <section className={styles.infoList}>
           <div className={styles.infoCard}>
             Account Verification <span style={{color: 'green', fontSize: '1.3em'}}>Verified ✅</span>
           </div>
@@ -25,11 +25,11 @@ export default function AccountSettings() {
           <div className={styles.infoCard}>
             Language <span style={{color: '#a51c30', fontWeight: 600}}>English</span>
           </div>
-        </div>
+        </section>
         <div className={styles.buttonSection}>
           <button className={styles.goBackButton} onClick={() => navi("/settings")}>Go Back</button>
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 } 

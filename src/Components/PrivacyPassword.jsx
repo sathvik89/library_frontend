@@ -28,18 +28,18 @@ export default function PrivacyPassword() {
   // }, [changeMode]);
 
   return (
-    <div className={styles.mainContainer}>
+    <main className={styles.mainContainer}>
       <div className={styles.logoContainer}>
         <img src={logo} alt="logo" className={styles.logo} />
       </div>
-      <div className={styles.card}>
-        <div className={styles.header}>
+      <section className={styles.card}>
+        <header className={styles.header}>
           <img src={icon} alt="profile" className={styles.icon} />
           <h2 className={styles.title}>Privacy and password</h2>
-        </div>
+        </header>
         {!changeMode ? (
           <>
-            <div className={styles.infoList}>
+            <section className={styles.infoList}>
               <div className={styles.infoCard}>
                 <span>View password <span role="img" aria-label="eye">👁️</span></span>
                 <span>{show ? password : "*".repeat(password.length)}</span>
@@ -54,14 +54,14 @@ export default function PrivacyPassword() {
                 <span style={{color: policy ? 'green' : 'red', fontWeight:600}}>{policy ? "accepted ✅" : "not accepted ❌"}</span>
                 <button style={{marginLeft:8}} onClick={() => setPolicy(p => !p)}>{policy ? "Dissagree" : "Accept"}</button>
               </div>
-            </div>
+            </section>
             <div className={styles.buttonSection}>
               <button className={styles.goBackButton} onClick={() => navi("/settings")}>Go Back</button>
             </div>
           </>
         ) : (
           <>
-            <div className={styles.infoList}>
+            <section className={styles.infoList}>
               <div className={styles.infoCard}>
                 <span>Current Password</span>
                 <input type="password" value={password} disabled style={{marginLeft:8}} />
@@ -74,14 +74,14 @@ export default function PrivacyPassword() {
                 <span>Re-enter New Password</span>
                 <input type="password" value={rePass} onChange={e => setRePass(e.target.value)} style={{marginLeft:8}} />
               </div>
-            </div>
+            </section>
             <div className={styles.buttonSection}>
               <button className={styles.goBackButton} onClick={() => setChangeMode(false)}>Go Back</button>
               <button className={styles.saveButton} onClick={handleSave}>Save</button>
             </div>
           </>
         )}
-      </div>
-    </div>
+      </section>
+    </main>
   );
 } 

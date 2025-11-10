@@ -58,10 +58,11 @@ function Login() {
   }
 
   return (
-    <div className={styles.mainLogin}>
-      <img className={styles.imageRU} src={RU} alt="" />
-      <h1 className={styles.titleLogin}>Library Management System</h1>
-      <form onSubmit={handleSubmit} className={styles.formLogin}>
+    <main className={styles.mainLogin}>
+      <section>
+        <img className={styles.imageRU} src={RU} alt="" />
+        <h1 className={styles.titleLogin}>Library Management System</h1>
+        <form onSubmit={handleSubmit} className={styles.formLogin}>
         <label htmlFor="identifier">
           {loginMode === "username"
             ? "Username:"
@@ -115,7 +116,8 @@ function Login() {
       <div style={{ marginTop: "20px" }}>
         <PreviousButton navi={"/"} />
       </div>
-    </div>
+      </section>
+    </main>
   );
 }
 

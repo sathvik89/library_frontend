@@ -40,7 +40,7 @@ export default function Ebook() {
   );
 
   return (
-    <div className={styles.container}>
+    <section className={styles.container}>
       <h1 className={styles.heading}>E-books Available</h1>
 
       <input
@@ -53,19 +53,19 @@ export default function Ebook() {
 
       {filteredBooks.length > 0 ? (
         filteredBooks.map((book) => (
-          <div key={book.id} className={styles.bookCard}>
+          <article key={book.id} className={styles.bookCard}>
             <h2 className={styles.bookTitle}>{book.name}</h2>
             <p className={styles.bookDescription}>{book.description}</p>
             <a href={book.link} className={styles.bookLink}>
               Download PDF
             </a>
-          </div>
+          </article>
         ))
       ) : (
         <p className={styles.noResultsMessage}>
           Sorry, no book with title "{searchQuery}" is available.
         </p>
       )}
-    </div>
+    </section>
   );
 }

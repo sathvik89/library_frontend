@@ -13,7 +13,7 @@ export default function ProfileList() {
   //     // navi("/home");
   //   }
   return (
-    <div
+    <nav
       className={styles.mainMenuContainer}
       style={{
         display: "flex",
@@ -28,7 +28,7 @@ export default function ProfileList() {
           <div className={styles.closeButton}>
             <button onClick={funci.handleShow}>X</button>
           </div>
-          <div className={styles.Quickoptions}>
+          <nav className={styles.Quickoptions}>
             <button onClick={() => navigate("/profile")}>👤 Profile</button>
             <button onClick={() => navigate("/billings")}>
               💳 Billing and Payments
@@ -37,9 +37,9 @@ export default function ProfileList() {
               📚 Manage History
             </button>
             <button onClick={() => navigate("/settings")}>⚙️ Settings</button>
-          </div>
+          </nav>
         </div>
       </div>
-    </div>
+    </nav>
   );
 }

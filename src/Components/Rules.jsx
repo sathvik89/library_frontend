@@ -1,7 +1,7 @@
 import styles from "../Styles/Rules.module.css";
 export default function Rules() {
   return (
-    <div className={styles.mainrule}>
+    <section className={styles.mainrule}>
       <h1>Library Rules</h1>
       <ul>
         <li>Maintain silence at all times inside the library.</li>
@@ -15,6 +15,6 @@ export default function Rules() {
           Strict dress code: No shorts or sleeveless shirts or tops allowed.
         </li>
       </ul>
-    </div>
+    </section>
   );
 }

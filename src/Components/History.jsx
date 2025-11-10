@@ -31,19 +31,19 @@ export default function History() {
     { name: "The Coded Labyrinth", borrow: "23/1/2022", return: "1/2/2022" },
   ];
   return (
-    <div className={styles.mainContainer}>
+    <main className={styles.mainContainer}>
       <div className={styles.logoContainer}>
         <img src={logo} alt="rishihood university logo" className={styles.logo} />
       </div>
-      <div className={styles.historyCard}>
-        <div className={styles.headerSection}>
+      <section className={styles.historyCard}>
+        <header className={styles.headerSection}>
           <img src={icon} alt="profile" className={styles.profileIcon} />
           <h2 className={styles.headerTitle}>Your History</h2>
-        </div>
+        </header>
         <div className={styles.recentsLabel}>Recents:-</div>
         <div className={styles.recentsScroll}>
           {recents.map((b, idx) => (
-            <div className={styles.recentCard} key={idx}>
+            <article className={styles.recentCard} key={idx}>
               <img src={b.image} alt={b.title} className={styles.bookImage} />
               <div className={styles.bookDetails}>
                 <div className={styles.bookTitle}>{b.title}</div>
@@ -52,7 +52,7 @@ export default function History() {
                 <div className={styles.bookMeta}>Book Id:- {b.bookId}</div>
                 <div className={styles.bookMeta}>Author:- {b.author}</div>
               </div>
-            </div>
+            </article>
           ))}
         </div>
         <div className={styles.tableWrapper}>
@@ -78,7 +78,7 @@ export default function History() {
         <div className={styles.buttonSection}>
           <button className={styles.goBackButton} onClick={() => navi("/home")}>Go Back</button>
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }

@@ -39,8 +39,8 @@ export default function Home() {
   }
 
   return (
-    <div className={styles.maincontainer}>
-      <div className={styles.mainHeading}>
+    <main className={styles.maincontainer}>
+      <header className={styles.mainHeading}>
         <div className={styles.logoDiv}>
           <img className={styles.imagestyle} src={logo} alt="" />
         </div>
@@ -51,31 +51,31 @@ export default function Home() {
         <myMenuContext.Provider value={{ handleShow }}>
           {profileOpen && <ProfileList />}
         </myMenuContext.Provider>
-      </div>
-      <div className={styles.searchbar}>
+      </header>
+      <section className={styles.searchbar}>
         <Search
           value={inputValue}
           onChange={setInputValue}
           onSearch={handleSearch}
         />
         <PresentDay />
-      </div>
-      <div className={styles.librarytime}>
+      </section>
+      <section className={styles.librarytime}>
         <LibraryTimings />
-      </div>
-      <div className={styles.news}>
+      </section>
+      <section className={styles.news}>
         <News />
-      </div>
-      <div className={styles.latestbooks}>
+      </section>
+      <section className={styles.latestbooks}>
         <Books />
-      </div>
-      <div className={styles.allbooks}>
+      </section>
+      <section className={styles.allbooks}>
         <Allbooks />
-      </div>
-      <div className={styles.ebooks}>
+      </section>
+      <section className={styles.ebooks}>
         <Ebook />
-      </div>
-      <div className={styles.population}>
+      </section>
+      <section className={styles.population}>
         <div className={styles.innerPop}>
           <h3>Current Seat Availability</h3>
 
@@ -86,12 +86,12 @@ export default function Home() {
 
           <button onClick={handleSeat}>Check Occupancy</button>
         </div>
-      </div>
-      <div className={styles.rules}>
+      </section>
+      <section className={styles.rules}>
         <Rules />
-      </div>
+      </section>
 
-      <div className={styles.feedback}>
+      <section className={styles.feedback}>
         <h3>Your Feedback Matters!</h3>
 
         <p>
@@ -100,14 +100,14 @@ export default function Home() {
         </p>
 
         <button onClick={() => navigate("/feedback")}>Give Feedback</button>
-      </div>
-      <div className={styles.help}>
+      </section>
+      <section className={styles.help}>
         <Help />
-      </div>
-      <div className={styles.previous}>
+      </section>
+      <section className={styles.previous}>
         <PreviousButton  navi={"/login"} />
         <Logoutbutton />
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }

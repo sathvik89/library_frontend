@@ -51,10 +51,11 @@ function Signup() {
   }
 
   return (
-    <div className={styles.mainLogin}>
-      <img src={RU} alt="" className={styles.imageRU} />
-      <h1 className={styles.titleLogin}>Library Management System - Sign Up</h1>
-      <form onSubmit={handleSubmit} className={styles.formLogin}>
+    <main className={styles.mainLogin}>
+      <section>
+        <img src={RU} alt="" className={styles.imageRU} />
+        <h1 className={styles.titleLogin}>Library Management System - Sign Up</h1>
+        <form onSubmit={handleSubmit} className={styles.formLogin}>
         <label for="username">
           Username:
           <input
@@ -143,7 +144,8 @@ function Signup() {
       <div style={{ marginTop: "20px" }}>
         <PreviousButton navi={"/"} />
       </div>
-    </div>
+      </section>
+    </main>
   );
 }
 

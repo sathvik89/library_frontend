@@ -11,13 +11,14 @@ export default function FeedBack() {
     toast.success("Thank you for your feedback!");
   }
   return (
-    <div className={styles.feedbackContainer}>
-      <img src={RU} className={styles.feedImage} alt="" />
-      <h1 className={styles.titlefeed}>Feedback form</h1>
-      {feed ? (
-        <h1 style={{ marginBottom: "20px" }}>Thankyou for your feedback 🙏🏻</h1>
-      ) : (
-        <form onSubmit={handleSubmit} className={styles.formFeedback}>
+    <main className={styles.feedbackContainer}>
+      <section>
+        <img src={RU} className={styles.feedImage} alt="" />
+        <h1 className={styles.titlefeed}>Feedback form</h1>
+        {feed ? (
+          <h1 style={{ marginBottom: "20px" }}>Thankyou for your feedback 🙏🏻</h1>
+        ) : (
+          <form onSubmit={handleSubmit} className={styles.formFeedback}>
           <div>
             <label htmlFor="name">Your Name:</label>
             <input type="text" id="name" name="name" required />
@@ -74,6 +75,7 @@ export default function FeedBack() {
         </form>
       )}
       <PreviousButton text={"Go back"} />
-    </div>
+      </section>
+    </main>
   );
 }

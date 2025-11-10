@@ -23,20 +23,20 @@ export default function Profile() {
   // }
 
   return (
-    <div className={styles.mainContainer}>
+    <main className={styles.mainContainer}>
       <div className={styles.logoContainer}>
         <img src={logo} alt="University Logo" className={styles.logo} />
       </div>
 
-      <div className={styles.profileCard}>
-        <div className={styles.profileHeader}>
+      <section className={styles.profileCard}>
+        <header className={styles.profileHeader}>
           <img src={icon} alt="Profile Icon" className={styles.profileIcon} />
           <h2 className={styles.profileTitle}>Profile</h2>
-        </div>
+        </header>
 
         <div className={styles.nameSection}>{name}</div>
 
-        <div className={styles.infoSection}>
+        <section className={styles.infoSection}>
           <div className={styles.infoItem}>
             <span className={styles.label}>Phone no:</span>
             {phone}
@@ -47,7 +47,7 @@ export default function Profile() {
           <div className={styles.infoItem}>
             <span className={styles.label}>Address:</span> {address}
           </div>
-        </div>
+        </section>
 <div className={styles.buttonGroup}>
    <button className={styles.goBackButton} onClick={() => navi("/home")}>
     Go back
@@ -57,7 +57,7 @@ export default function Profile() {
   </button>
 </div>
 
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }

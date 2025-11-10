@@ -106,11 +106,11 @@ export default function Allbooks() {
   ];
 
   return (
-    <div className={styles.containerAllbook}>
+    <section className={styles.containerAllbook}>
       <h1 className={styles.headingAll}>All Books</h1>
 
       {sampleBooks.map((book) => (
-        <div key={book.id} className={styles.bookCard}>
+        <article key={book.id} className={styles.bookCard}>
           <div className={styles.bookimages}>
             <img src={book.image1} alt="" />
           </div>
@@ -122,8 +122,8 @@ export default function Allbooks() {
               {book.location}
             </p>
           </div>
-        </div>
+        </article>
       ))}
-    </div>
+    </section>
   );
 }

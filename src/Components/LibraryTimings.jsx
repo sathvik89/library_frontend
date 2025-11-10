@@ -5,7 +5,7 @@ export default function LibraryTimings() {
   const sundayTimings = "9 AM to 5 PM";
 
   return (
-    <div className={styles.mainLibrarytime}>
+    <section className={styles.mainLibrarytime}>
       <h2 className={styles.libraryTitle}>Library Timings</h2>
       
       <ul className={styles.librarylist}>
@@ -20,6 +20,6 @@ export default function LibraryTimings() {
         Please plan your visit accordingly. We look forward to seeing you at the
         library!
       </p>
-    </div>
+    </section>
   );
 }

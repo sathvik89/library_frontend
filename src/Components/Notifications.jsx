@@ -18,11 +18,11 @@ export default function Notifications() {
     <Modal open={open} footer={null} closable={false} width={400} bodyStyle={{padding:0, background:'#fdf1de'}}>
       {/* <div className={styles.mainContainer}> */}
         <div className={styles.card}>
-          <div className={styles.header}>
+          <header className={styles.header}>
             <img src={icon} alt="profile" className={styles.icon} />
             <h2 className={styles.title}>Notifications</h2>
-          </div>
-          <div className={styles.notificationCard}>
+          </header>
+          <section className={styles.notificationCard}>
             <span style={{fontWeight:600, fontSize:'1.1em'}}>Notifications :</span>
             <Switch
               checked={enabled}
@@ -31,7 +31,7 @@ export default function Notifications() {
               unCheckedChildren="Off"
               style={{marginLeft:16, background: enabled ? '#a51c30' : '#ccc'}}
             />
-          </div>
+          </section>
           <div className={styles.buttonSection}>
             <button className={styles.goBackButton} onClick= { handlebackbutton }>Go Back</button>
           </div>

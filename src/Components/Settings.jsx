@@ -38,36 +38,36 @@ export default function Settings() {
     toast.success("Password changed successfully!");
   }
   return (
-    <div className={styles.mainContainer}>
+    <main className={styles.mainContainer}>
       <div className={styles.logoContainer}>
         <img src={logo} alt="logouni" className={styles.logo} />
       </div>
-      <div className={styles.card}>
-        <div className={styles.header}>
+      <section className={styles.card}>
+        <header className={styles.header}>
           <img src={icon} alt="profile" className={styles.icon} />
           <h2 className={styles.title}>Settings</h2>
-        </div>
-        <div className={styles.options}>
+        </header>
+        <nav className={styles.options}>
           <button className={styles.optionButton} onClick={() => navi("/settings/account")}>Manage your account</button>
           <button className={styles.optionButton} onClick={() => navi("/settings/subscription")}>subscription details</button>
           <button className={styles.optionButton} onClick={() => setShowNoti(true)}>Notifications</button>
           <button className={styles.optionButton} onClick={() => setShowPass(true)}>Change password</button>
           <button className={styles.optionButton} onClick={() => navi("/settings/privacy")}>Privacy and password</button>
-        </div>
+        </nav>
         <div className={styles.buttonSection}>
         <button className={styles.goBackButton} onClick={() => navi("/home")}>Go Back</button>
         <Logoutbutton/>
           
         </div>
-      </div>
+      </section>
       {/* notifications */}
       <Modal open={showNoti} onCancel={() => setShowNoti(false)} footer={null} width={400} maskClosable={true}>
         <div className={styles.card} style={{margin:'2rem auto'}}>
-          <div className={styles.header}>
+          <header className={styles.header}>
             <img src={icon} alt="profile" className={styles.icon} />
             <h2 className={styles.title}>Notifications</h2>
-          </div>
-          <div className={styles.notificationCard}>
+          </header>
+          <section className={styles.notificationCard}>
             <span style={{fontWeight:600, fontSize:'1.1em'}}>Notifications :</span>
             <Switch
               checked={notiOn}
@@ -76,7 +76,7 @@ export default function Settings() {
               unCheckedChildren="Off"
               style={{marginLeft:16, background: notiOn ? '#a51c30' : '#ccc'}}
             />
-          </div>
+          </section>
           <div className={styles.buttonSection}>
             <button className={styles.goBackButton} onClick={() => setShowNoti(false)}>Close</button>
           </div>
@@ -85,11 +85,11 @@ export default function Settings() {
       {/* password */}
       <Modal open={showPass} onCancel={() => setShowPass(false)} footer={null} width={400} maskClosable={true}>
         <div className={styles.card} style={{margin:'2rem auto'}}>
-          <div className={styles.header}>
+          <header className={styles.header}>
             <img src={icon} alt="profile" className={styles.icon} />
             <h2 className={styles.title}>Change Password</h2>
-          </div>
-          <div className={styles.infoList}>
+          </header>
+          <section className={styles.infoList}>
             <div className={styles.infoCard}>
               <span>Current Password</span>
               <input type="password" value={password} disabled style={{marginLeft:8}} />
@@ -103,13 +103,13 @@ export default function Settings() {
               <input type="password" value={rePass} onChange={e => setRePass(e.target.value)} style={{marginLeft:8}} />
             </div>
             {passError && <div style={{color:'red', marginLeft:'1rem'}}>{passError}</div>}
-          </div>
+          </section>
           <div className={styles.buttonSection}>
             <button className={styles.goBackButton} onClick={() => setShowPass(false)}>Cancel</button>
             <button className={styles.saveButton} onClick={handleSavePass}>Save</button>
           </div>
         </div>
       </Modal>
-    </div>
+    </main>
   );
 }

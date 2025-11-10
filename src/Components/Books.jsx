@@ -84,7 +84,7 @@ export default function Books() {
   );
 
   return (
-    <div className={styles.mainBooksContainer}>
+    <section className={styles.mainBooksContainer}>
       <h1 className={styles.heading}>Latest Collection 📚</h1>
       <div className={styles.BooksList}>
         {filteredBooks.length > 0 ? (
@@ -103,6 +103,6 @@ export default function Books() {
           </p>
         )}
       </div>
-    </div>
+    </section>
   );
 }

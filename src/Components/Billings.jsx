@@ -13,15 +13,15 @@ export default function Billings() {
     { name: "Eclipsed Dreams", id: "BIL-7743-PO", payment: "₹799" },
   ];
   return (
-    <div className={styles.mainContainer}>
+    <main className={styles.mainContainer}>
       <div className={styles.logoContainer}>
         <img src={logo} alt="logouni" className={styles.logo} />
       </div>
-      <div className={styles.billingCard}>
-        <div className={styles.headerSection}>
+      <section className={styles.billingCard}>
+        <header className={styles.headerSection}>
           <img src={icon} alt="profile" className={styles.profileIcon} />
           <h2 className={styles.headerTitle}>Billing and Payments</h2>
-        </div>
+        </header>
         <div className={styles.tableWrapper}>
           <table className={styles.billingTable}>
             <thead>
@@ -45,7 +45,7 @@ export default function Billings() {
         <div className={styles.buttonSection}>
           <button className={styles.goBackButton} onClick={() => navigate("/home")}>Go Back</button>
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }
