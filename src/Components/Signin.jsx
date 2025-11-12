@@ -15,6 +15,7 @@ function Signup() {
   const [role, setRole] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const backendUrl = "https://library-backend-t3r9.onrender.com/auth/register"
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -34,7 +35,7 @@ function Signup() {
         ...(role && { role })
       };
 
-      const response = await axios.post("https://library-backend-t3r9.onrender.com/auth/register", body);
+      const response = await axios.post(backendUrl, body);
 
       toast.success(response.data.message || "Signup successful!");
       navigate("/home"); 
