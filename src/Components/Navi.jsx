@@ -7,7 +7,9 @@ export default function Navi() {
   const hideNavigation = [
     "/login",
     "/signin",
-    "/home",
+    "/studentDashboard",
+    "/librarianDashboard",
+    "/adminDashboard",
     "/occupancy",
     "/reserveseat",
     "/feedback",

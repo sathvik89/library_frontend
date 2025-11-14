@@ -4,7 +4,9 @@ import styles from "../Styles/Login.module.css";
 import PreviousButton from "./PreviousButton";
 import RU from "../BookImages/RUimage.png";
 import GoogleLogin from "./GoogleLogin";
+import {jwtDecode} from 'jwt-decode'; 
 import { toast } from 'react-hot-toast';
+import { API_ENDPOINTS } from "../config/apiConfig";
 
 function Login() {
   const [loginMode, setLoginMode] = useState("username"); // "username" or "email"
@@ -28,7 +30,7 @@ function Login() {
         ? { username: identifier, password }
         : { email: identifier, password };
 
-      const res = await fetch("https://library-backend-t3r9.onrender.com/auth/login", {
+      const res = await fetch(API_ENDPOINTS.AUTH.LOGIN, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
@@ -40,7 +42,23 @@ function Login() {
         console.log(data);
         localStorage.setItem("token", data.token);//storing it in local storage
         toast.success(`Logged in as: ${identifier}`);
-        navigate("/home");
+        let token =  localStorage.getItem("token");
+        let decoded = jwtDecode(token);
+        console.log(decoded);
+        let role = decoded.role
+        console.log(role);  
+        if(role === "ADMIN"){
+          navigate("/adminDashboard");
+        }
+        else if (role === "LIBRARIAN" ){
+          navigate("/librarianDashboard");
+        }
+        else if (role === "STUDENT"){
+          navigate("/studentDashboard");
+        }
+        else{
+          toast.error("Invalid role");
+        }
       } else {
         toast.error(data.message || "Login failed.");
       }

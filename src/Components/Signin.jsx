@@ -5,6 +5,7 @@ import styles from "../Styles/Login.module.css";
 import PreviousButton from "./PreviousButton";
 import RU from "../BookImages/RUimage.png";
 import { toast } from "react-hot-toast";
+import { API_ENDPOINTS } from "../config/apiConfig";
 
 function Signup() {
   const [username, setUsername] = useState("");
@@ -15,7 +16,6 @@ function Signup() {
   const [role, setRole] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const backendUrl = "https://library-backend-t3r9.onrender.com/auth/register"
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -35,7 +35,7 @@ function Signup() {
         ...(role && { role })
       };
 
-      const response = await axios.post(backendUrl, body);
+      const response = await axios.post(API_ENDPOINTS.AUTH.REGISTER, body);
 
       toast.success(response.data.message || "Signup successful!");
       navigate("/home"); 

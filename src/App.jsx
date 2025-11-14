@@ -48,7 +48,9 @@ export default function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/signin" element={<Signin />} />
 
-                <Route path="/home" element={<Home />} />
+                <Route path="/studentDashboard" element={<Home />} />
+                <Route path="/librarianDashboard" element={<Home />} />
+                <Route path="/adminDashboard" element={<Home />} />
                 <Route
                   path="/occupancy"
                   element={<Seating available={available} />}
