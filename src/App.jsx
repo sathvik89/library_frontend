@@ -22,6 +22,8 @@ import SubscriptionDetails from "./Components/SubscriptionDetails";
 import Notifications from "./Components/Notifications";
 import PrivacyPassword from "./Components/PrivacyPassword";
 import { AuthProvider } from "./context/AuthContext";
+import AdminDashboard from "./Components/AdminDashboard";
+import LibrarianDashboard from "./Components/LibrarianDashboard";
 
 export default function App() {
   const [available, setavailabe] = React.useState(220);
@@ -49,8 +51,8 @@ export default function App() {
                 <Route path="/signin" element={<Signin />} />
 
                 <Route path="/studentDashboard" element={<Home />} />
-                <Route path="/librarianDashboard" element={<Home />} />
-                <Route path="/adminDashboard" element={<Home />} />
+                <Route path="/librarianDashboard" element={<LibrarianDashboard />} />
+                <Route path="/adminDashboard" element={<AdminDashboard />} />
                 <Route
                   path="/occupancy"
                   element={<Seating available={available} />}

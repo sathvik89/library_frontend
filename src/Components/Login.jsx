@@ -40,24 +40,41 @@ function Login() {
 
       if (res.ok) {
         console.log(data);
-        localStorage.setItem("token", data.token);//storing it in local storage
+        
+        // check if token exists in response
+        if (!data.token) {
+          toast.error("Login failed: No token received.");
+          return;
+        }
+        
+        // store token in localStorage
+        localStorage.setItem("token", data.token);
         toast.success(`Logged in as: ${identifier}`);
-        let token =  localStorage.getItem("token");
-        let decoded = jwtDecode(token);
-        console.log(decoded);
-        let role = decoded.role
-        console.log(role);  
-        if(role === "ADMIN"){
-          navigate("/adminDashboard");
-        }
-        else if (role === "LIBRARIAN" ){
-          navigate("/librarianDashboard");
-        }
-        else if (role === "STUDENT"){
-          navigate("/studentDashboard");
-        }
-        else{
-          toast.error("Invalid role");
+        
+        // decode token to get role and redirect
+        try {
+          const decoded = jwtDecode(data.token);
+          console.log(decoded);
+          const role = decoded.role;
+          console.log(role);
+          
+          // redirect based on role
+          if (role === "ADMIN") {
+            navigate("/adminDashboard");
+          } else if (role === "LIBRARIAN") {
+            navigate("/librarianDashboard");
+          } else if (role === "STUDENT") {
+            navigate("/studentDashboard");
+          } else {
+            toast.error("Invalid role in token. Please contact support.");
+            // clear invalid token
+            localStorage.removeItem("token");
+          }
+        } catch (decodeError) {
+          console.error("Error decoding token:", decodeError);
+          toast.error("Failed to process login token. Please try again.");
+          // clear invalid token
+          localStorage.removeItem("token");
         }
       } else {
         toast.error(data.message || "Login failed.");
