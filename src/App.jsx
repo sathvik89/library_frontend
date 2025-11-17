@@ -24,7 +24,7 @@ import PrivacyPassword from "./Components/PrivacyPassword";
 import { AuthProvider } from "./context/AuthContext";
 import AdminDashboard from "./Components/AdminDashboard";
 import LibrarianDashboard from "./Components/LibrarianDashboard";
-
+import ViewAllBooks from "./Components/ViewAllBooks"; 
 export default function App() {
   const [available, setavailabe] = React.useState(220);
   const [reserve, setReserve] = React.useState(false);
@@ -71,6 +71,7 @@ export default function App() {
 
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/profileEdit" element={<ProfileEdit />} />
+                <Route path="/ViewAllBooks" element={<ViewAllBooks />} />
 
                 <Route path="/billings" element={<Billings />} />
                 <Route path="/history" element={<Historyy />} />

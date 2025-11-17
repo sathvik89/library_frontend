@@ -9,8 +9,10 @@ import AllbooksImage7 from "../BookImages/BookAll7.png";
 import AllbooksImage8 from "../BookImages/BookAll8.png";
 import AllbooksImage9 from "../BookImages/BookAll9.png";
 import AllbooksImage10 from "../BookImages/BookAll10.png";
+import {useNavigate} from "react-router-dom";
 
 export default function Allbooks() {
+  const navi = useNavigate();
   // Dummy books data
   const sampleBooks = [
     {
@@ -107,7 +109,13 @@ export default function Allbooks() {
 
   return (
     <section className={styles.containerAllbook}>
-      <h1 className={styles.headingAll}>All Books</h1>
+      <div className={styles.headerRow}>
+        <h1 className={styles.headingAll}>All Books</h1>
+
+        <button className={styles.viewAllBtn} onClick={() => navi("/ViewAllBooks")}>
+          View All
+        </button>
+      </div>
 
       {sampleBooks.map((book) => (
         <article key={book.id} className={styles.bookCard}>

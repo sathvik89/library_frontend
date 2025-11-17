@@ -1,7 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import styles from "../Styles/Navi.module.css";
-import RU from "../BookImages/RUimage.png";
 export default function Navi() {
   const location = useLocation();
   const hideNavigation = [
@@ -14,6 +13,7 @@ export default function Navi() {
     "/reserveseat",
     "/feedback",
     "/MenuList",
+    "/ViewAllBooks",
     "/profile",
     "/billings",
     "/history",
