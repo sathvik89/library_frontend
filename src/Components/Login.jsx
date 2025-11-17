@@ -7,12 +7,14 @@ import GoogleLogin from "./GoogleLogin";
 import {jwtDecode} from 'jwt-decode'; 
 import { toast } from 'react-hot-toast';
 import { API_ENDPOINTS } from "../config/apiConfig";
-
+import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
 function Login() {
   const [loginMode, setLoginMode] = useState("username"); // "username" or "email"
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
   const navigate = useNavigate();
 
   // Handles login via username or email
@@ -129,17 +131,27 @@ function Login() {
             : "Or, enter username instead"}
         </div>
         <label htmlFor="pass">
-          Password:
-          <input
-            id="pass"
-            type="password"
-            name="password"
-            value={password}
-            placeholder="Enter your password"
-            onChange={e => setPassword(e.target.value)}
-            disabled={loading}
-          />
-        </label>
+  Password:
+  <div className={styles.passwordWrapper}>
+    <input
+      id="pass"
+      type={showPassword ? "text" : "password"}
+      name="password"
+      value={password}
+      placeholder="Enter your password"
+      onChange={(e) => setPassword(e.target.value)}
+      disabled={loading}
+    />
+
+    <span
+      className={styles.eyeIcon}
+      onClick={() => setShowPassword(!showPassword)}
+    >
+      {showPassword ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+    </span>
+  </div>
+</label>
+
         <br />
         <div style={{ width: "100%" }}>
           <GoogleLogin textu="Login with" />
