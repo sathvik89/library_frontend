@@ -43,7 +43,7 @@ export default function Billings() {
           </table>
         </div>
         <div className={styles.buttonSection}>
-          <button className={styles.goBackButton} onClick={() => navigate("/home")}>Go Back</button>
+          <button className={styles.goBackButton} onClick={() => navigate("/studentDashboard")}>Go Back</button>
         </div>
       </section>
     </main>

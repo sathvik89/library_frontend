@@ -13,7 +13,7 @@ import PresentDay from "./PresentDay.jsx";
 import News from "./News.jsx";
 import styles from "../Styles/Home.module.css";
 import Logoutbutton from "./Logoutbutton.jsx";
-import logo from "../BookImages/RULOGO.png";
+import logo from "../BookImages/RUimage.png";
 import profile from "../BookImages/ProfileIcon.png";
 import ProfileList from "./ProfileList.jsx";
 import { useAuth } from "../context/AuthContext";
@@ -42,11 +42,11 @@ export default function Home() {
     <main className={styles.maincontainer}>
       <header className={styles.mainHeading}>
         <div className={styles.logoDiv}>
-          <img className={styles.imagestyle} src={logo} alt="" />
+          <img className={styles.imagestyle} src={logo} alt="RU Logo" />
         </div>
         Library Space
         <button onClick={handleShow} className={styles.buttondiv}>
-          <img className={styles.buttonImage} src={profile} alt="" />
+          <img className={styles.buttonImage} src={profile} alt="Profile Icon" />
         </button>
         <myMenuContext.Provider value={{ handleShow }}>
           {profileOpen && <ProfileList />}

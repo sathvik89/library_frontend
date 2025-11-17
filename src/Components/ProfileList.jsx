@@ -8,10 +8,6 @@ import { useNavigate } from "react-router-dom";
 export default function ProfileList() {
   const funci = useContext(myMenuContext);
   const navigate = useNavigate();
-  //   const navi = useNavigate();
-  //   function handleClose() {
-  //     // navi("/home");
-  //   }
   return (
     <nav
       className={styles.mainMenuContainer}

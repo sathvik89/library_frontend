@@ -16,7 +16,7 @@ const GoogleLogin = ({ textu }) => {
       const result = await signInWithPopup(auth, provider);
       const googleUser = result.user;
       toast.success(`Welcome, ${googleUser.displayName || googleUser.email}!`);
-      navigate("/home");
+      navigate("/studentDashboard");
     } catch (err) {
       toast.error("Google login failed: " + err.message);
     } finally {

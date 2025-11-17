@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "../Styles/ViewAllBooks.module.css";
+import { API_ENDPOINTS } from "../config/apiConfig";
 
 function ViewAllBooks() {
   const [books, setBooks] = useState([]);
@@ -10,8 +11,9 @@ function ViewAllBooks() {
   useEffect(() => {
     async function fetchBooks() {
       try {
-        const res = await axios.get("http://localhost:3001/api/books");
-        setBooks(res.data.books || []);
+        const res = await axios.get(API_ENDPOINTS.BOOKS.GET_ALL);
+        console.log(res.data);
+        setBooks(res.data.data || []);
       } catch (err) {
         console.error(err);
         setError("Failed to load books.");

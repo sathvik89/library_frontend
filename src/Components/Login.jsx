@@ -8,6 +8,7 @@ import {jwtDecode} from 'jwt-decode';
 import { toast } from 'react-hot-toast';
 import { API_ENDPOINTS } from "../config/apiConfig";
 import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
+import axios from "axios";
 function Login() {
   const [loginMode, setLoginMode] = useState("username"); // "username" or "email"
   const [identifier, setIdentifier] = useState("");
@@ -32,15 +33,13 @@ function Login() {
         ? { username: identifier, password }
         : { email: identifier, password };
 
-      const res = await fetch(API_ENDPOINTS.AUTH.LOGIN, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
+      const res = await axios.post(API_ENDPOINTS.AUTH.LOGIN, payload, {
+        headers: { "Content-Type": "application/json" }
       });
 
-      const data = await res.json();
+      const data = await res.data;
 
-      if (res.ok) {
+      if (res.status === 200) {
         console.log(data);
         
         // check if token exists in response

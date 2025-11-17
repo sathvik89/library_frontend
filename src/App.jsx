@@ -47,16 +47,14 @@ export default function App() {
             <main>
               <Routes>
                 <Route path="/" element={<Mainpage />} />
+                <Route path="*" element={<Mainpage />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signin" element={<Signin />} />
 
                 <Route path="/studentDashboard" element={<Home />} />
                 <Route path="/librarianDashboard" element={<LibrarianDashboard />} />
                 <Route path="/adminDashboard" element={<AdminDashboard />} />
-                <Route
-                  path="/occupancy"
-                  element={<Seating available={available} />}
-                />
+                <Route path="/occupancy" element={<Seating available={available} />}/>
                 <Route
                   path="/reserveseat"
                   element={

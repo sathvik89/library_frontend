@@ -76,7 +76,7 @@ export default function History() {
           </table>
         </div>
         <div className={styles.buttonSection}>
-          <button className={styles.goBackButton} onClick={() => navi("/home")}>Go Back</button>
+          <button className={styles.goBackButton} onClick={() => navi("/studentDashboard")}>Go Back</button>
         </div>
       </section>
     </main>

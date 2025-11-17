@@ -55,7 +55,7 @@ export default function Settings() {
           <button className={styles.optionButton} onClick={() => navi("/settings/privacy")}>Privacy and password</button>
         </nav>
         <div className={styles.buttonSection}>
-        <button className={styles.goBackButton} onClick={() => navi("/home")}>Go Back</button>
+        <button className={styles.goBackButton} onClick={() => navi("/studentDashboard")}>Go Back</button>  
         <Logoutbutton/>
           
         </div>

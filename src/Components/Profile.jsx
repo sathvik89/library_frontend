@@ -12,16 +12,6 @@ export default function Profile() {
   function handleEdit() {
     navi("/profileEdit");
   }
-  // function handlePhoneChange(e) {
-  //   setPhone(e.target.value);
-  // }
-  // function handleEmailChange(e) {
-  //   setEmail(e.target.value);
-  // }
-  // function handleAddressChange(e) {
-  //   setAddress(e.target.value);
-  // }
-
   return (
     <main className={styles.mainContainer}>
       <div className={styles.logoContainer}>
@@ -49,7 +39,7 @@ export default function Profile() {
           </div>
         </section>
 <div className={styles.buttonGroup}>
-   <button className={styles.goBackButton} onClick={() => navi("/home")}>
+   <button className={styles.goBackButton} onClick={() => navi("/studentDashboard")}> 
     Go back
   </button>
   <button className={styles.editButton} onClick={handleEdit}>
