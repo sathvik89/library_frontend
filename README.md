@@ -1,12 +1,42 @@
-# React + Vite
+# Library Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A lightweight and scalable Library Management System designed to handle **book circulation**, **seat/cabin bookings**, **user management**, and **digital library services**.  
+The goal is to replace manual library tracking with a clean, structured, database-driven solution.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+##  Deployment URLs
+**Frontend:** _Add your deployed frontend URL here_  
+**Backend:** _Add your deployed backend URL here_  
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🎯 What Problem Does It Solve?
+- Tracks books, availability, and individual copies  
+- Manages borrowing/returns with due dates & fines  
+- Handles waitlists when books are unavailable  
+- Supports seat/cabin booking with QR check-ins  
+- Provides announcements, rules, timings, feedback, and help desk  
+- Centralizes all library workflows in one system
+  
+---
+
+## Tech Stack (Backend/DB)
+- **Node.js + Express**
+- **MongoDB + Mongoose**
+- **JWT Authentication**
+- **React.js + Javascript**
+- **AntD designs UI**
+
+---
+
+## 📁 Backend Repository
+GitHub URL: _Add backend repo link here_
+
+---
+
+## ▶️ Getting Started
+```bash
+npm install
+npm start
+```
