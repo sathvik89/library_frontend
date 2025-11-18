@@ -6,12 +6,12 @@ The goal is to replace manual library tracking with a clean, structured, databas
 ---
 
 ##  Deployment URLs
-**Frontend:** _Add your deployed frontend URL here_  
-**Backend:** _Add your deployed backend URL here_  
+**Frontend:** https://library-space-rishihood.vercel.app
+**Backend:** https://library-backend-t3r9.onrender.com
 
 ---
 
-## 🎯 What Problem Does It Solve?
+##  What Problem Does It Solve?
 - Tracks books, availability, and individual copies  
 - Manages borrowing/returns with due dates & fines  
 - Handles waitlists when books are unavailable  
@@ -30,12 +30,12 @@ The goal is to replace manual library tracking with a clean, structured, databas
 
 ---
 
-## 📁 Backend Repository
-GitHub URL: _Add backend repo link here_
+##  Backend Repository
+GitHub URL: https://github.com/sathvik89/library_backend
 
 ---
 
-## ▶️ Getting Started
+##  Getting Started
 ```bash
 npm install
 npm start
