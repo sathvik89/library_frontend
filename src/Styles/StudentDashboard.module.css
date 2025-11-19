@@ -1,0 +1,249 @@
+:root {
+  --maroon-primary: #800000;
+  --white: #ffffff;
+  --radius: 8px;
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.maincontainer {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-gap: 1.5rem;
+  padding: 0.5rem 2rem;
+  /* max-width: 1200px; */
+  width: 100%;
+  margin: 0 auto;
+}
+.logoDiv {
+  width: 110px;
+  /* text-align: center; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@media (max-width: 480px) {
+  .logoDiv {
+    width: 150px;
+  }
+  .buttondiv {
+    width: 150px;
+  }
+}
+.imagestyle {
+  width: 100%;
+  height: auto;
+}
+.buttonImage {
+  width: 100%;
+  height: auto;
+  border-radius: 50px;
+  border: 5px solid var(--minibackground);
+}
+.buttondiv {
+  width: 100px;
+  border-radius: 50px;
+}
+.mainHeading {
+  grid-column: 1 / -1;
+  text-align: center;
+  font-size: 2.5rem;
+  color: var(--white);
+  margin-bottom: 1rem;
+  font-weight: 900;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #800000;
+}
+/* .logoAndSearch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.homeImage {
+  width: 150px;
+  height: auto;
+  margin-bottom: 40px;
+} */
+/* .homeImage {
+  position: absolute;
+  top: 7.5rem;
+  left: 7rem;
+  width: 150px;
+  height: auto;
+} */
+
+.searchbar {
+  grid-column: 1 / -1;
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+/* .date {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: left;
+  width: 100%;
+  padding: 20px;
+} */
+/* </div>
+<div className={styles.date}> */
+
+.librarytime {
+  grid-column: 1 / 7;
+  background-color: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.5rem;
+}
+
+.news {
+  grid-column: 7 / -1;
+  background-color: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.5rem;
+}
+
+.latestbooks {
+  grid-column: 1 / -1;
+  background-color: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.5rem;
+  margin-top: 1rem;
+}
+
+.allbooks {
+  grid-column: 1 / 9;
+  background-color: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.5rem;
+  margin-top: 1rem;
+  max-height: 1013px;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: var(--maroon-primary) var(--grey-dark);
+}
+
+.ebooks {
+  grid-column: 9 / -1;
+  background-color: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.5rem;
+  margin-top: 1rem;
+}
+
+.population {
+  grid-column: 1 / 7;
+  background-color: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1rem;
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.innerPop {
+  background-color: var(--minibackground);
+  padding: 90px;
+  border-radius: var(--radius);
+  border: 2px solid maroon;
+}
+
+.population p {
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.population button {
+  width: 50%;
+  height: auto;
+}
+
+.rules {
+  grid-column: 7 / -1;
+  background-color: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.5rem;
+  margin-top: 1rem;
+}
+
+.feedback {
+  grid-column: 1 / 7;
+  background-color: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.5rem;
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.feedback p {
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.feedback button {
+  width: 50%;
+}
+
+.help {
+  grid-column: 7 / -1;
+  background-color: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.5rem;
+  margin-top: 1rem;
+}
+
+.previous {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+@media (max-width: 992px) {
+  .maincontainer {
+    max-width: 100vw;
+    padding: 1.5rem 0.25rem;
+  }
+  .librarytime,
+  .news {
+    grid-column: 1 / -1;
+  }
+
+  .allbooks,
+  .ebooks {
+    grid-column: 1 / -1;
+  }
+
+  .population,
+  .rules,
+  .feedback,
+  .help {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 768px) {
+  .maincontainer {
+    padding: 0.5rem 1.25rem;
+    max-width: 100vw;
+  }
+  .mainHeading {
+    font-size: 2rem;
+  }
+}
