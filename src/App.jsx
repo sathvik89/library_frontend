@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React from "react";
-import Home from "./Components/Home";
+import StudentDashboard from "./Components/StudentDashboard";
 import Login from "./Components/Login";
 import Navi from "./Components/Navi";
 import Signin from "./Components/Signin";
@@ -24,7 +24,8 @@ import PrivacyPassword from "./Components/PrivacyPassword";
 import { AuthProvider } from "./context/AuthContext";
 import AdminDashboard from "./Components/AdminDashboard";
 import LibrarianDashboard from "./Components/LibrarianDashboard";
-import ViewAllBooks from "./Components/ViewAllBooks"; 
+import ViewAllBooks from "./Components/ViewAllBooks";
+import ProtectedRoute from "./Components/ProtectedRoute"; 
 export default function App() {
   const [available, setavailabe] = React.useState(220);
   const [reserve, setReserve] = React.useState(false);
@@ -51,9 +52,30 @@ export default function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/signin" element={<Signin />} />
 
-                <Route path="/studentDashboard" element={<Home />} />
-                <Route path="/librarianDashboard" element={<LibrarianDashboard />} />
-                <Route path="/adminDashboard" element={<AdminDashboard />} />
+                <Route
+                  path="/studentDashboard"
+                  element={
+                    <ProtectedRoute allowedRoles={["STUDENT", "ADMIN"]}>
+                      <StudentDashboard />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/librarianDashboard"
+                  element={
+                    <ProtectedRoute allowedRoles={["LIBRARIAN", "ADMIN"]}>
+                      <LibrarianDashboard />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/adminDashboard"
+                  element={
+                    <ProtectedRoute allowedRoles={["ADMIN"]}>
+                      <AdminDashboard />
+                    </ProtectedRoute>
+                  }
+                />
                 <Route path="/occupancy" element={<Seating available={available} />}/>
                 <Route
                   path="/reserveseat"

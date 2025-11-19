@@ -1,8 +1,7 @@
 // import { useNavigate } from "react-router-dom";
 import styles from "../Styles/ProfileList.module.css";
 import { useContext } from "react";
-import { myMenuContext } from "./Home";
-import Navi from "./Navi";
+import { myMenuContext } from "./StudentDashboard";
 import { useNavigate } from "react-router-dom";
 import { UserOutlined, CreditCardOutlined, HistoryOutlined, SettingOutlined } from "@ant-design/icons";
 

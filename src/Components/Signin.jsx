@@ -59,7 +59,7 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
       const response = await axios.post(API_ENDPOINTS.AUTH.REGISTER, body);
 
       toast.success(response.data.message || "Signup successful!");
-      navigate("/studentDashboard");
+      navigate("/login");
     } catch (error) {
       if (error.response?.data?.message) {
         toast.error(error.response.data.message);

@@ -4,11 +4,12 @@ import styles from "../Styles/Login.module.css";
 import PreviousButton from "./PreviousButton";
 import RU from "../BookImages/RUimage.png";
 import GoogleLogin from "./GoogleLogin";
-import {jwtDecode} from 'jwt-decode'; 
 import { toast } from 'react-hot-toast';
 import { API_ENDPOINTS } from "../config/apiConfig";
 import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
 import axios from "axios";
+import { setupAxiosHeaders } from "../utils/axiosConfig";
+
 function Login() {
   const [loginMode, setLoginMode] = useState("username"); // "username" or "email"
   const [identifier, setIdentifier] = useState("");
@@ -40,9 +41,6 @@ function Login() {
       const data = await res.data;
 
       if (res.status === 200) {
-        console.log(data);
-        
-        // check if token exists in response
         if (!data.token) {
           toast.error("Login failed: No token received.");
           return;
@@ -50,32 +48,34 @@ function Login() {
         
         // store token in localStorage
         localStorage.setItem("token", data.token);
-        toast.success(`Logged in as: ${identifier}`);
         
-        // decode token to get role and redirect
+        // set axios default header
+        setupAxiosHeaders();
+        
+        // Call /auth/me to get user info and verify token
         try {
-          const decoded = jwtDecode(data.token);
-          console.log(decoded);
-          const role = decoded.role;
-          console.log(role);
+          const meResponse = await axios.get(API_ENDPOINTS.AUTH.ME);
+          const user = meResponse.data;
           
-          // redirect based on role
-          if (role === "ADMIN") {
+          toast.success(`Logged in as: ${user.userName}`);
+          
+          // redirect based on role from backend
+          if (user.role === "ADMIN") {
             navigate("/adminDashboard");
-          } else if (role === "LIBRARIAN") {
+          } else if (user.role === "LIBRARIAN") {
             navigate("/librarianDashboard");
-          } else if (role === "STUDENT") {
+          } else if (user.role === "STUDENT") {
             navigate("/studentDashboard");
           } else {
-            toast.error("Invalid role in token. Please contact support.");
-            // clear invalid token
+            toast.error("Invalid role. Please contact support.");
             localStorage.removeItem("token");
+            delete axios.defaults.headers.common["Authorization"];
           }
-        } catch (decodeError) {
-          console.error("Error decoding token:", decodeError);
-          toast.error("Failed to process login token. Please try again.");
-          // clear invalid token
+        } catch (meError) {
+          console.error("Error fetching user info:", meError);
+          toast.error("Failed to verify authentication. Please try again.");
           localStorage.removeItem("token");
+          delete axios.defaults.headers.common["Authorization"];
         }
       } else {
         toast.error(data.message || "Login failed.");
@@ -152,9 +152,9 @@ function Login() {
 </label>
 
         <br />
-        <div style={{ width: "100%" }}>
+        {/* <div style={{ width: "100%" }}>
           <GoogleLogin textu="Login with" />
-        </div>
+        </div> */}
         <button className={styles.Loginsubmit} type="submit" disabled={loading}>
           {loading ? "Logging in..." : "Login"}
         </button>

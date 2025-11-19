@@ -1,5 +1,4 @@
 import { createContext, useContext, useState } from "react";
-import { SearchContext } from "./SearchContext";
 import { useNavigate } from "react-router-dom";
 import Books from "./Books.jsx";
 import Search from "./Search.jsx";
@@ -11,21 +10,21 @@ import Rules from "./Rules.jsx";
 import LibraryTimings from "./LibraryTimings.jsx";
 import PresentDay from "./PresentDay.jsx";
 import News from "./News.jsx";
-import styles from "../Styles/Home.module.css";
+import styles from "../Styles/StudentDashboard.module.css";
 import Logoutbutton from "./Logoutbutton.jsx";
 import logo from "../BookImages/RUimage.png";
 import profile from "../BookImages/ProfileIcon.png";
 import ProfileList from "./ProfileList.jsx";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext.jsx";
 export const myMenuContext = createContext();
-export default function Home() {
-  const { setSearchQuery } = useContext(SearchContext);
+
+
+export default function StudentDashboard() {
   const navigate = useNavigate();
   const [profileOpen, setProfileOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const { user } = useAuth();
   function handleShow() {
-    // navigate("/MenuList");
     setProfileOpen((prev) => !prev);
   }
   console.log(profileOpen);
