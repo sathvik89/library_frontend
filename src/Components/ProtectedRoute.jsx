@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Spin } from "antd";
 import axios from "axios";
 import { API_ENDPOINTS } from "../config/apiConfig";
 import { setupAxiosHeaders } from "../utils/axiosConfig";
@@ -53,10 +54,9 @@ function ProtectedRoute({ children, allowedRoles = [] }) {
         display: "flex", 
         justifyContent: "center", 
         alignItems: "center", 
-        height: "100vh",
-        fontSize: "1.2rem"
+        height: "100vh"
       }}>
-        Loading...
+        <Spin size="large" tip="Loading..." />
       </div>
     );
   }

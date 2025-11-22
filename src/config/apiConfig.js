@@ -9,6 +9,10 @@ export const API_ENDPOINTS = {
   },
   BOOKS: {
     GET_ALL: `${API_BASE_URL}/books`,
+    GET_BY_ID: (id) => `${API_BASE_URL}/books/${id}`,
+    CREATE: `${API_BASE_URL}/books`,
+    UPDATE: (id) => `${API_BASE_URL}/books/${id}`,
+    DELETE: (id) => `${API_BASE_URL}/books/${id}`,
   },
 };
 

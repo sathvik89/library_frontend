@@ -1,0 +1,104 @@
+.modal {
+  border-radius: 8px;
+}
+
+.modalContent {
+  display: flex;
+  gap: 24px;
+  padding: 8px;
+}
+
+.imageSection {
+  flex-shrink: 0;
+  width: 300px;
+}
+
+.modalImage {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  object-fit: cover;
+}
+
+.detailsSection {
+  flex: 1;
+  min-width: 0;
+}
+
+.modalTitle {
+  color: var(--maroon-primary);
+  margin-bottom: 0;
+  font-size: 24px;
+}
+
+.descriptions {
+  margin-top: 16px;
+}
+
+.descriptionSection {
+  margin-top: 16px;
+}
+
+.descriptionText {
+  color: #666;
+  line-height: 1.8;
+  margin-bottom: 0;
+}
+
+.copiesSection {
+  margin-top: 16px;
+}
+
+.copiesList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.copyItem {
+  padding: 8px 12px;
+  background: #f5f5f5;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.ebookSection {
+  margin-top: 16px;
+  text-align: center;
+}
+
+.ebookLink {
+  display: inline-block;
+  padding: 10px 24px;
+  background: var(--maroon-primary);
+  color: white;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.ebookLink:hover {
+  background: var(--maroon-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(178, 14, 56, 0.3);
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .modalContent {
+    flex-direction: column;
+  }
+
+  .imageSection {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .modalImage {
+    max-width: 250px;
+  }
+}
+

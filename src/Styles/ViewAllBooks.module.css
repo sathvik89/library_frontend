@@ -1,63 +1,93 @@
 .container {
-    padding: 30px;
+  padding: 30px 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: calc(100vh - 250px);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.heading {
+  font-size: 36px;
+  color: var(--maroon-primary);
+  margin: 0;
+  font-weight: 700;
+  flex: 1;
+}
+
+.booksContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 24px;
+  padding: 20px 0;
+  margin-bottom: 32px;
+  flex: 1;
+}
+
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  padding: 40px;
+  flex: 1;
+}
+
+.errorContainer,
+.emptyContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  padding: 40px;
+  flex: 1;
+}
+
+.paginationContainer {
+  display: flex;
+  justify-content: center;
+  padding: 32px 0;
+  margin-top: 24px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+@media (max-width: 768px) {
+  .container {
+    padding: 20px 15px;
   }
-  
+
   .heading {
-    text-align: center;
-    font-size: 34px;
-    color: var(--maroon-primary);
-    margin-bottom: 25px;
+    font-size: 28px;
+    margin-bottom: 20px;
   }
-  
+
   .booksContainer {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 25px;
-    padding: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 16px;
+    padding: 10px 0;
   }
-  
-  .bookCard {
-    background: #fffaf6;
-    border-radius: 12px;
-    padding: 18px;
-    text-align: center;
-    box-shadow: 0px 2px 8px rgba(140, 40, 40, 0.2);
-    transition: var(--transition);
+
+  .paginationContainer {
+    padding: 20px 10px;
   }
-  
-  .bookCard:hover {
-    transform: translateY(-5px);
-    box-shadow: 0px 5px 14px rgba(140, 40, 40, 0.3);
+}
+
+@media (max-width: 480px) {
+  .booksContainer {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
   }
-  
-  .bookCard img {
-    width: 140px;
-    height: 190px;
-    border-radius: 8px;
-    object-fit: cover;
-    margin-bottom: 10px;
-  }
-  
-  .title {
-    color: var(--maroon-primary);
-    font-size: 20px;
-    margin: 10px 0 5px;
-  }
-  
-  .description {
-    font-size: 14px;
-    color: #444;
-    margin-bottom: 10px;
-  }
-  
-  .genre {
-    font-size: 13px;
-    color: #333;
-  }
-  
-  .loading, .error {
-    text-align: center;
-    margin-top: 35px;
-    color: var(--maroon-primary);
-  }
-  
+}

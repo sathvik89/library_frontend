@@ -24,10 +24,11 @@ export default function StudentDashboard() {
   const [profileOpen, setProfileOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const { user } = useAuth();
+  
   function handleShow() {
     setProfileOpen((prev) => !prev);
   }
-  console.log(profileOpen);
+  console.log("profile is open", profileOpen);
 
   function handleSeat() {
     navigate("/occupancy");

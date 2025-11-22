@@ -1,0 +1,43 @@
+.filtersContainer {
+  margin-bottom: 24px;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.filters {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+}
+
+.searchInput {
+  flex: 1;
+  min-width: 350px;
+}
+
+.filterSelect {
+  min-width: 180px;
+}
+
+@media (max-width: 1024px) {
+  .searchInput {
+    min-width: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .filters {
+    flex-direction: column;
+  }
+
+  .searchInput,
+  .filterSelect {
+    width: 100% !important;
+    min-width: 100% !important;
+  }
+}
+

@@ -31,6 +31,8 @@ body {
   background-color: var(--app-background);
   color: var(--black);
   line-height: 1.6;
+  margin: 0;
+  padding: 0;
 }
 
 button {
@@ -99,4 +101,23 @@ ul {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1rem;
+}
+
+/* Ensure body and html take full height for footer positioning */
+html,
+body,
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#root > div {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
 }

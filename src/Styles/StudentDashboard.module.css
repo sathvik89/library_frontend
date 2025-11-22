@@ -13,6 +13,10 @@
   width: 100%;
   margin: 0 auto;
 }
+
+.mainHeading {
+  margin-top: 0;
+}
 .logoDiv {
   width: 110px;
   /* text-align: center; */
