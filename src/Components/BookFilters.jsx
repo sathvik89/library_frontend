@@ -1,56 +1,60 @@
-import { Input, Select, Space } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
+// src/components/BookFilters.jsx
+import { Input, Select, Space, Button } from "antd";
+import { SearchOutlined, ClearOutlined } from "@ant-design/icons";
 import styles from "../Styles/BookFilters.module.css";
 
 const { Search } = Input;
 const { Option } = Select;
 
 const GENRES = [
-  "FICTION",
-  "NON_FICTION",
-  "MYSTERY",
-  "THRILLER",
-  "FANTASY",
-  "SCIENCE_FICTION",
-  "ROMANCE",
-  "HISTORICAL",
-  "HORROR",
-  "BIOGRAPHY",
-  "SELF_HELP",
-  "POETRY",
-  "DRAMA",
-  "ADVENTURE",
-  "CRIME",
-  "YOUNG_ADULT",
-  "CHILDREN",
-  "CLASSICS",
+  "FICTION","NON_FICTION","MYSTERY","THRILLER","FANTASY","SCIENCE_FICTION","ROMANCE",
+  "HISTORICAL","HORROR","BIOGRAPHY","SELF_HELP","POETRY","DRAMA","ADVENTURE","CRIME",
+  "YOUNG_ADULT","CHILDREN","CLASSICS",
 ];
 
 const SORT_OPTIONS = [
   { value: "title_asc", label: "Title (A-Z)" },
   { value: "title_desc", label: "Title (Z-A)" },
-  { value: "author_asc", label: "Author (A-Z)" },
-  { value: "author_desc", label: "Author (Z-A)" },
   { value: "available_desc", label: "Most Available" },
   { value: "available_asc", label: "Least Available" },
 ];
 
-function BookFilters({ filters, onFilterChange }) {
-  const handleSearch = (value) => {
+function BookFilters({ filters, searchInput, onFilterChange, onImmediateSearch }) {
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
     onFilterChange({ ...filters, search: value, page: 1 });
   };
 
-  const handleGenreChange = (value) => {
-    onFilterChange({ ...filters, genre: value, page: 1 });
+  const handleSearchSubmit = (value) => {
+    if (onImmediateSearch) {
+      onImmediateSearch(value);
+    } else {
+      onFilterChange({ ...filters, search: value, page: 1 });
+    }
   };
 
-  const handleAvailabilityChange = (value) => {
-    onFilterChange({ ...filters, availability: value, page: 1 });
+  const handleGenreChange = (value) => onFilterChange({ ...filters, genre: value, page: 1 });
+  const handleAvailabilityChange = (value) => onFilterChange({ ...filters, availability: value, page: 1 });
+  const handleSortChange = (value) => onFilterChange({ ...filters, sortBy: value, page: 1 });
+
+  const handleClearAll = () => {
+    // clear search & other filters, keep page reset to 1 and keep limit
+    onFilterChange({
+      page: 1,
+      limit: filters.limit || 10,
+      search: "",
+      genre: "",
+      availability: "",
+      sortBy: "",
+    });
   };
 
-  const handleSortChange = (value) => {
-    onFilterChange({ ...filters, sortBy: value, page: 1 });
-  };
+  const hasActiveFilters =
+    (filters.genre && filters.genre !== "") ||
+    (filters.availability && filters.availability !== "") ||
+    (filters.sortBy && filters.sortBy !== "") ||
+    (searchInput && searchInput !== "") ||
+    (filters.search && filters.search !== "");
 
   return (
     <div className={styles.filtersContainer}>
@@ -61,17 +65,9 @@ function BookFilters({ filters, onFilterChange }) {
           enterButton={<SearchOutlined />}
           size="large"
           className={styles.searchInput}
-          onSearch={handleSearch}
-          onChange={(e) => {
-            const value = e.target.value;
-            if (value === "") {
-              handleSearch("");
-            }
-            else{
-              handleSearch(value);
-            }
-          }}
-          value={filters.search}
+          onSearch={handleSearchSubmit}
+          onChange={handleSearchChange}
+          value={searchInput !== undefined ? searchInput : filters.search}
           style={{ width: 672 }}
         />
 
@@ -87,7 +83,6 @@ function BookFilters({ filters, onFilterChange }) {
           filterOption={(input, option) =>
             (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
           }
-          dropdownStyle={{ maxHeight: 300, overflow: "auto" }}
         >
           {GENRES.map((genre) => (
             <Option key={genre} value={genre} label={genre}>
@@ -116,7 +111,7 @@ function BookFilters({ filters, onFilterChange }) {
           className={styles.filterSelect}
           value={filters.sortBy || undefined}
           onChange={handleSortChange}
-          style={{ width: 200 }}
+          style={{ width: 160 }}
         >
           {SORT_OPTIONS.map((option) => (
             <Option key={option.value} value={option.value}>
@@ -124,10 +119,21 @@ function BookFilters({ filters, onFilterChange }) {
             </Option>
           ))}
         </Select>
+
+        {hasActiveFilters && (
+          <Button
+            type="default"
+            icon={<ClearOutlined />}
+            size="large"
+            onClick={handleClearAll}
+            className={styles.clearButton}
+          >
+            Clear All
+          </Button>
+        )}
       </Space>
     </div>
   );
 }
 
 export default BookFilters;
-

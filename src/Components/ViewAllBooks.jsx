@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+// src/components/ViewAllBooks.jsx
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { Spin, Pagination, Empty, message } from "antd";
 import styles from "../Styles/ViewAllBooks.module.css";
@@ -16,7 +17,7 @@ function ViewAllBooks() {
   const [modalOpen, setModalOpen] = useState(false);
   const [filters, setFilters] = useState({
     page: 1,
-    limit: 12,
+    limit: 10,
     search: "",
     genre: "",
     availability: "",
@@ -24,11 +25,29 @@ function ViewAllBooks() {
   });
   const [pagination, setPagination] = useState({
     current: 1,
-    pageSize: 12,
+    pageSize: 10,
     total: 0,
   });
+  const [searchInput, setSearchInput] = useState("");
+  const debounceTimerRef = useRef(null);
 
+  // debounce effect for search input
   useEffect(() => {
+    if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
+
+    debounceTimerRef.current = setTimeout(() => {
+      setFilters((prev) => ({ ...prev, search: searchInput, page: 1 }));
+    }, 500);
+
+    return () => {
+      if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
+    };
+  }, [searchInput]);
+
+  // main fetch (runs whenever filters change)
+  useEffect(() => {
+    let cancelled = false;
+
     async function fetchBooks() {
       setLoading(true);
       setError("");
@@ -38,70 +57,69 @@ function ViewAllBooks() {
           limit: filters.limit,
         };
 
-        if (filters.search) {
-          params.search = filters.search;
-        }
-        if (filters.genre) {
-          params.genre = filters.genre;
-        }
-        if (filters.availability) {
-          params.availability = filters.availability;
-        }
-        if (filters.sortBy) {
-          params.sortBy = filters.sortBy;
-        }
+        if (filters.search) params.search = filters.search;
+        if (filters.genre) params.genre = filters.genre;
+        if (filters.availability) params.availability = filters.availability;
+        if (filters.sortBy) params.sortBy = filters.sortBy;
 
         const res = await axios.get(API_ENDPOINTS.BOOKS.GET_ALL, { params });
 
-        // Handle both paginated and non-paginated responses
-        if (res.data.success) {
-          if (res.data.data && Array.isArray(res.data.data)) {
-            setBooks(res.data.data);
+        if (!cancelled) {
+          if (res.data?.success) {
+            const booksData = res.data.data || [];
+            const paginationData = res.data.pagination || {};
+            setBooks(booksData);
             setPagination({
-              current: filters.page,
-              pageSize: filters.limit,
-              total: res.data.total || res.data.data.length,
-            });
-          } else if (res.data.data && res.data.data.books) {
-            // If data has a books property, it's paginated
-            setBooks(res.data.data.books);
-            setPagination({
-              current: res.data.data.currentPage || filters.page,
-              pageSize: res.data.data.pageSize || filters.limit,
-              total: res.data.data.total || 0,
+              current: paginationData.page || filters.page,
+              pageSize: paginationData.limit || filters.limit,
+              total: paginationData.total || 0,
             });
           } else {
+            const msg = res.data?.message || "Failed to load books.";
+            setError(msg);
+            message.error(msg);
             setBooks([]);
-            setPagination({
-              current: filters.page,
-              pageSize: filters.limit,
-              total: 0,
-            });
           }
-        } else {
-          setError("Failed to load books.");
-          message.error("Failed to load books.");
         }
       } catch (err) {
-        console.error(err);
-        setError("Failed to load books.");
-        message.error("Failed to load books. Please try again.");
-        setBooks([]);
+        if (!cancelled) {
+          console.error(err);
+          const serverMsg = err?.response?.data?.message || "Failed to load books. Please try again.";
+          setError(serverMsg);
+          message.error(serverMsg);
+          setBooks([]);
+        }
       } finally {
-        setLoading(false);
+        if (!cancelled) setLoading(false);
       }
     }
-    
+
     fetchBooks();
+    return () => {
+      cancelled = true;
+    };
   }, [filters]);
 
   const handleFilterChange = (newFilters) => {
-    setFilters(newFilters);
+    // If search is present in newFilters it means user typed - update searchInput to show in input
+    if (Object.prototype.hasOwnProperty.call(newFilters, "search")) {
+      setSearchInput(newFilters.search || "");
+      setFilters((prev) => ({ ...prev, ...newFilters, page: 1 }));
+      return;
+    }
+    setFilters((prev) => ({ ...prev, ...newFilters, page: 1 }));
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleImmediateSearch = (searchValue) => {
+    if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
+    setSearchInput(searchValue);
+    setFilters((prev) => ({ ...prev, search: searchValue, page: 1 }));
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handlePageChange = (page, pageSize) => {
-    setFilters({ ...filters, page, limit: pageSize });
+    setFilters((prev) => ({ ...prev, page, limit: pageSize }));
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -122,7 +140,12 @@ function ViewAllBooks() {
         <PreviousButton text="Go Back" navi={-1} />
       </div>
 
-      <BookFilters filters={filters} onFilterChange={handleFilterChange} />
+      <BookFilters
+        filters={filters}
+        searchInput={searchInput}
+        onFilterChange={handleFilterChange}
+        onImmediateSearch={handleImmediateSearch}
+      />
 
       {loading ? (
         <div className={styles.loadingContainer}>
@@ -152,10 +175,8 @@ function ViewAllBooks() {
                 total={pagination.total}
                 showSizeChanger
                 showQuickJumper
-                showTotal={(total, range) =>
-                  `${range[0]}-${range[1]} of ${total} books`
-                }
-                pageSizeOptions={["12", "24", "48", "96"]}
+                showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} books`}
+                pageSizeOptions={["10", "20", "40", "60", "80", "100"]}
                 onChange={handlePageChange}
                 onShowSizeChange={handlePageChange}
               />
