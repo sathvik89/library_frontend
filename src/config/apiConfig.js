@@ -9,6 +9,7 @@ export const API_ENDPOINTS = {
   },
   BOOKS: {
     GET_ALL: `${API_BASE_URL}/books`,
+    ADD_NEW_BOOK: `${API_BASE_URL}/books/add`,
     GET_BY_ID: (id) => `${API_BASE_URL}/books/${id}`,
     CREATE: `${API_BASE_URL}/books`,
     UPDATE: (id) => `${API_BASE_URL}/books/${id}`,

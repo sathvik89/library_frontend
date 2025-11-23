@@ -4,6 +4,7 @@ import { SearchOutlined, ClearOutlined } from "@ant-design/icons";
 import axios from "axios";
 import Logoutbutton from "./Logoutbutton";
 import PreviousButton from "./PreviousButton";
+import AddbookModal from "./AddbookModal";
 import { API_ENDPOINTS } from "../config/apiConfig";
 import styles from "../Styles/LibrarianDashboard.module.css";
 
@@ -35,7 +36,7 @@ export default function LibrarianDashboard() {
   });
   const [searchInput, setSearchInput] = useState("");
   const debounceTimerRef = useRef(null);
-
+  const [modalOpen, setModalOpen] = useState(false); 
   // Debounce effect for search input
   useEffect(() => {
     if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
@@ -104,6 +105,11 @@ export default function LibrarianDashboard() {
       cancelled = true;
     };
   }, [filters]);
+
+
+  const handleBookAdded = () => {
+    setFilters((prev) => ({ ...prev, page: 1 }));
+  };
 
   const handleFilterChange = (newFilters) => {
     if (Object.prototype.hasOwnProperty.call(newFilters, "search")) {
@@ -285,6 +291,7 @@ export default function LibrarianDashboard() {
               <Option value="available">Available Only</Option>
               <Option value="unavailable">Unavailable Only</Option>
             </Select>
+            <Button type="primary" onClick={()=>setModalOpen(true)}>Add New Book</Button>
 
             {hasActiveFilters && (
               <Button
@@ -348,6 +355,12 @@ export default function LibrarianDashboard() {
         <PreviousButton navi="/login" />
         <Logoutbutton />
       </div>
+
+      <AddbookModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        onSuccess={handleBookAdded}
+      />
     </div>
   );
 }
