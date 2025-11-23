@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Modal, Form, Input, Select, InputNumber, Space, Button, Divider } from "antd";
+import { ReloadOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { API_ENDPOINTS } from "../config/apiConfig";
 import { toast } from "react-hot-toast";
@@ -19,6 +20,20 @@ function AddbookModal({ open, onClose, onSuccess }) {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [numberOfCopies, setNumberOfCopies] = useState(0);
+
+  const generateBarcode = () => {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let barcode = "";
+    for (let i = 0; i < 8; i++) {
+      barcode += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return barcode;
+  };
+
+  const handleGenerateBarcode = (index) => {
+    const newBarcode = generateBarcode();
+    form.setFieldValue(`barcode_${index}`, newBarcode);
+  };
 
   const handleCancel = () => {
     form.resetFields();
@@ -195,7 +210,24 @@ function AddbookModal({ open, onClose, onSuccess }) {
                     name={`barcode_${index}`}
                     style={{ marginBottom: 0 }}
                   >
-                    <Input placeholder="Enter barcode (optional)" size="large" />
+                    <Input
+                      placeholder="Enter barcode, you can click the button to generate a random barcode(opt)"
+                      size="large"
+                      addonAfter={
+                        <Button
+                          type="text"
+                          icon={<ReloadOutlined />}
+                          size="small"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            handleGenerateBarcode(index);
+                          }}
+                          title="Generate barcode"
+                          style={{ padding: 0 }}
+                        />
+                      }
+                    />
                   </Form.Item>
 
                   <Form.Item
