@@ -1,10 +1,9 @@
 // src/components/ViewAllBooks.jsx
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import { Spin, Pagination, Empty, message } from "antd";
+import { Spin, Empty, message, Table, Tag } from "antd";
 import styles from "../Styles/ViewAllBooks.module.css";
 import { API_ENDPOINTS } from "../config/apiConfig";
-import BookCard from "./BookCard";
 import BookModal from "./BookModal";
 import BookFilters from "./BookFilters";
 import PreviousButton from "./PreviousButton";
@@ -123,8 +122,8 @@ function ViewAllBooks() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const handleCardClick = (book) => {
-    setSelectedBook(book);
+  const handleRowClick = (record) => {
+    setSelectedBook(record);
     setModalOpen(true);
   };
 
@@ -132,6 +131,61 @@ function ViewAllBooks() {
     setModalOpen(false);
     setSelectedBook(null);
   };
+
+  const columns = [
+    {
+      title: "Title",
+      dataIndex: "title",
+      key: "title",
+      width: "25%",
+      render: (text) => <span className={styles.tableCell}>{text || "N/A"}</span>,
+    },
+    {
+      title: "Author",
+      dataIndex: "authorName",
+      key: "authorName",
+      width: "20%",
+      render: (text) => <span className={styles.tableCell}>{text || "N/A"}</span>,
+    },
+    {
+      title: "Genre",
+      dataIndex: "genre",
+      key: "genre",
+      width: "15%",
+      render: (genre) => (
+        <Tag color="blue" className={styles.genreTag}>
+          {genre ? genre.replace(/_/g, " ") : "N/A"}
+        </Tag>
+      ),
+    },
+    {
+      title: "Publisher",
+      dataIndex: "publisher",
+      key: "publisher",
+      width: "15%",
+      render: (text) => <span className={styles.tableCell}>{text || "N/A"}</span>,
+    },
+    {
+      title: "Total Copies",
+      dataIndex: "totalCopies",
+      key: "totalCopies",
+      width: "10%",
+      align: "center",
+      render: (count) => <span className={styles.tableCell}>{count || 0}</span>,
+    },
+    {
+      title: "Available Copies",
+      dataIndex: "availableCopies",
+      key: "availableCopies",
+      width: "15%",
+      align: "center",
+      render: (count) => (
+        <Tag color={count > 0 ? "green" : "red"} className={styles.availabilityTag}>
+          {count || 0}
+        </Tag>
+      ),
+    },
+  ];
 
   return (
     <div className={styles.container}>
@@ -160,29 +214,29 @@ function ViewAllBooks() {
           <Empty description="No books found" />
         </div>
       ) : (
-        <>
-          <div className={styles.booksContainer}>
-            {books.map((book) => (
-              <BookCard key={book.id} book={book} onCardClick={handleCardClick} />
-            ))}
-          </div>
-
-          {pagination.total > 0 && (
-            <div className={styles.paginationContainer}>
-              <Pagination
-                current={pagination.current}
-                pageSize={pagination.pageSize}
-                total={pagination.total}
-                showSizeChanger
-                showQuickJumper
-                showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} books`}
-                pageSizeOptions={["10", "20", "40", "60", "80", "100"]}
-                onChange={handlePageChange}
-                onShowSizeChange={handlePageChange}
-              />
-            </div>
-          )}
-        </>
+        <div className={styles.tableContainer}>
+          <Table
+            columns={columns}
+            dataSource={books.map((book) => ({ ...book, key: book.id }))}
+            pagination={{
+              current: pagination.current,
+              pageSize: pagination.pageSize,
+              total: pagination.total,
+              showSizeChanger: true,
+              showQuickJumper: true,
+              showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} books`,
+              pageSizeOptions: ["10", "20", "40", "60", "80", "100"],
+              onChange: handlePageChange,
+              onShowSizeChange: handlePageChange,
+            }}
+            className={styles.booksTable}
+            scroll={{ x: "max-content" }}
+            onRow={(record) => ({
+              onClick: () => handleRowClick(record),
+              style: { cursor: "pointer" },
+            })}
+          />
+        </div>
       )}
 
       <BookModal book={selectedBook} open={modalOpen} onClose={handleModalClose} />

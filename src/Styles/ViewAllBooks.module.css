@@ -25,13 +25,75 @@
   flex: 1;
 }
 
-.booksContainer {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 24px;
-  padding: 20px 0;
-  margin-bottom: 32px;
-  flex: 1;
+.tableContainer {
+  margin-bottom: 24px;
+  overflow-x: auto;
+  width: 100%;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+}
+
+.booksTable {
+  width: 100%;
+}
+
+.booksTable :global(.ant-pagination) {
+  display: flex;
+  justify-content: center;
+  ;
+}
+
+.booksTable :global(.ant-table-container) {
+  width: 100%;
+}
+
+.booksTable :global(.ant-table) {
+  width: 100%;
+  table-layout: auto;
+}
+
+.booksTable :global(.ant-table-wrapper) {
+  width: 100%;
+}
+
+.booksTable :global(.ant-table-thead > tr > th) {
+  background-color: var(--maroon-primary);
+  color: var(--white);
+  font-weight: 600;
+  border-bottom: 2px solid var(--maroon-dark);
+}
+
+.booksTable :global(.ant-table-thead > tr > th:hover) {
+  background-color: var(--maroon-dark);
+}
+
+.booksTable :global(.ant-table-tbody > tr:hover > td) {
+  background-color: var(--minibackground);
+}
+
+.booksTable :global(.ant-table-tbody > tr > td) {
+  border-bottom: 1px solid var(--grey-light);
+  padding: 16px;
+}
+
+.tableCell {
+  color: var(--text-color);
+  font-size: 0.95rem;
+}
+
+.genreTag {
+  font-size: 0.9rem;
+  padding: 4px 12px;
+  border-radius: 4px;
+}
+
+.availabilityTag {
+  font-size: 0.9rem;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-weight: 500;
 }
 
 .loadingContainer {
@@ -74,10 +136,15 @@
     margin-bottom: 20px;
   }
 
-  .booksContainer {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 16px;
-    padding: 10px 0;
+  .tableContainer {
+    padding: 15px;
+    overflow-x: scroll;
+  }
+
+  .booksTable :global(.ant-table-thead > tr > th),
+  .booksTable :global(.ant-table-tbody > tr > td) {
+    padding: 12px 8px;
+    font-size: 0.85rem;
   }
 
   .paginationContainer {
@@ -86,8 +153,11 @@
 }
 
 @media (max-width: 480px) {
-  .booksContainer {
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 12px;
+  .tableContainer {
+    padding: 10px;
+  }
+
+  .heading {
+    font-size: 24px;
   }
 }

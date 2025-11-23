@@ -5,6 +5,7 @@ import axios from "axios";
 import Logoutbutton from "./Logoutbutton";
 import PreviousButton from "./PreviousButton";
 import AddbookModal from "./AddbookModal";
+import BookDetailsModal from "./BookDetailsModal";
 import { API_ENDPOINTS } from "../config/apiConfig";
 import styles from "../Styles/LibrarianDashboard.module.css";
 
@@ -36,7 +37,9 @@ export default function LibrarianDashboard() {
   });
   const [searchInput, setSearchInput] = useState("");
   const debounceTimerRef = useRef(null);
-  const [modalOpen, setModalOpen] = useState(false); 
+  const [modalOpen, setModalOpen] = useState(false);
+  const [bookDetailsModalOpen, setBookDetailsModalOpen] = useState(false);
+  const [selectedBookId, setSelectedBookId] = useState(null); 
   // Debounce effect for search input
   useEffect(() => {
     if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
@@ -109,6 +112,11 @@ export default function LibrarianDashboard() {
 
   const handleBookAdded = () => {
     setFilters((prev) => ({ ...prev, page: 1 }));
+  };
+
+  const handleBookDetailsModalClose = () => {
+    setBookDetailsModalOpen(false);
+    setSelectedBookId(null);
   };
 
   const handleFilterChange = (newFilters) => {
@@ -291,19 +299,34 @@ export default function LibrarianDashboard() {
               <Option value="available">Available Only</Option>
               <Option value="unavailable">Unavailable Only</Option>
             </Select>
-            <Button type="primary" onClick={()=>setModalOpen(true)}>Add New Book</Button>
+
+            <Select
+              placeholder="Sort By"
+              allowClear
+              size="large"
+              className={styles.filterSelect}
+              value={filters.sortBy || undefined}
+              onChange={(value) => handleFilterChange({ sortBy: value })}
+              style={{ width: 200 }}
+            >
+              <Option value="title_asc">Title (A-Z)</Option>
+              <Option value="title_desc">Title (Z-A)</Option>
+              <Option value="available_desc">Most Available</Option>
+              <Option value="available_asc">Least Available</Option>
+            </Select>
 
             {hasActiveFilters && (
               <Button
-                type="default"
-                icon={<ClearOutlined />}
-                size="large"
-                onClick={handleClearAll}
-                className={styles.clearButton}
+              type="default"
+              icon={<ClearOutlined />}
+              size="large"
+              onClick={handleClearAll}
+              className={styles.clearButton}
               >
                 Clear All
               </Button>
             )}
+            <Button type="primary" onClick={()=>setModalOpen(true)}>Add New Book</Button>
           </Space>
         </div>
 
@@ -329,6 +352,13 @@ export default function LibrarianDashboard() {
                 onChange={handleTableChange}
                 className={styles.booksTable}
                 scroll={{ x: "max-content" }}
+                onRow={(record) => ({
+                  onClick: () => {
+                    setSelectedBookId(record.id);
+                    setBookDetailsModalOpen(true);
+                  },
+                  style: { cursor: "pointer" },
+                })}
               />
             </div>
 
@@ -360,6 +390,12 @@ export default function LibrarianDashboard() {
         open={modalOpen}
         onClose={() => setModalOpen(false)}
         onSuccess={handleBookAdded}
+      />
+
+      <BookDetailsModal
+        bookId={selectedBookId}
+        open={bookDetailsModalOpen}
+        onClose={handleBookDetailsModalClose}
       />
     </div>
   );
