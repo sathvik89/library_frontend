@@ -4,31 +4,17 @@ import { ReloadOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { API_ENDPOINTS } from "../config/apiConfig";
 import { toast } from "react-hot-toast";
+import { generateBarcode } from "../utils/barcodeGenerator";
+import { GENRES, COPY_STATUSES } from "../Constants/constants";
 
 const { Option } = Select;
 const { TextArea } = Input;
 
-const GENRES = [
-  "FICTION", "NON_FICTION", "MYSTERY", "THRILLER", "FANTASY", "SCIENCE_FICTION", "ROMANCE",
-  "HISTORICAL", "HORROR", "BIOGRAPHY", "SELF_HELP", "POETRY", "DRAMA", "ADVENTURE", "CRIME",
-  "YOUNG_ADULT", "CHILDREN", "CLASSICS",
-];
-
-const COPY_STATUSES = ["AVAILABLE", "LOANED", "DAMAGED", "LOST"];
 
 function AddbookModal({ open, onClose, onSuccess }) {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [numberOfCopies, setNumberOfCopies] = useState(0);
-
-  const generateBarcode = () => {
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    let barcode = "";
-    for (let i = 0; i < 8; i++) {
-      barcode += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return barcode;
-  };
 
   const handleGenerateBarcode = (index) => {
     const newBarcode = generateBarcode();
@@ -276,4 +262,3 @@ function AddbookModal({ open, onClose, onSuccess }) {
 }
 
 export default AddbookModal;
-

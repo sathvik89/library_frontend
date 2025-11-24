@@ -1,35 +1,24 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Card, Table, Input, Select, Space, Spin, Empty, message, Tag, Pagination, Button } from "antd";
-import { SearchOutlined, ClearOutlined } from "@ant-design/icons";
+import { SearchOutlined, ClearOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import axios from "axios";
 import Logoutbutton from "./Logoutbutton";
 import PreviousButton from "./PreviousButton";
 import AddbookModal from "./AddbookModal";
 import BookDetailsModal from "./BookDetailsModal";
+import EditBookModal from "./EditBookModal";
 import { API_ENDPOINTS } from "../config/apiConfig";
 import styles from "../Styles/LibrarianDashboard.module.css";
+import { GENRES } from "../Constants/constants";
 
 const { Search } = Input;
 const { Option } = Select;
-
-const GENRES = [
-  "FICTION", "NON_FICTION", "MYSTERY", "THRILLER", "FANTASY", "SCIENCE_FICTION", "ROMANCE",
-  "HISTORICAL", "HORROR", "BIOGRAPHY", "SELF_HELP", "POETRY", "DRAMA", "ADVENTURE", "CRIME",
-  "YOUNG_ADULT", "CHILDREN", "CLASSICS",
-];
-
+    
 export default function LibrarianDashboard() {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [filters, setFilters] = useState({
-    page: 1,
-    limit: 10,
-    search: "",
-    genre: "",
-    availability: "",
-    sortBy: "",
-  });
+  const [filters, setFilters] = useState({page: 1,limit: 10,search: "",genre: "",availability: "",sortBy: "",});
   const [pagination, setPagination] = useState({
     current: 1,
     pageSize: 10,
@@ -39,7 +28,9 @@ export default function LibrarianDashboard() {
   const debounceTimerRef = useRef(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [bookDetailsModalOpen, setBookDetailsModalOpen] = useState(false);
-  const [selectedBookId, setSelectedBookId] = useState(null); 
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [selectedBookId, setSelectedBookId] = useState(null);
+  const [editingBookId, setEditingBookId] = useState(null); 
   // Debounce effect for search input
   useEffect(() => {
     if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
@@ -53,7 +44,7 @@ export default function LibrarianDashboard() {
     };
   }, [searchInput]);
 
-  // Main fetch (runs whenever filters change)
+  // fetch books (active whenever filters change)
   useEffect(() => {
     let cancelled = false;
 
@@ -119,8 +110,28 @@ export default function LibrarianDashboard() {
     setSelectedBookId(null);
   };
 
+  const handleEditClick = (e, bookId) => {
+    e.stopPropagation();
+    setEditingBookId(bookId);
+    setEditModalOpen(true);
+  };
+
+  const handleEditModalClose = () => {
+    setEditModalOpen(false);
+    setEditingBookId(null);
+  };
+
+  const handleEditSuccess = () => {
+    setFilters((prev) => ({ ...prev, page: 1 }));
+  };
+
+  const handleDeleteClick = (e, bookId) => {
+    e.stopPropagation();
+    message.info("Delete functionality will be implemented later");
+  };
+
   const handleFilterChange = (newFilters) => {
-    if (Object.prototype.hasOwnProperty.call(newFilters, "search")) {
+    if ("search" in newFilters) {
       setSearchInput(newFilters.search || "");
       setFilters((prev) => ({ ...prev, ...newFilters, page: 1 }));
       return;
@@ -208,6 +219,32 @@ export default function LibrarianDashboard() {
         <Tag color={count > 0 ? "green" : "red"} className={styles.availabilityTag}>
           {count || 0}
         </Tag>
+      ),
+    },
+    {
+      title: "Actions",
+      key: "actions",
+      width: "10%",
+      align: "center",
+      fixed: "right",
+      render: (_, record) => (
+        <Space size="middle">
+          <Button
+            type="primary"
+            icon={<EditOutlined />}
+            size="small"
+            onClick={(e) => handleEditClick(e, record.id)}
+            title="Edit book"
+          />
+          <Button
+            type="primary"
+            danger
+            icon={<DeleteOutlined />}
+            size="small"
+            onClick={(e) => handleDeleteClick(e, record.id)}
+            title="Delete book"
+          />
+        </Space>
       ),
     },
   ];
@@ -353,7 +390,10 @@ export default function LibrarianDashboard() {
                 className={styles.booksTable}
                 scroll={{ x: "max-content" }}
                 onRow={(record) => ({
-                  onClick: () => {
+                  onClick: (e) => {
+                    if (e.target.tagName === 'BUTTON' || e.target.closest('button')) {
+                      return;
+                    }
                     setSelectedBookId(record.id);
                     setBookDetailsModalOpen(true);
                   },
@@ -396,6 +436,13 @@ export default function LibrarianDashboard() {
         bookId={selectedBookId}
         open={bookDetailsModalOpen}
         onClose={handleBookDetailsModalClose}
+      />
+
+      <EditBookModal
+        bookId={editingBookId}
+        open={editModalOpen}
+        onClose={handleEditModalClose}
+        onSuccess={handleEditSuccess}
       />
     </div>
   );
