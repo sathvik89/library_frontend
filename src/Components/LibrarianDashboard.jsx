@@ -10,6 +10,7 @@ import EditBookModal from "./EditBookModal";
 import { API_ENDPOINTS } from "../config/apiConfig";
 import styles from "../Styles/LibrarianDashboard.module.css";
 import { GENRES } from "../Constants/constants";
+import { toast } from "react-hot-toast";
 
 const { Search } = Input;
 const { Option } = Select;
@@ -125,9 +126,28 @@ export default function LibrarianDashboard() {
     setFilters((prev) => ({ ...prev, page: 1 }));
   };
 
-  const handleDeleteClick = (e, bookId) => {
+  const handleDeleteClick =async (e, bookId) => {
     e.stopPropagation();
-    message.info("Delete functionality will be implemented later");
+    try{
+      setLoading(true);
+      const response = await axios.delete(API_ENDPOINTS.BOOKS.DELETE(bookId));
+      if(response.data?.success){
+        toast.success(response.data.message || "Book deleted successfully!");
+        setFilters((prev) => ({ ...prev, page: 1 }));
+      }
+      else{
+          const errorMsg = response.data?.message || "Failed to delete book. Please try again.";
+          toast.error(errorMsg);
+      }
+    }
+    catch(err){
+      console.error("Error deleting book:", err);
+      const errorMsg = err?.response?.data?.message || "Failed to delete book. Please try again.";
+      toast.error(errorMsg);
+    }
+    finally{
+      setLoading(false);
+    }
   };
 
   const handleFilterChange = (newFilters) => {
