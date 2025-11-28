@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import styles from "../Styles/Login.module.css";
 import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
 
 import PreviousButton from "./PreviousButton";
 import RU from "../BookImages/RUimage.png";
 import { toast } from "react-hot-toast";
-import { API_ENDPOINTS } from "../config/apiConfig";
+import { registerUser } from "../api/services/authService";
 import validatePasswords from "../utils/validatePasswords";
 
 function Signup() {
@@ -56,7 +55,7 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
         ...(role && { role }),
       };
 
-      const response = await axios.post(API_ENDPOINTS.AUTH.REGISTER, body);
+      const response = await registerUser(body);
 
       toast.success(response.data.message || "Signup successful!");
       navigate("/login");

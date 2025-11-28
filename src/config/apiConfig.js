@@ -15,5 +15,8 @@ export const API_ENDPOINTS = {
     UPDATE: (id) => `${API_BASE_URL}/books/update/${id}`,
     DELETE: (id) => `${API_BASE_URL}/books/delete/${id}`,
   },
+  USER: {
+    UPDATE: (userId) => `${API_BASE_URL}/users/update/${userId}`,
+  },
 };
 

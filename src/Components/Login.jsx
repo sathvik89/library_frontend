@@ -3,12 +3,11 @@ import { useNavigate } from "react-router-dom";
 import styles from "../Styles/Login.module.css";
 import PreviousButton from "./PreviousButton";
 import RU from "../BookImages/RUimage.png";
-import GoogleLogin from "./GoogleLogin";
 import { toast } from 'react-hot-toast';
-import { API_ENDPOINTS } from "../config/apiConfig";
 import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
-import axios from "axios";
+import { loginUser, getCurrentUser } from "../api/services/authService";
 import { setupAxiosHeaders } from "../utils/axiosConfig";
+import axios from "axios";
 
 function Login() {
   const [loginMode, setLoginMode] = useState("username"); // "username" or "email"
@@ -30,14 +29,7 @@ function Login() {
     }
     setLoading(true);
     try {
-      let payload = loginMode === "username"
-        ? { username: identifier, password }
-        : { email: identifier, password };
-
-      const res = await axios.post(API_ENDPOINTS.AUTH.LOGIN, payload, {
-        headers: { "Content-Type": "application/json" }
-      });
-
+      const res = await loginUser(identifier, password, loginMode);
       const data = await res.data;
 
       if (res.status === 200) {
@@ -54,7 +46,7 @@ function Login() {
         
         // Call /auth/me to get user info and verify token
         try {
-          const meResponse = await axios.get(API_ENDPOINTS.AUTH.ME);
+          const meResponse = await getCurrentUser();
           const user = meResponse.data;
           
           toast.success(`Logged in as: ${user.userName}`);
@@ -82,7 +74,6 @@ function Login() {
       }
     } catch (err) {
       toast.error("Network error. Please try again.");
-      console.log(err);
     } finally {
       setLoading(false);
     }
@@ -152,9 +143,6 @@ function Login() {
 </label>
 
         <br />
-        {/* <div style={{ width: "100%" }}>
-          <GoogleLogin textu="Login with" />
-        </div> */}
         <button className={styles.Loginsubmit} type="submit" disabled={loading}>
           {loading ? "Logging in..." : "Login"}
         </button>

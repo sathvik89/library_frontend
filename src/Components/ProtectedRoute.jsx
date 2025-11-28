@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Spin } from "antd";
 import axios from "axios";
-import { API_ENDPOINTS } from "../config/apiConfig";
-import { setupAxiosHeaders } from "../utils/axiosConfig";
+import { getCurrentUser } from "../api/services/authService";
 
 function ProtectedRoute({ children, allowedRoles = [] }) {
   const [isAuthorized, setIsAuthorized] = useState(false);
@@ -19,11 +18,8 @@ function ProtectedRoute({ children, allowedRoles = [] }) {
         return;
       }
 
-      // setting axios header
-      setupAxiosHeaders();
-
       try {
-        const response = await axios.get(API_ENDPOINTS.AUTH.ME);
+        const response = await getCurrentUser();
         const user = response.data;
 
         // checking if user role is allowed

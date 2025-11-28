@@ -8,9 +8,8 @@ import {
   BarcodeOutlined,
   ClockCircleOutlined,
 } from "@ant-design/icons";
-import axios from "axios";
-import { API_ENDPOINTS } from "../config/apiConfig";
 import { toast } from "react-hot-toast";
+import { getBookById } from "../api/services/bookService";
 
 const { Title, Paragraph } = Typography;
 
@@ -42,7 +41,7 @@ function BookDetailsModal({ bookId, open, onClose }) {
   const fetchBookDetails = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(API_ENDPOINTS.BOOKS.GET_BY_ID(bookId));
+      const response = await getBookById(bookId);
 
       if (response.data?.success) {
         setBook(response.data.data);

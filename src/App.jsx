@@ -16,12 +16,10 @@ import Billings from "./Components/Billings";
 import Settings from "./Components/Settings";
 import Historyy from "./Components/History";
 import ProfileEdit from "./Components/ProfileEdit";
-import ProfileContext from "./context/ProfileContext";
 import AccountSettings from "./Components/AccountSettings";
 import SubscriptionDetails from "./Components/SubscriptionDetails";
 import Notifications from "./Components/Notifications";
 import PrivacyPassword from "./Components/PrivacyPassword";
-import { AuthProvider } from "./context/AuthContext";
 import AdminDashboard from "./Components/AdminDashboard";
 import LibrarianDashboard from "./Components/LibrarianDashboard";
 import ViewAllBooks from "./Components/ViewAllBooks";
@@ -40,72 +38,68 @@ export default function App() {
   }
 
   return (
-    <AuthProvider>
       <BrowserRouter>
         <SearchProvider>
           <Navi />
-          <ProfileContext>
-            <main>
-              <Routes>
-                <Route path="/" element={<Mainpage />} />
-                <Route path="*" element={<Mainpage />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signin" element={<Signin />} />
+          <main>
+            <Routes>
+              <Route path="/" element={<Mainpage />} />
+              <Route path="*" element={<Mainpage />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signin" element={<Signin />} />
 
-                <Route
-                  path="/studentDashboard"
-                  element={
-                    <ProtectedRoute allowedRoles={["STUDENT", "ADMIN"]}>
-                      <StudentDashboard />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/librarianDashboard"
-                  element={
-                    <ProtectedRoute allowedRoles={["LIBRARIAN", "ADMIN"]}>
-                      <LibrarianDashboard />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/adminDashboard"
-                  element={
-                    <ProtectedRoute allowedRoles={["ADMIN"]}>
-                      <AdminDashboard />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route path="/occupancy" element={<Seating available={available} />}/>
-                <Route
-                  path="/reserveseat"
-                  element={
-                    <ReserveSeat
-                      reserve={reserve}
-                      onClick={(handleSeatcount, handleSeat)}
-                    />
-                  }
-                />
-                <Route path="/feedback" element={<FeedBack />} />
-                <Route path="/MenuList" element={<ProfileList />} />
+              <Route
+                path="/studentDashboard"
+                element={
+                  <ProtectedRoute allowedRoles={["STUDENT", "ADMIN"]}>
+                    <StudentDashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/librarianDashboard"
+                element={
+                  <ProtectedRoute allowedRoles={["LIBRARIAN", "ADMIN"]}>
+                    <LibrarianDashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/adminDashboard"
+                element={
+                  <ProtectedRoute allowedRoles={["ADMIN"]}>
+                    <AdminDashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="/occupancy" element={<Seating available={available} />}/>
+              <Route
+                path="/reserveseat"
+                element={
+                  <ReserveSeat
+                    reserve={reserve}
+                    onClick={(handleSeatcount, handleSeat)}
+                  />
+                }
+              />
+              <Route path="/feedback" element={<FeedBack />} />
+              <Route path="/MenuList" element={<ProfileList />} />
 
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/profileEdit" element={<ProfileEdit />} />
-                <Route path="/ViewAllBooks" element={<ViewAllBooks />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/profileEdit" element={<ProfileEdit />} />
+              <Route path="/ViewAllBooks" element={<ViewAllBooks />} />
 
-                <Route path="/billings" element={<Billings />} />
-                <Route path="/history" element={<Historyy />} />
-                <Route path="/settings" element={<Settings />} />
-                <Route path="/settings/account" element={<AccountSettings />} />
-                <Route path="/settings/subscription" element={<SubscriptionDetails />} />
-                <Route path="/settings/notifications" element={<Notifications />} />
-                <Route path="/settings/privacy" element={<PrivacyPassword />} />
-              </Routes>
-            </main>
-          </ProfileContext>
+              <Route path="/billings" element={<Billings />} />
+              <Route path="/history" element={<Historyy />} />
+              <Route path="/settings" element={<Settings />} />
+              <Route path="/settings/account" element={<AccountSettings />} />
+              <Route path="/settings/subscription" element={<SubscriptionDetails />} />
+              <Route path="/settings/notifications" element={<Notifications />} />
+              <Route path="/settings/privacy" element={<PrivacyPassword />} />
+            </Routes>
+          </main>
           <RightsReserved />
         </SearchProvider>
       </BrowserRouter>
-    </AuthProvider>
   );
 }

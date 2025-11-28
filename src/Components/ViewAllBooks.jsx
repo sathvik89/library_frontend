@@ -1,9 +1,8 @@
 // src/components/ViewAllBooks.jsx
 import { useEffect, useState, useRef } from "react";
-import axios from "axios";
 import { Spin, Empty, message, Table, Tag } from "antd";
 import styles from "../Styles/ViewAllBooks.module.css";
-import { API_ENDPOINTS } from "../config/apiConfig";
+import { getAllBooks } from "../api/services/bookService";
 import BookModal from "./BookModal";
 import BookFilters from "./BookFilters";
 import PreviousButton from "./PreviousButton";
@@ -61,7 +60,7 @@ function ViewAllBooks() {
         if (filters.availability) params.availability = filters.availability;
         if (filters.sortBy) params.sortBy = filters.sortBy;
 
-        const res = await axios.get(API_ENDPOINTS.BOOKS.GET_ALL, { params });
+        const res = await getAllBooks(params);
 
         if (!cancelled) {
           if (res.data?.success) {

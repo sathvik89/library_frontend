@@ -1,13 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Card, Table, Input, Select, Space, Spin, Empty, message, Tag, Pagination, Button } from "antd";
 import { SearchOutlined, ClearOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
-import axios from "axios";
 import Logoutbutton from "./Logoutbutton";
 import PreviousButton from "./PreviousButton";
 import AddbookModal from "./AddbookModal";
 import BookDetailsModal from "./BookDetailsModal";
 import EditBookModal from "./EditBookModal";
-import { API_ENDPOINTS } from "../config/apiConfig";
+import { getAllBooks, deleteBook } from "../api/services/bookService";
 import styles from "../Styles/LibrarianDashboard.module.css";
 import { GENRES } from "../Constants/constants";
 import { toast } from "react-hot-toast";
@@ -63,7 +62,7 @@ export default function LibrarianDashboard() {
         if (filters.availability) params.availability = filters.availability;
         if (filters.sortBy) params.sortBy = filters.sortBy;
 
-        const res = await axios.get(API_ENDPOINTS.BOOKS.GET_ALL, { params });
+        const res = await getAllBooks(params);
 
         if (!cancelled) {
           if (res.data?.success) {
@@ -130,7 +129,7 @@ export default function LibrarianDashboard() {
     e.stopPropagation();
     try{
       setLoading(true);
-      const response = await axios.delete(API_ENDPOINTS.BOOKS.DELETE(bookId));
+      const response = await deleteBook(bookId);
       if(response.data?.success){
         toast.success(response.data.message || "Book deleted successfully!");
         setFilters((prev) => ({ ...prev, page: 1 }));

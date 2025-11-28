@@ -15,7 +15,6 @@ import Logoutbutton from "./Logoutbutton.jsx";
 import logo from "../BookImages/RUimage.png";
 import profile from "../BookImages/ProfileIcon.png";
 import ProfileList from "./ProfileList.jsx";
-import { useAuth } from "../context/AuthContext.jsx";
 export const myMenuContext = createContext();
 
 
@@ -23,19 +22,17 @@ export default function StudentDashboard() {
   const navigate = useNavigate();
   const [profileOpen, setProfileOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
-  const { user } = useAuth();
   
   function handleShow() {
     setProfileOpen((prev) => !prev);
   }
-  console.log("profile is open", profileOpen);
 
   function handleSeat() {
     navigate("/occupancy");
   }
 
   function handleSearch() {
-    setSearchQuery(inputValue);
+    // setSearchQuery(inputValue);
   }
 
   return (

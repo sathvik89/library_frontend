@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { Modal, Form, Input, Select, InputNumber, Space, Button, Divider } from "antd";
 import { ReloadOutlined } from "@ant-design/icons";
-import axios from "axios";
-import { API_ENDPOINTS } from "../config/apiConfig";
 import { toast } from "react-hot-toast";
+import { addNewBook } from "../api/services/bookService";
 import { generateBarcode } from "../utils/barcodeGenerator";
 import { GENRES, COPY_STATUSES } from "../Constants/constants";
 
@@ -40,7 +39,6 @@ function AddbookModal({ open, onClose, onSuccess }) {
         };
         copies.push(copyData);
       }
-      console.log(copies);
 
       const payload = {
         title: values.title,
@@ -53,7 +51,7 @@ function AddbookModal({ open, onClose, onSuccess }) {
         copies: copies,
       };
 
-      const response = await axios.post(API_ENDPOINTS.BOOKS.ADD_NEW_BOOK, payload);
+      const response = await addNewBook(payload);
 
       if (response.data?.success) {
         toast.success(response.data.message || "Book added successfully!");

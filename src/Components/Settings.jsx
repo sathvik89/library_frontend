@@ -1,42 +1,109 @@
+import { useEffect, useState } from "react";
 import styles from "../Styles/Settings.module.css";
 import logo from "../BookImages/RUimage.png";
 import icon from "../BookImages/ProfileIcon.png";
 import { useNavigate } from "react-router-dom";
-import { useState, useContext } from "react";
 import { Modal, Switch } from "antd";
-import { profileDetails } from "../context/ProfileContext";
-import { useEffect } from "react";
 import { toast } from 'react-hot-toast';
 import Logoutbutton from "./Logoutbutton";
+import { getCurrentUser } from "../api/services/authService";
+import { updateUser } from "../api/services/userService";
 
 export default function Settings() {
-  const navi = useNavigate();
+  const navigate = useNavigate();
   const [showNoti, setShowNoti] = useState(false);
   const [notiOn, setNotiOn] = useState(false);
   const [showPass, setShowPass] = useState(false);
-  const { password, handlePasswordChange } = useContext(profileDetails);
+  const [user, setUser] = useState(null);
+  const [currentPass, setCurrentPass] = useState("");
   const [newPass, setNewPass] = useState("");
   const [rePass, setRePass] = useState("");
   const [passError, setPassError] = useState("");
+  const [saving, setSaving] = useState(false);
 
-  function handleSavePass() {
-    if (!newPass || !rePass) {
-      setPassError("Please fill both fields");
-      toast.error("Please fill both fields");
-      return;
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+
+  const fetchUserData = async () => {
+    try {
+      const response = await getCurrentUser();
+      if (response.data) {
+        setUser(response.data);
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
     }
-    if (newPass !== rePass) {
-      setPassError("Passwords do not match");
-      toast.error("Passwords do not match");
-      return;
-    }
-    handlePasswordChange({ target: { value: newPass } });
-    setShowPass(false);
-    setNewPass("");
-    setRePass("");
+  };
+
+  const validatePassword = () => {
     setPassError("");
-    toast.success("Password changed successfully!");
-  }
+
+    if (!currentPass || !newPass || !rePass) {
+      setPassError("Please fill all fields");
+      toast.error("Please fill all fields");
+      return false;
+    }
+
+    if (newPass.length < 6) {
+      setPassError("New password must be at least 6 characters long");
+      toast.error("New password must be at least 6 characters long");
+      return false;
+    }
+
+    if (newPass !== rePass) {
+      setPassError("New passwords do not match");
+      toast.error("New passwords do not match");
+      return false;
+    }
+
+    if (currentPass === newPass) {
+      setPassError("New password must be different from current password");
+      toast.error("New password must be different from current password");
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleSavePass = async () => {
+    if (!validatePassword()) {
+      return;
+    }
+
+    if (!user) {
+      toast.error("User data not loaded. Please try again.");
+      return;
+    }
+
+    setSaving(true);
+    try {
+      const updateData = {
+        currentPassword: currentPass,
+        password: newPass,
+      };
+
+      const response = await updateUser(user.userID, updateData);
+
+      if (response.data?.success) {
+        toast.success(response.data.message || "Password updated successfully!");
+        setShowPass(false);
+        setCurrentPass("");
+        setNewPass("");
+        setRePass("");
+        setPassError("");
+      } else {
+        toast.error(response.data?.message || "Failed to update password");
+      }
+    } catch (error) {
+      console.error("Error updating password:", error);
+      const errorMsg = error?.response?.data?.message || "Failed to update password. Please try again.";
+      setPassError(errorMsg);
+      toast.error(errorMsg);
+    } finally {
+      setSaving(false);
+    }
+  };
   return (
     <main className={styles.mainContainer}>
       <div className={styles.logoContainer}>
@@ -48,14 +115,14 @@ export default function Settings() {
           <h2 className={styles.title}>Settings</h2>
         </header>
         <nav className={styles.options}>
-          <button className={styles.optionButton} onClick={() => navi("/settings/account")}>Manage your account</button>
-          <button className={styles.optionButton} onClick={() => navi("/settings/subscription")}>subscription details</button>
+          <button className={styles.optionButton} onClick={() => navigate("/settings/account")}>Manage your account</button>
+          <button className={styles.optionButton} onClick={() => navigate("/settings/subscription")}>subscription details</button>
           <button className={styles.optionButton} onClick={() => setShowNoti(true)}>Notifications</button>
           <button className={styles.optionButton} onClick={() => setShowPass(true)}>Change password</button>
-          <button className={styles.optionButton} onClick={() => navi("/settings/privacy")}>Privacy and password</button>
+          <button className={styles.optionButton} onClick={() => navigate("/settings/privacy")}>Privacy and password</button>
         </nav>
         <div className={styles.buttonSection}>
-        <button className={styles.goBackButton} onClick={() => navi("/studentDashboard")}>Go Back</button>  
+        <button className={styles.goBackButton} onClick={() => navigate("/studentDashboard")}>Go Back</button>  
         <Logoutbutton/>
           
         </div>
@@ -92,21 +159,60 @@ export default function Settings() {
           <section className={styles.infoList}>
             <div className={styles.infoCard}>
               <span>Current Password</span>
-              <input type="password" value={password} disabled style={{marginLeft:8}} />
+              <input 
+                type="password" 
+                value={currentPass} 
+                onChange={e => setCurrentPass(e.target.value)}
+                placeholder="Enter current password"
+                disabled={saving}
+                style={{marginLeft:8}} 
+              />
             </div>
             <div className={styles.infoCard}>
               <span>New Password</span>
-              <input type="password" value={newPass} onChange={e => setNewPass(e.target.value)} style={{marginLeft:8}} />
+              <input 
+                type="password" 
+                value={newPass} 
+                onChange={e => setNewPass(e.target.value)}
+                placeholder="Enter new password"
+                disabled={saving}
+                style={{marginLeft:8}} 
+              />
             </div>
             <div className={styles.infoCard}>
               <span>Re-enter New Password</span>
-              <input type="password" value={rePass} onChange={e => setRePass(e.target.value)} style={{marginLeft:8}} />
+              <input 
+                type="password" 
+                value={rePass} 
+                onChange={e => setRePass(e.target.value)}
+                placeholder="Confirm new password"
+                disabled={saving}
+                style={{marginLeft:8}} 
+              />
             </div>
-            {passError && <div style={{color:'red', marginLeft:'1rem'}}>{passError}</div>}
+            {passError && <div style={{color:'red', marginLeft:'1rem', marginTop:'8px'}}>{passError}</div>}
           </section>
           <div className={styles.buttonSection}>
-            <button className={styles.goBackButton} onClick={() => setShowPass(false)}>Cancel</button>
-            <button className={styles.saveButton} onClick={handleSavePass}>Save</button>
+            <button 
+              className={styles.goBackButton} 
+              onClick={() => {
+                setShowPass(false);
+                setCurrentPass("");
+                setNewPass("");
+                setRePass("");
+                setPassError("");
+              }}
+              disabled={saving}
+            >
+              Cancel
+            </button>
+            <button 
+              className={styles.saveButton} 
+              onClick={handleSavePass}
+              disabled={saving}
+            >
+              {saving ? "Saving..." : "Save"}
+            </button>
           </div>
         </div>
       </Modal>

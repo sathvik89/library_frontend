@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Form, Input, Select, Space, Button, Divider, Spin, message } from "antd";
 import { ReloadOutlined, PlusOutlined, DeleteOutlined } from "@ant-design/icons";
-import axios from "axios";
-import { API_ENDPOINTS } from "../config/apiConfig";
 import { toast } from "react-hot-toast";
 import { generateBarcode } from "../utils/barcodeGenerator";
-import { setupAxiosHeaders } from "../utils/axiosConfig";
+import { getBookById, updateBook } from "../api/services/bookService";
 import { GENRES, COPY_STATUSES } from "../Constants/constants";
 
 const { Option } = Select;
@@ -28,11 +26,7 @@ function EditBookModal({ bookId, open, onClose, onSuccess }) {
 
     setFetching(true);
     try {
-      const url = API_ENDPOINTS.BOOKS.GET_BY_ID(bookId);
-      console.log("Fetching book details from:", url);
-      console.log("Book ID:", bookId);
-      setupAxiosHeaders();
-      const response = await axios.get(url);
+      const response = await getBookById(bookId);
 
       if (response.data?.success) {
         const bookData = response.data.data;
@@ -198,7 +192,7 @@ function EditBookModal({ bookId, open, onClose, onSuccess }) {
         return;
       }
 
-      const response = await axios.patch(API_ENDPOINTS.BOOKS.UPDATE(bookId), payload);
+      const response = await updateBook(bookId, payload);
 
       if (response.data?.success) {
         toast.success(response.data.message || "Book updated successfully!");

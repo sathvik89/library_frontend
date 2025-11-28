@@ -7,8 +7,7 @@ export function getUserRole() {
       return null;
     }
       
-    const decoded = jwtDecode(token);
-    console.log(decoded);
+    const decoded = jwtDecode(token); 
     return decoded.role;
   } catch (error) {
     console.error("Error decoding token:", error);
