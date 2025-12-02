@@ -21,6 +21,9 @@ export const API_ENDPOINTS = {
     UPDATE: (userId) => `${API_BASE_URL}/users/update/${userId}`,
     DELETE: (userId) => `${API_BASE_URL}/users/delete/${userId}`,
   },
+  RESERVATIONS: {
+    RESERVE: (bookId) => `${API_BASE_URL}/reservations/${bookId}`,
+  },
 
 };
 

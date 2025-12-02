@@ -41,12 +41,12 @@ function BookDetailsModal({ bookId, open, onClose }) {
   const fetchBookDetails = async () => {
     setLoading(true);
     try {
-      const response = await getBookById(bookId);
+      const bookResponse = await getBookById(bookId);
 
-      if (response.data?.success) {
-        setBook(response.data.data);
+      if (bookResponse.data?.success) {
+        setBook(bookResponse.data.data);
       } else {
-        const errorMsg = response.data?.message || "Failed to load book details.";
+        const errorMsg = bookResponse.data?.message || "Failed to load book details.";
         toast.error(errorMsg);
         message.error(errorMsg);
         onClose();

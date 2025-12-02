@@ -10,7 +10,7 @@ function ViewAllBooks() {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [selectedBook, setSelectedBook] = useState(null);
+  const [selectedBookId, setSelectedBookId] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [filters, setFilters] = useState({
     page: 1,
@@ -121,13 +121,13 @@ function ViewAllBooks() {
   };
 
   const handleRowClick = (record) => {
-    setSelectedBook(record);
+    setSelectedBookId(record.id);
     setModalOpen(true);
   };
 
   const handleModalClose = () => {
     setModalOpen(false);
-    setSelectedBook(null);
+    setSelectedBookId(null);
   };
 
   const columns = [
@@ -237,7 +237,7 @@ function ViewAllBooks() {
         </div>
       )}
 
-      <BookModal book={selectedBook} open={modalOpen} onClose={handleModalClose} />
+      <BookModal bookId={selectedBookId} open={modalOpen} onClose={handleModalClose} />
     </div>
   );
 }

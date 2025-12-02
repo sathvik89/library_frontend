@@ -1,13 +1,93 @@
-import { Modal, Descriptions, Tag, Space, Typography, Divider } from "antd";
-import { BookOutlined, UserOutlined, ShopOutlined, FileTextOutlined, BarcodeOutlined } from "@ant-design/icons";
+import { useEffect, useState, useCallback } from "react";
+import { Modal, Descriptions, Tag, Space, Typography, Divider, Button, Spin, message } from "antd";
+import {
+  BookOutlined,
+  UserOutlined,
+  ShopOutlined,
+  FileTextOutlined,
+  BarcodeOutlined,
+  CheckCircleOutlined,
+} from "@ant-design/icons";
+import { toast } from "react-hot-toast";
+import { getBookById } from "../api/services/bookService";
+import { reserveBook } from "../api/services/reservationService";
 import styles from "../Styles/BookModal.module.css";
 
 const { Title, Paragraph } = Typography;
 
-function BookModal({ book, open, onClose }) {
-  if (!book) return null;
+function BookModal({ bookId, open, onClose }) {
+  const [book, setBook] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [reserving, setReserving] = useState(false);
 
-  const imageUrl = book.coverImg || "https://via.placeholder.com/300x400?text=No+Image";
+  const fetchBookDetails = useCallback(async () => {
+    if (!bookId) return;
+    setLoading(true);
+    try {
+      const response = await getBookById(bookId);
+
+      if (response.data?.success) {
+        setBook(response.data.data);
+      } else {
+        const errorMsg = response.data?.message || "Failed to load book details.";
+        toast.error(errorMsg);
+        message.error(errorMsg);
+        onClose();
+      }
+    } catch (error) {
+      console.error("Error fetching book details:", error);
+      const errorMsg =
+        error?.response?.data?.message ||
+        error?.message ||
+        "Failed to load book details. Please try again.";
+      toast.error(errorMsg);
+      message.error(errorMsg);
+      onClose();
+    } finally {
+      setLoading(false);
+    }
+  }, [bookId, onClose]);
+
+  useEffect(() => {
+    if (open && bookId) {
+      fetchBookDetails();
+    } else {
+      setBook(null);
+    }
+  }, [open, bookId, fetchBookDetails]);
+
+  const handleReserveBook = async () => {
+    if (!bookId) {
+      toast.error("Book ID is missing.");
+      return;
+    }
+
+    setReserving(true);
+    try {
+      const response = await reserveBook(bookId);
+      
+      if (response.data?.success) {
+        const successMsg = response.data?.message || "Book reserved successfully!";
+        toast.success(successMsg);
+      } else {
+        const errorMsg = response.data?.message || "Failed to reserve book.";
+        toast.error(errorMsg);
+      }
+    } catch (error) {
+      console.error("Error reserving book:", error);
+      const errorMsg =
+        error?.response?.data?.message ||
+        error?.message ||
+        "Failed to reserve book. Please try again.";
+      toast.error(errorMsg);
+    } finally {
+      setReserving(false);
+    }
+  };
+
+  if (!open) return null;
+
+  const imageUrl = book?.coverImg || "https://via.placeholder.com/300x400?text=No+Image";
 
   return (
     <Modal
@@ -17,84 +97,117 @@ function BookModal({ book, open, onClose }) {
       width={800}
       className={styles.modal}
       centered
+      destroyOnClose
     >
-      <div className={styles.modalContent}>
-        <div className={styles.imageSection}>
-          <img
-            src={imageUrl}
-            alt={book.title}
-            className={styles.modalImage}
-            onError={(e) => {
-              e.target.src = "https://via.placeholder.com/300x400?text=No+Image";
-            }}
-          />
+      {loading ? (
+        <div style={{ textAlign: "center", padding: "50px" }}>
+          <Spin size="large" tip="Loading book details..." />
         </div>
+      ) : book ? (
+        <div className={styles.modalContent}>
+          <div className={styles.imageSection}>
+            <img
+              src={imageUrl}
+              alt={book.title}
+              className={styles.modalImage}
+              onError={(e) => {
+                e.target.src = "https://via.placeholder.com/300x400?text=No+Image";
+              }}
+            />
+          </div>
 
-        <div className={styles.detailsSection}>
-          <Title level={2} className={styles.modalTitle}>
-            {book.title}
-          </Title>
+          <div className={styles.detailsSection}>
+            <Title level={2} className={styles.modalTitle}>
+              {book.title}
+            </Title>
 
-          <Divider />
+            <Divider />
 
-          <Descriptions column={1} bordered size="small" className={styles.descriptions}>
-            <Descriptions.Item
-              label={
-                <Space>
-                  <UserOutlined />
-                  <span>Author</span>
-                </Space>
-              }
-            >
-              {book.authorName || "N/A"}
-            </Descriptions.Item>
+            <Descriptions column={1} bordered size="small" className={styles.descriptions}>
+              <Descriptions.Item
+                label={
+                  <Space>
+                    <UserOutlined />
+                    <span>Author</span>
+                  </Space>
+                }
+              >
+                {book.authorName || "N/A"}
+              </Descriptions.Item>
 
-            <Descriptions.Item
-              label={
-                <Space>
-                  <ShopOutlined />
-                  <span>Publisher</span>
-                </Space>
-              }
-            >
-              {book.publisher || "N/A"}
-            </Descriptions.Item>
+              <Descriptions.Item
+                label={
+                  <Space>
+                    <ShopOutlined />
+                    <span>Publisher</span>
+                  </Space>
+                }
+              >
+                {book.publisher || "N/A"}
+              </Descriptions.Item>
 
-            <Descriptions.Item
-              label={
-                <Space>
-                  <BookOutlined />
-                  <span>Genre</span>
-                </Space>
-              }
-            >
-              <Tag color="blue">{book.genre || "N/A"}</Tag>
-            </Descriptions.Item>
+              <Descriptions.Item
+                label={
+                  <Space>
+                    <BookOutlined />
+                    <span>Genre</span>
+                  </Space>
+                }
+              >
+                <Tag color="blue">
+                  {book.genre ? book.genre.replace(/_/g, " ") : "N/A"}
+                </Tag>
+              </Descriptions.Item>
 
-            <Descriptions.Item
-              label={
-                <Space>
-                  <FileTextOutlined />
-                  <span>Total Copies</span>
-                </Space>
-              }
-            >
-              {book.totalCopies || 0}
-            </Descriptions.Item>
+              <Descriptions.Item
+                label={
+                  <Space>
+                    <FileTextOutlined />
+                    <span>Total Copies</span>
+                  </Space>
+                }
+              >
+                {book.totalCopies || 0}
+              </Descriptions.Item>
 
-            <Descriptions.Item
-              label={
-                <Space>
-                  <FileTextOutlined />
-                  <span>Available Copies</span>
-                </Space>
-              }
-            >
-              <Tag color={book.availableCopies > 0 ? "green" : "red"}>
-                {book.availableCopies || 0}
-              </Tag>
-            </Descriptions.Item>
-          </Descriptions>
+              <Descriptions.Item
+                label={
+                  <Space>
+                    <FileTextOutlined />
+                    <span>Available Copies</span>
+                  </Space>
+                }
+              >
+                <Tag color={book.availableCopies > 0 ? "green" : "red"}>
+                  {book.availableCopies || 0}
+                </Tag>
+                
+              </Descriptions.Item>
+              {/* <Descriptions.Item
+                label={
+                  <Space>
+                    <FileTextOutlined />
+                    <span>Queue Position</span>
+                  </Space>
+                }
+              > <Tag color="blue">
+                {reservation.queuePosition}
+                </Tag></Descriptions.Item> */}
+            </Descriptions>
+
+
+            <div style={{ marginTop: "16px" }}>
+              <Button
+                type="primary"
+                icon={<CheckCircleOutlined />}
+                onClick={handleReserveBook}
+                loading={reserving}
+                size="large"
+                block
+              >
+                Reserve Book
+              </Button>
+            </div>
 
           {book.description && (
             <>
@@ -146,8 +259,9 @@ function BookModal({ book, open, onClose }) {
               </div>
             </>
           )}
+          </div>
         </div>
-      </div>
+      ) : null}
     </Modal>
   );
 }
