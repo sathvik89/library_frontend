@@ -32,7 +32,7 @@ export default function ProfileList() {
               <CreditCardOutlined /> Billing and Payments
             </button>
             <button onClick={() => navigate("/history")}>
-              <HistoryOutlined /> Manage History
+              <HistoryOutlined /> Manage Loans and Reservations
             </button>
             <button onClick={() => navigate("/settings")}>
               <SettingOutlined /> Settings
