@@ -1,4 +1,3 @@
-// src/components/ViewAllBooks.jsx
 import { useEffect, useState, useRef } from "react";
 import { Spin, Empty, message, Table, Tag } from "antd";
 import styles from "../Styles/ViewAllBooks.module.css";

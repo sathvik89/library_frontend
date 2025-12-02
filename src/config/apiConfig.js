@@ -16,7 +16,11 @@ export const API_ENDPOINTS = {
     DELETE: (id) => `${API_BASE_URL}/books/delete/${id}`,
   },
   USER: {
+    GET_ALL: `${API_BASE_URL}/users`,
+    GET_BY_ID: (id) => `${API_BASE_URL}/users/${id}`,
     UPDATE: (userId) => `${API_BASE_URL}/users/update/${userId}`,
+    DELETE: (userId) => `${API_BASE_URL}/users/delete/${userId}`,
   },
+
 };
 
