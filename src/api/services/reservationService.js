@@ -1,6 +1,6 @@
 import axios from "axios";
-import { API_ENDPOINTS } from "../../config/apiConfig";
-import { setupAxiosHeaders } from "../../utils/axiosConfig";
+import { API_ENDPOINTS } from "@/config/apiConfig";
+import { setupAxiosHeaders } from "@/api/axiosConfig";
 
 export const reserveBook = async (bookId) => {
   setupAxiosHeaders();

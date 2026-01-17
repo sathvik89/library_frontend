@@ -1,0 +1,245 @@
+import { useEffect, useState, useRef } from "react";
+import { Spin, Empty, message, Table, Tag } from "antd";
+import styles from "@/Styles/ViewAllBooks.module.css";
+import { getAllBooks } from "@/api/services/bookService";
+import BookModal from "@/components/books/BookModal";
+import BookFilters from "@/components/books/BookFilters";
+import PreviousButton from "@/components/common/PreviousButton";
+
+function ViewAllBooks() {
+  const [books, setBooks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [selectedBookId, setSelectedBookId] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [filters, setFilters] = useState({
+    page: 1,
+    limit: 10,
+    search: "",
+    genre: "",
+    availability: "",
+    sortBy: "",
+  });
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 10,
+    total: 0,
+  });
+  const [searchInput, setSearchInput] = useState("");
+  const debounceTimerRef = useRef(null);
+
+  // debounce effect for search input
+  useEffect(() => {
+    if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
+
+    debounceTimerRef.current = setTimeout(() => {
+      setFilters((prev) => ({ ...prev, search: searchInput, page: 1 }));
+    }, 500);
+
+    return () => {
+      if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
+    };
+  }, [searchInput]);
+
+  // main fetch (runs whenever filters change)
+  useEffect(() => {
+    let cancelled = false;
+
+    async function fetchBooks() {
+      setLoading(true);
+      setError("");
+      try {
+        const params = {
+          page: filters.page,
+          limit: filters.limit,
+        };
+
+        if (filters.search) params.search = filters.search;
+        if (filters.genre) params.genre = filters.genre;
+        if (filters.availability) params.availability = filters.availability;
+        if (filters.sortBy) params.sortBy = filters.sortBy;
+
+        const res = await getAllBooks(params);
+
+        if (!cancelled) {
+          if (res.data?.success) {
+            const booksData = res.data.data || [];
+            const paginationData = res.data.pagination || {};
+            setBooks(booksData);
+            setPagination({
+              current: paginationData.page || filters.page,
+              pageSize: paginationData.limit || filters.limit,
+              total: paginationData.total || 0,
+            });
+          } else {
+            const msg = res.data?.message || "Failed to load books.";
+            setError(msg);
+            message.error(msg);
+            setBooks([]);
+          }
+        }
+      } catch (err) {
+        if (!cancelled) {
+          console.error(err);
+          const serverMsg = err?.response?.data?.message || "Failed to load books. Please try again.";
+          setError(serverMsg);
+          message.error(serverMsg);
+          setBooks([]);
+        }
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+
+    fetchBooks();
+    return () => {
+      cancelled = true;
+    };
+  }, [filters]);
+
+  const handleFilterChange = (newFilters) => {
+    // If search is present in newFilters it means user typed - update searchInput to show in input
+    if (Object.prototype.hasOwnProperty.call(newFilters, "search")) {
+      setSearchInput(newFilters.search || "");
+      setFilters((prev) => ({ ...prev, ...newFilters, page: 1 }));
+      return;
+    }
+    setFilters((prev) => ({ ...prev, ...newFilters, page: 1 }));
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleImmediateSearch = (searchValue) => {
+    if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
+    setSearchInput(searchValue);
+    setFilters((prev) => ({ ...prev, search: searchValue, page: 1 }));
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handlePageChange = (page, pageSize) => {
+    setFilters((prev) => ({ ...prev, page, limit: pageSize }));
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleRowClick = (record) => {
+    setSelectedBookId(record.id);
+    setModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setModalOpen(false);
+    setSelectedBookId(null);
+  };
+
+  const columns = [
+    {
+      title: "Title",
+      dataIndex: "title",
+      key: "title",
+      width: "25%",
+      render: (text) => <span className={styles.tableCell}>{text || "N/A"}</span>,
+    },
+    {
+      title: "Author",
+      dataIndex: "authorName",
+      key: "authorName",
+      width: "20%",
+      render: (text) => <span className={styles.tableCell}>{text || "N/A"}</span>,
+    },
+    {
+      title: "Genre",
+      dataIndex: "genre",
+      key: "genre",
+      width: "15%",
+      render: (genre) => (
+        <Tag color="blue" className={styles.genreTag}>
+          {genre ? genre.replace(/_/g, " ") : "N/A"}
+        </Tag>
+      ),
+    },
+    {
+      title: "Publisher",
+      dataIndex: "publisher",
+      key: "publisher",
+      width: "15%",
+      render: (text) => <span className={styles.tableCell}>{text || "N/A"}</span>,
+    },
+    {
+      title: "Total Copies",
+      dataIndex: "totalCopies",
+      key: "totalCopies",
+      width: "10%",
+      align: "center",
+      render: (count) => <span className={styles.tableCell}>{count || 0}</span>,
+    },
+    {
+      title: "Available Copies",
+      dataIndex: "availableCopies",
+      key: "availableCopies",
+      width: "15%",
+      align: "center",
+      render: (count) => (
+        <Tag color={count > 0 ? "green" : "red"} className={styles.availabilityTag}>
+          {count || 0}
+        </Tag>
+      ),
+    },
+  ];
+
+  return (
+    <div className={styles.container}>
+      <div className={styles.header}>
+        <h1 className={styles.heading}>Collection of All Books</h1>
+        <PreviousButton text="Go Back" navi={-1} />
+      </div>
+
+      <BookFilters
+        filters={filters}
+        searchInput={searchInput}
+        onFilterChange={handleFilterChange}
+        onImmediateSearch={handleImmediateSearch}
+      />
+
+      {loading ? (
+        <div className={styles.loadingContainer}>
+          <Spin size="large" tip="Loading books..." />
+        </div>
+      ) : error ? (
+        <div className={styles.errorContainer}>
+          <Empty description={error} />
+        </div>
+      ) : books.length === 0 ? (
+        <div className={styles.emptyContainer}>
+          <Empty description="No books found" />
+        </div>
+      ) : (
+        <div className={styles.tableContainer}>
+          <Table
+            columns={columns}
+            dataSource={books.map((book) => ({ ...book, key: book.id }))}
+            pagination={{
+              current: pagination.current,
+              pageSize: pagination.pageSize,
+              total: pagination.total,
+              showSizeChanger: true,
+              showQuickJumper: true,
+              showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} books`,
+              pageSizeOptions: ["10", "20", "40", "60", "80", "100"],
+              onChange: handlePageChange,
+              onShowSizeChange: handlePageChange,
+            }}
+            className={styles.booksTable}
+            scroll={{ x: "max-content" }}
+            onRow={(record) => ({
+              onClick: () => handleRowClick(record),
+              style: { cursor: "pointer" },
+            })}
+          />
+        </div>
+      )}
+
+      <BookModal bookId={selectedBookId} open={modalOpen} onClose={handleModalClose} />
+    </div>
+  );
+}
+
+export default ViewAllBooks;
