@@ -1,16 +1,13 @@
-import React, { useEffect, useState, useRef } from "react";
-import { Table, Input, Select, Space, Spin, Empty, message, Tag, Pagination, Button } from "antd";
-import { SearchOutlined, ClearOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import React, { useEffect, useState } from "react";
+import { Table, Space, Spin, Empty, message, Tag, Pagination, Button } from "antd";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { getAllBooks, deleteBook } from "@/api/services/bookService";
-import { GENRES } from "@/Constants/constants";
 import { toast } from "react-hot-toast";
 import AddbookModal from "./AddbookModal";
 import BookDetailsModal from "./BookDetailsModal";
 import EditBookModal from "./EditBookModal";
+import BookFilters from "./BookFilters";
 import styles from "@/Styles/AdminDashboard.module.css";
-
-const { Search } = Input;
-const { Option } = Select;
 
 export default function BooksTable() {
   const [books, setBooks] = useState([]);
@@ -29,25 +26,12 @@ export default function BooksTable() {
     pageSize: 10,
     total: 0,
   });
-  const [booksSearchInput, setBooksSearchInput] = useState("");
-  const booksDebounceTimerRef = useRef(null);
+  
   const [bookModalOpen, setBookModalOpen] = useState(false);
   const [bookDetailsModalOpen, setBookDetailsModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [selectedBookId, setSelectedBookId] = useState(null);
   const [editingBookId, setEditingBookId] = useState(null);
-
-  useEffect(() => {
-    if (booksDebounceTimerRef.current) clearTimeout(booksDebounceTimerRef.current);
-
-    booksDebounceTimerRef.current = setTimeout(() => {
-      setBooksFilters((prev) => ({ ...prev, search: booksSearchInput, page: 1 }));
-    }, 500);
-
-    return () => {
-      if (booksDebounceTimerRef.current) clearTimeout(booksDebounceTimerRef.current);
-    };
-  }, [booksSearchInput]);
 
   // Fetch books (active whenever filters change)
   useEffect(() => {
@@ -150,43 +134,9 @@ export default function BooksTable() {
     }
   };
 
-  const handleBooksFilterChange = (newFilters) => {
-    if ("search" in newFilters) {
-      setBooksSearchInput(newFilters.search || "");
-      setBooksFilters((prev) => ({ ...prev, ...newFilters, page: 1 }));
-      return;
-    }
-    setBooksFilters((prev) => ({ ...prev, ...newFilters, page: 1 }));
-  };
-
-  const handleBooksImmediateSearch = (searchValue) => {
-    if (booksDebounceTimerRef.current) clearTimeout(booksDebounceTimerRef.current);
-    setBooksSearchInput(searchValue);
-    setBooksFilters((prev) => ({ ...prev, search: searchValue, page: 1 }));
-  };
-
   const handleBooksPageChange = (page, pageSize) => {
     setBooksFilters((prev) => ({ ...prev, page, limit: pageSize }));
   };
-
-  const handleBooksClearAll = () => {
-    setBooksSearchInput("");
-    setBooksFilters({
-      page: 1,
-      limit: booksFilters.limit || 10,
-      search: "",
-      genre: "",
-      availability: "",
-      sortBy: "",
-    });
-  };
-
-  const hasActiveBooksFilters =
-    (booksFilters.genre && booksFilters.genre !== "") ||
-    (booksFilters.availability && booksFilters.availability !== "") ||
-    (booksFilters.sortBy && booksFilters.sortBy !== "") ||
-    (booksSearchInput && booksSearchInput !== "") ||
-    (booksFilters.search && booksFilters.search !== "");
 
   const handleBooksTableChange = (paginationInfo, filters, sorter) => {
     let sortBy = "";
@@ -291,81 +241,12 @@ export default function BooksTable() {
       <div className={styles.tableSection}>
         <h2 className={styles.tableSectionTitle}>Books Inventory</h2>
         
-        <div className={styles.filtersContainer}>
-          <Space size="middle" wrap className={styles.filters}>
-            <Search
-              placeholder="Search books by title or author..."
-              allowClear
-              enterButton={<SearchOutlined />}
-              size="large"
-              className={styles.searchInput}
-              onSearch={handleBooksImmediateSearch}
-              onChange={(e) => setBooksSearchInput(e.target.value)}
-              value={booksSearchInput}
-              style={{ width: 600 }}
-            />
-
-            <Select
-              placeholder="Filter by Genre"
-              allowClear
-              size="large"
-              className={styles.filterSelect}
-              value={booksFilters.genre || undefined}
-              onChange={(value) => handleBooksFilterChange({ genre: value })}
-              style={{ width: 200 }}
-              showSearch
-              filterOption={(input, option) =>
-                (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
-              }
-            >
-              {GENRES.map((genre) => (
-                <Option key={genre} value={genre} label={genre}>
-                  {genre.replace(/_/g, " ")}
-                </Option>
-              ))}
-            </Select>
-
-            <Select
-              placeholder="Filter by Availability"
-              allowClear
-              size="large"
-              className={styles.filterSelect}
-              value={booksFilters.availability || undefined}
-              onChange={(value) => handleBooksFilterChange({ availability: value })}
-              style={{ width: 200 }}
-            >
-              <Option value="available">Available Only</Option>
-              <Option value="unavailable">Unavailable Only</Option>
-            </Select>
-
-            <Select
-              placeholder="Sort By"
-              allowClear
-              size="large"
-              className={styles.filterSelect}
-              value={booksFilters.sortBy || undefined}
-              onChange={(value) => handleBooksFilterChange({ sortBy: value })}
-              style={{ width: 200 }}
-            >
-              <Option value="title_asc">Title (A-Z)</Option>
-              <Option value="title_desc">Title (Z-A)</Option>
-              <Option value="available_desc">Most Available</Option>
-              <Option value="available_asc">Least Available</Option>
-            </Select>
-
-            {hasActiveBooksFilters && (
-              <Button
-                type="default"
-                icon={<ClearOutlined />}
-                size="large"
-                onClick={handleBooksClearAll}
-                className={styles.clearButton}
-              >
-                Clear All
-              </Button>
-            )}
-            <Button type="primary" onClick={() => setBookModalOpen(true)}>Add New Book</Button>
-          </Space>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+             <BookFilters 
+                filters={booksFilters} 
+                onFilterChange={setBooksFilters} 
+             />
+             <Button type="primary" onClick={() => setBookModalOpen(true)}>Add New Book</Button>
         </div>
 
         {booksLoading ? (
