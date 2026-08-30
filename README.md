@@ -21,12 +21,16 @@ The goal is to replace manual library tracking with a clean, structured, databas
   
 ---
 
-## Tech Stack (Backend/DB)
-- **Node.js + Express**
-- **MongoDB + Mongoose**
-- **JWT Authentication**
-- **React.js + Javascript**
-- **AntD designs UI**
+## Tech Stack
+**Frontend**
+- **React 19 + Vite** (JavaScript)
+- **Ant Design** UI + CSS Modules
+- **React Router 7**, **axios**
+
+**Backend**
+- **Node.js + Express 5**
+- **PostgreSQL + Prisma ORM**
+- **JWT authentication** (bcrypt password hashing)
 
 ---
 

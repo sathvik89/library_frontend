@@ -73,7 +73,15 @@ function Login() {
         toast.error(data.message || "Login failed.");
       }
     } catch (err) {
-      toast.error("Network error. Please try again.");
+      // axios rejects on any non-2xx, so surface the server's message when there is one
+      if (err.response?.data?.message) {
+        toast.error(err.response.data.message);
+      } else if (err.request) {
+        toast.error("Cannot reach the server. Please check your connection.");
+      } else {
+        toast.error("Login failed. Please try again.");
+      }
+      console.error("Login error:", err);
     } finally {
       setLoading(false);
     }
