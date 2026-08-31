@@ -1,3 +1,6 @@
+// antd v5 static methods (Modal.confirm, message.*, notification.*) silently
+// no-op on React 19 without this patch. Must be imported before antd is used.
+import "@ant-design/v5-patch-for-react-19";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./App.css";
