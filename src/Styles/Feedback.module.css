@@ -1,86 +1,247 @@
+/* Feedback form — two columns on desktop, single column on phones. */
+
 .feedbackContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  padding: 2rem;
-  animation: fadeInUp 0.6s ease-out both;
+  min-height: 94vh;
+  padding: var(--ru-space-6) var(--ru-space-5);
+  animation: fadeInUp 0.5s ease-out both;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
 @keyframes fadeInUp {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .feedImage {
   position: absolute;
-  top: 2rem;
-  right: 2rem;
+  top: var(--ru-space-5);
+  right: var(--ru-space-5);
   width: auto;
-  max-width: 200px;
+  max-width: 160px;
   height: auto;
-
-  animation: fadeIn 1.5s ease-out;
 }
 
-@media (max-width: 768px) {
-  .feedImage {
-    position: static;
-    margin-top: 1rem;
-    max-width: 80%;
-    width: 100%;
-    height: auto;
-    margin-bottom: 10px;
-  }
-
-  .formFeedback {
-    padding: 1.5rem;
-  }
+.header {
+  text-align: center;
+  margin-bottom: var(--ru-space-5);
 }
 
 .titlefeed {
-  color: var(--maroon-primary);
+  color: var(--ru-maroon-800);
+  font-size: var(--ru-text-3xl);
+  margin-bottom: var(--ru-space-2);
+}
+
+.subtitle {
+  color: var(--ru-ink-soft);
+  font-size: var(--ru-text-sm);
 }
 
 .formFeedback {
-  animation: fadeInUp 0.6s ease-out both;
-  background-color: var(--minibackground);
-  padding: 2rem;
-  border-radius: var(--radius);
-  border: 2px solid maroon;
-  box-shadow: var(--shadow);
+  background-color: var(--ru-surface);
+  border: 1px solid var(--ru-border);
+  padding: var(--ru-space-6);
+  border-radius: var(--ru-radius-lg);
+  box-shadow: var(--ru-shadow-md);
   width: 100%;
-  max-width: 600px;
-  margin: 2rem 0;
+  max-width: 720px;
 }
 
-.formFeedback div {
-  margin-bottom: 1.5rem;
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--ru-space-4) var(--ru-space-5);
 }
 
-.formFeedback label {
-  display: block;
-  margin-bottom: 0.5rem;
+.fullWidth {
+  grid-column: 1 / -1;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ru-space-2);
+  border: none;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+
+.labelText {
+  font-size: var(--ru-text-sm);
   font-weight: 500;
+  color: var(--ru-ink);
+  padding: 0;
 }
 
-.formFeedback input,
+.formFeedback input[type="text"],
+.formFeedback input[type="email"],
 .formFeedback select,
 .formFeedback textarea {
   width: 100%;
+  padding: 0.6rem 0.75rem;
+  font-family: inherit;
+  font-size: var(--ru-text-sm);
+  color: var(--ru-ink);
+  background: var(--ru-white);
+  border: 1px solid var(--ru-border);
+  border-radius: var(--ru-radius-sm);
+  transition: border-color var(--ru-transition), box-shadow var(--ru-transition);
 }
 
-.FeedbackSubmit {
+.formFeedback textarea {
+  resize: vertical;
+  min-height: 96px;
+}
+
+.formFeedback input:focus,
+.formFeedback select:focus,
+.formFeedback textarea:focus {
+  outline: none;
+  border-color: var(--ru-primary);
+  box-shadow: var(--ru-ring);
+}
+
+.formFeedback ::placeholder {
+  color: var(--ru-ink-faint);
+}
+
+/* ---------- 1-5 rating ---------- */
+
+.ratingRow {
+  display: flex;
+  align-items: center;
+  gap: var(--ru-space-2);
+  flex-wrap: wrap;
+}
+
+.ratingPill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 38px;
+  border: 1px solid var(--ru-border);
+  border-radius: var(--ru-radius-sm);
+  background: var(--ru-white);
+  font-size: var(--ru-text-sm);
+  font-weight: 600;
+  color: var(--ru-ink-soft);
+  cursor: pointer;
+  transition: background-color var(--ru-transition),
+    border-color var(--ru-transition), color var(--ru-transition);
+}
+
+.ratingPill:hover {
+  border-color: var(--ru-maroon-200);
+  background: var(--ru-maroon-50);
+}
+
+/* The radio itself is the accessible control; the pill is the visible one. */
+.ratingPill input {
+  position: absolute;
+  opacity: 0;
   width: 100%;
-  padding: 0.75rem;
-  font-size: 1rem;
-  margin-top: 1rem;
-  background-color: var(--maroon-primary);
+  height: 100%;
+  margin: 0;
+  cursor: pointer;
+}
+
+.ratingPill:focus-within {
+  border-color: var(--ru-primary);
+  box-shadow: var(--ru-ring);
+}
+
+.ratingPillOn {
+  background: var(--ru-primary);
+  border-color: var(--ru-primary);
+  color: var(--ru-on-primary);
+}
+
+.ratingHint {
+  font-size: var(--ru-text-xs);
+  color: var(--ru-ink-faint);
+  margin-left: var(--ru-space-2);
+}
+
+/* ---------- submit + states ---------- */
+
+.FeedbackSubmit {
+  grid-column: 1 / -1;
+  width: 100%;
+  padding: 0.7rem;
+  margin-top: var(--ru-space-2);
+  font-size: var(--ru-text-base);
+  font-weight: 600;
+  color: var(--ru-on-primary);
+  background-color: var(--ru-primary);
+  border: none;
+  border-radius: var(--ru-radius-sm);
+  cursor: pointer;
+}
+
+.FeedbackSubmit:hover {
+  background-color: var(--ru-primary-hover);
+}
+
+.thanks {
+  background: var(--ru-surface);
+  border: 1px solid var(--ru-border);
+  border-radius: var(--ru-radius-lg);
+  box-shadow: var(--ru-shadow-md);
+  padding: var(--ru-space-7) var(--ru-space-6);
+  text-align: center;
+  max-width: 520px;
+  width: 100%;
+}
+
+.thanksIcon {
+  font-size: 2.5rem;
+  color: var(--ru-success);
+  margin-bottom: var(--ru-space-4);
+}
+
+.thanks h2 {
+  color: var(--ru-maroon-800);
+  margin-bottom: var(--ru-space-2);
+}
+
+.thanks p {
+  font-size: var(--ru-text-sm);
+  color: var(--ru-ink-soft);
+}
+
+.footerRow {
+  margin-top: var(--ru-space-5);
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: var(--ru-space-3);
+  }
+
+  .titlefeed {
+    font-size: var(--ru-text-2xl);
+  }
+
+  .formFeedback {
+    padding: var(--ru-space-5);
+  }
+
+  .feedImage {
+    position: static;
+    max-width: 130px;
+    margin: 0 auto var(--ru-space-4);
+  }
 }
