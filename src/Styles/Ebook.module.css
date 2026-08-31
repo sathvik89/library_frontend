@@ -2,6 +2,11 @@
   width: 100%;
   padding: 0;
   background: transparent;
+  /* 34 titles carry an e-book link now -- keep the rail from running away
+     with the page height. */
+  max-height: 620px;
+  overflow-y: auto;
+  padding-right: var(--ru-space-2);
 }
 
 .heading {

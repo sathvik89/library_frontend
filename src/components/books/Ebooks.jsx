@@ -4,7 +4,7 @@ import { DownloadOutlined } from "@ant-design/icons";
 import { getAllBooks } from "@/api/services/bookService";
 import styles from "@/Styles/Ebook.module.css";
 
-const LIMIT = 8;
+const LIMIT = 12;
 
 /** Catalogue titles that have an ebookLink set (filtered server-side). */
 export default function Ebook() {
