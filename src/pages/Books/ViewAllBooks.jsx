@@ -6,6 +6,7 @@ import { getAllBooks } from "@/api/services/bookService";
 import BookModal from "@/components/books/BookModal";
 import BookFilters from "@/components/books/BookFilters";
 import PreviousButton from "@/components/common/PreviousButton";
+import BookCoverThumb from "@/components/books/BookCoverThumb";
 
 function ViewAllBooks() {
   // Arriving from the dashboard search: /ViewAllBooks?search=harry
@@ -136,6 +137,13 @@ function ViewAllBooks() {
   };
 
   const columns = [
+    {
+      title: "Cover",
+      dataIndex: "coverImg",
+      key: "cover",
+      width: 70,
+      render: (src, record) => <BookCoverThumb src={src} alt={record.title} />,
+    },
     {
       title: "Title",
       dataIndex: "title",

@@ -87,7 +87,7 @@ function BookModal({ bookId, open, onClose }) {
 
   if (!open) return null;
 
-  const imageUrl = book?.coverImg || "https://via.placeholder.com/300x400?text=No+Image";
+  const imageUrl = book?.coverImg || null;
 
   return (
     <Modal
@@ -106,14 +106,18 @@ function BookModal({ bookId, open, onClose }) {
       ) : book ? (
         <div className={styles.modalContent}>
           <div className={styles.imageSection}>
-            <img
-              src={imageUrl}
-              alt={book.title}
-              className={styles.modalImage}
-              onError={(e) => {
-                e.target.src = "https://via.placeholder.com/300x400?text=No+Image";
-              }}
-            />
+            {imageUrl ? (
+              <img
+                src={imageUrl}
+                alt={book.title}
+                className={styles.modalImage}
+                onError={(e) => {
+                  e.target.style.display = "none";
+                }}
+              />
+            ) : (
+              <div className={styles.modalImage} />
+            )}
           </div>
 
           <div className={styles.detailsSection}>

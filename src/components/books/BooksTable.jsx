@@ -8,6 +8,7 @@ import BookDetailsModal from "./BookDetailsModal";
 import EditBookModal from "./EditBookModal";
 import BookFilters from "./BookFilters";
 import styles from "@/Styles/DataTable.module.css";
+import BookCoverThumb from "@/components/books/BookCoverThumb";
 
 export default function BooksTable() {
   const [books, setBooks] = useState([]);
@@ -156,6 +157,13 @@ export default function BooksTable() {
   };
 
   const booksColumns = [
+    {
+      title: "Cover",
+      dataIndex: "coverImg",
+      key: "cover",
+      width: 70,
+      render: (src, record) => <BookCoverThumb src={src} alt={record.title} />,
+    },
     {
       title: "Title",
       dataIndex: "title",

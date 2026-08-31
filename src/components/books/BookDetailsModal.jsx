@@ -144,7 +144,7 @@ function BookDetailsModal({ bookId, open, onClose }) {
 
   if (!open) return null;
 
-  const imageUrl = book?.coverImg || "https://via.placeholder.com/300x400?text=No+Image";
+  const imageUrl = book?.coverImg || null;
 
   return (
     <Modal
@@ -163,19 +163,28 @@ function BookDetailsModal({ bookId, open, onClose }) {
         <div style={{ padding: "10px" }}>
           <div style={{ display: "flex", gap: "20px", marginBottom: "20px" }}>
             <div style={{ flexShrink: 0 }}>
-              <img
-                src={imageUrl}
-                alt={book.title}
+              <div
                 style={{
                   width: "200px",
                   height: "300px",
-                  objectFit: "cover",
                   borderRadius: "8px",
+                  overflow: "hidden",
+                  background: "var(--ru-skin-100)",
+                  border: "1px solid var(--ru-skin-300)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
-                onError={(e) => {
-                  e.target.src = "https://via.placeholder.com/300x400?text=No+Image";
-                }}
-              />
+              >
+                {imageUrl && (
+                  <img
+                    src={imageUrl}
+                    alt={book.title}
+                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                    onError={(e) => { e.target.style.display = "none"; }}
+                  />
+                )}
+              </div>
             </div>
 
             <div style={{ flex: 1 }}>
