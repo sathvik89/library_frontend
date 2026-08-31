@@ -1,163 +1,138 @@
-.container {
-  padding: 30px 20px;
-  max-width: 1400px;
+/* Student-facing catalogue: a cover grid rather than a data table. */
+
+.page {
+  max-width: var(--ru-content-max);
   margin: 0 auto;
-  min-height: calc(100vh - 250px);
-  display: flex;
-  flex-direction: column;
-  flex: 1;
+  padding: var(--ru-space-6) var(--ru-space-5) var(--ru-space-7);
 }
 
 .header {
   display: flex;
+  align-items: flex-start;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 30px;
+  gap: var(--ru-space-4);
   flex-wrap: wrap;
-  gap: 16px;
+  margin-bottom: var(--ru-space-5);
+}
+
+.eyebrow {
+  font-size: var(--ru-text-xs);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ru-primary);
+  margin-bottom: var(--ru-space-2);
 }
 
 .heading {
-  font-size: 36px;
-  color: var(--maroon-primary);
-  margin: 0;
-  font-weight: 700;
-  flex: 1;
+  font-size: var(--ru-text-3xl);
+  color: var(--ru-maroon-900);
+  margin-bottom: var(--ru-space-2);
 }
 
-.tableContainer {
-  margin-bottom: 24px;
-  overflow-x: auto;
-  width: 100%;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  padding: 10px;
+.subheading {
+  font-size: var(--ru-text-base);
+  color: var(--ru-ink-soft);
+  max-width: 60ch;
 }
 
-.booksTable {
-  width: 100%;
+.filterCard {
+  background: var(--ru-surface);
+  border: 1px solid var(--ru-border);
+  border-radius: var(--ru-radius-lg);
+  box-shadow: var(--ru-shadow-sm);
+  padding: var(--ru-space-4) var(--ru-space-5);
+  margin-bottom: var(--ru-space-4);
 }
 
-.booksTable :global(.ant-pagination) {
-  display: flex;
-  justify-content: center;
-  ;
+.resultLine {
+  font-size: var(--ru-text-sm);
+  color: var(--ru-ink-faint);
+  margin-bottom: var(--ru-space-4);
 }
 
-.booksTable :global(.ant-table-container) {
-  width: 100%;
-}
-
-.booksTable :global(.ant-table) {
-  width: 100%;
-  table-layout: auto;
-}
-
-.booksTable :global(.ant-table-wrapper) {
-  width: 100%;
-}
-
-.booksTable :global(.ant-table-thead > tr > th) {
-  background-color: var(--maroon-primary);
-  color: var(--white);
+.resultLine strong {
+  color: var(--ru-ink);
   font-weight: 600;
-  border-bottom: 2px solid var(--maroon-dark);
 }
 
-.booksTable :global(.ant-table-thead > tr > th:hover) {
-  background-color: var(--maroon-dark);
+/* ---------- grid ---------- */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: var(--ru-space-5) var(--ru-space-4);
+  align-items: stretch;
 }
 
-.booksTable :global(.ant-table-tbody > tr:hover > td) {
-  background-color: var(--minibackground);
+/* ---------- loading skeletons ---------- */
+
+.skeletonCard {
+  background: var(--ru-surface);
+  border: 1px solid var(--ru-border);
+  border-radius: var(--ru-radius);
+  overflow: hidden;
+  padding-bottom: var(--ru-space-4);
 }
 
-.booksTable :global(.ant-table-tbody > tr > td) {
-  border-bottom: 1px solid var(--grey-light);
-  padding: 16px;
+.skeletonCard :global(.ant-skeleton) {
+  padding: var(--ru-space-4) var(--ru-space-4) 0;
 }
 
-.tableCell {
-  color: var(--text-color);
-  font-size: 0.95rem;
+.skeletonCover {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  background: linear-gradient(
+    90deg,
+    var(--ru-skin-200) 25%,
+    var(--ru-skin-100) 50%,
+    var(--ru-skin-200) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.3s infinite;
 }
 
-.genreTag {
-  font-size: 0.9rem;
-  padding: 4px 12px;
-  border-radius: 4px;
+@keyframes shimmer {
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
 }
 
-.availabilityTag {
-  font-size: 0.9rem;
-  padding: 4px 12px;
-  border-radius: 4px;
-  font-weight: 500;
-}
+/* ---------- states + paging ---------- */
 
-.loadingContainer {
+.stateBox {
   display: flex;
-  justify-content: center;
   align-items: center;
-  min-height: 400px;
-  padding: 40px;
-  flex: 1;
+  justify-content: center;
+  min-height: 320px;
+  background: var(--ru-skin-50);
+  border: 1px dashed var(--ru-skin-300);
+  border-radius: var(--ru-radius-lg);
+  padding: var(--ru-space-6);
 }
 
-.errorContainer,
-.emptyContainer {
+.paginationRow {
   display: flex;
   justify-content: center;
-  align-items: center;
-  min-height: 400px;
-  padding: 40px;
-  flex: 1;
+  margin-top: var(--ru-space-6);
+  padding-top: var(--ru-space-5);
+  border-top: 1px solid var(--ru-border);
 }
-
-.paginationContainer {
-  display: flex;
-  justify-content: center;
-  padding: 32px 0;
-  margin-top: 24px;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
 
 @media (max-width: 768px) {
-  .container {
-    padding: 20px 15px;
+  .page {
+    padding: var(--ru-space-5) var(--ru-space-4) var(--ru-space-6);
   }
 
   .heading {
-    font-size: 28px;
-    margin-bottom: 20px;
+    font-size: var(--ru-text-2xl);
   }
 
-  .tableContainer {
-    padding: 15px;
-    overflow-x: scroll;
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: var(--ru-space-4) var(--ru-space-3);
   }
 
-  .booksTable :global(.ant-table-thead > tr > th),
-  .booksTable :global(.ant-table-tbody > tr > td) {
-    padding: 12px 8px;
-    font-size: 0.85rem;
-  }
-
-  .paginationContainer {
-    padding: 20px 10px;
-  }
-}
-
-@media (max-width: 480px) {
-  .tableContainer {
-    padding: 10px;
-  }
-
-  .heading {
-    font-size: 24px;
+  .filterCard {
+    padding: var(--ru-space-4);
   }
 }

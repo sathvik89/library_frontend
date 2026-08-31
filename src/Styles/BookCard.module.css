@@ -58,6 +58,14 @@
   background: var(--ru-skin-200);
 }
 
+/* antd's Meta title forces nowrap + ellipsis, which chopped titles mid-word.
+   Let them wrap to two lines instead. */
+.bookCard :global(.ant-card-meta-title) {
+  white-space: normal;
+  overflow: visible;
+  margin-bottom: 0 !important;
+}
+
 .title {
   font-family: var(--ru-font-display);
   font-size: var(--ru-text-base);
