@@ -41,8 +41,6 @@ export default function Ebook() {
 
   return (
     <section className={styles.container}>
-      <h1 className={styles.heading}>E-books Available</h1>
-
       <input
         className={styles.inputStyles}
         type="text"

@@ -1,0 +1,323 @@
+/* Shared chrome for every dashboard: top bar, page header, stat row, sections. */
+
+.shell {
+  min-height: 100vh;
+  background: var(--ru-bg);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- Top bar ---------- */
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: var(--ru-topbar-h);
+  background: var(--ru-maroon-800);
+  color: var(--ru-white);
+  display: flex;
+  align-items: center;
+  gap: var(--ru-space-4);
+  padding: 0 var(--ru-space-5);
+  box-shadow: var(--ru-shadow-md);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--ru-space-3);
+  min-width: 0;
+}
+
+.brandLogo {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+  background: var(--ru-white);
+  border-radius: var(--ru-radius-pill);
+  padding: 3px;
+  flex-shrink: 0;
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.brandName {
+  font-family: var(--ru-font-display);
+  font-size: var(--ru-text-lg);
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--ru-white);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.brandSub {
+  font-size: var(--ru-text-xs);
+  color: var(--ru-maroon-200);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.topbarSpacer {
+  flex: 1;
+}
+
+.topbarActions {
+  display: flex;
+  align-items: center;
+  gap: var(--ru-space-3);
+}
+
+.rolePill {
+  font-size: var(--ru-text-xs);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ru-white);
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  padding: 0.25rem 0.7rem;
+  border-radius: var(--ru-radius-pill);
+  white-space: nowrap;
+}
+
+.userName {
+  font-size: var(--ru-text-sm);
+  font-weight: 500;
+  color: var(--ru-white);
+  white-space: nowrap;
+}
+
+/* ---------- Page header ---------- */
+
+.main {
+  flex: 1;
+  width: 100%;
+  max-width: var(--ru-content-max);
+  margin: 0 auto;
+  padding: var(--ru-space-6) var(--ru-space-5) var(--ru-space-7);
+}
+
+.pageHeader {
+  margin-bottom: var(--ru-space-6);
+}
+
+.eyebrow {
+  font-size: var(--ru-text-xs);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ru-primary);
+  margin-bottom: var(--ru-space-2);
+}
+
+.pageTitle {
+  font-size: var(--ru-text-3xl);
+  color: var(--ru-maroon-900);
+  margin-bottom: var(--ru-space-2);
+}
+
+.pageSubtitle {
+  font-size: var(--ru-text-base);
+  color: var(--ru-ink-soft);
+  max-width: 62ch;
+}
+
+/* ---------- Stat cards ---------- */
+
+.statRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--ru-space-4);
+  margin-bottom: var(--ru-space-6);
+}
+
+.statCard {
+  position: relative;
+  background: var(--ru-surface);
+  border: 1px solid var(--ru-border);
+  border-radius: var(--ru-radius);
+  padding: var(--ru-space-5) var(--ru-space-5) var(--ru-space-4);
+  box-shadow: var(--ru-shadow-sm);
+  overflow: hidden;
+  transition: box-shadow var(--ru-transition), transform var(--ru-transition);
+}
+
+/* Maroon edge marks each tile without adding another box. */
+.statCard::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: var(--ru-primary);
+}
+
+.statCard:hover {
+  box-shadow: var(--ru-shadow-md);
+  transform: translateY(-2px);
+}
+
+.statLabel {
+  font-size: var(--ru-text-xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ru-ink-faint);
+  margin-bottom: var(--ru-space-2);
+}
+
+.statValue {
+  font-family: var(--ru-font-display);
+  font-size: var(--ru-text-3xl);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--ru-maroon-800);
+  font-variant-numeric: tabular-nums;
+}
+
+.statHint {
+  font-size: var(--ru-text-xs);
+  color: var(--ru-ink-faint);
+  margin-top: var(--ru-space-2);
+}
+
+.statSkeleton {
+  display: inline-block;
+  width: 2.5ch;
+  height: 1em;
+  border-radius: var(--ru-radius-sm);
+  background: linear-gradient(
+    90deg,
+    var(--ru-skin-200) 25%,
+    var(--ru-skin-100) 50%,
+    var(--ru-skin-200) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+/* ---------- Sections ---------- */
+
+.section {
+  background: var(--ru-surface);
+  border: 1px solid var(--ru-border);
+  border-radius: var(--ru-radius-lg);
+  box-shadow: var(--ru-shadow-sm);
+  margin-bottom: var(--ru-space-5);
+  overflow: hidden;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ru-space-4);
+  flex-wrap: wrap;
+  padding: var(--ru-space-5);
+  border-bottom: 1px solid var(--ru-border);
+  background: var(--ru-skin-50);
+}
+
+.sectionTitleGroup {
+  min-width: 0;
+}
+
+.sectionTitle {
+  font-size: var(--ru-text-xl);
+  color: var(--ru-maroon-800);
+  margin-bottom: 2px;
+}
+
+.sectionDesc {
+  font-size: var(--ru-text-sm);
+  color: var(--ru-ink-faint);
+}
+
+.sectionBody {
+  padding: var(--ru-space-5);
+}
+
+.sectionBodyFlush {
+  padding: 0;
+}
+
+/* ---------- Footer actions ---------- */
+
+.footerActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--ru-space-4);
+  flex-wrap: wrap;
+  padding-top: var(--ru-space-5);
+  margin-top: var(--ru-space-2);
+  border-top: 1px solid var(--ru-border);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 768px) {
+  .topbar {
+    padding: 0 var(--ru-space-4);
+    gap: var(--ru-space-3);
+  }
+
+  .brandSub,
+  .userName {
+    display: none;
+  }
+
+  .topbarActions {
+    gap: var(--ru-space-2);
+    flex-shrink: 0;
+  }
+}
+
+@media (max-width: 430px) {
+  .brandName {
+    display: none;
+  }
+
+  .main {
+    padding: var(--ru-space-5) var(--ru-space-4) var(--ru-space-6);
+  }
+
+  .pageTitle {
+    font-size: var(--ru-text-2xl);
+  }
+
+  .statRow {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: var(--ru-space-3);
+  }
+
+  .statCard {
+    padding: var(--ru-space-4);
+  }
+
+  .statValue {
+    font-size: var(--ru-text-2xl);
+  }
+
+  .sectionHeader,
+  .sectionBody {
+    padding: var(--ru-space-4);
+  }
+}

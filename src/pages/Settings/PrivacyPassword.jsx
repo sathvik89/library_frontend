@@ -3,6 +3,7 @@ import icon from "@/assets/images/books/ProfileIcon.png";
 import { useNavigate } from "react-router-dom";
 import styles from "@/Styles/Settings.module.css";
 import { useState } from "react";
+import { CheckCircleFilled, CloseCircleFilled } from "@ant-design/icons";
 
 export default function PrivacyPassword() {
   const navi = useNavigate();
@@ -28,7 +29,10 @@ export default function PrivacyPassword() {
           </div>
           <div className={styles.infoCard}>
             <span>Privacy and policy</span>
-            <span style={{color: policy ? 'green' : 'red', fontWeight:600}}>{policy ? "accepted ✅" : "not accepted ❌"}</span>
+            <span style={{color: policy ? 'var(--ru-success)' : 'var(--ru-danger)', fontWeight:600, display:'inline-flex', alignItems:'center', gap:6}}>
+              {policy ? <CheckCircleFilled /> : <CloseCircleFilled />}
+              {policy ? "accepted" : "not accepted"}
+            </span>
             <button style={{marginLeft:8}} onClick={() => setPolicy(p => !p)}>{policy ? "Dissagree" : "Accept"}</button>
           </div>
         </section>

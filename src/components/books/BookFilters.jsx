@@ -11,7 +11,7 @@ const GENRES = [
   "HISTORICAL","HORROR","BIOGRAPHY","SELF_HELP","POETRY","DRAMA","ADVENTURE","CRIME",
   "YOUNG_ADULT","CHILDREN","CLASSICS",
 ];
-
+// this is split there "_"
 const SORT_OPTIONS = [
   { value: "title_asc", label: "Title (A-Z)" },
   { value: "title_desc", label: "Title (Z-A)" },
@@ -68,7 +68,6 @@ function BookFilters({ filters, searchInput, onFilterChange, onImmediateSearch }
           onSearch={handleSearchSubmit}
           onChange={handleSearchChange}
           value={searchInput !== undefined ? searchInput : filters.search}
-          style={{ width: 672 }}
         />
 
         <Select

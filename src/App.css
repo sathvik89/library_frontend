@@ -1,85 +1,32 @@
-:root {
-  --maroon-primary: rgb(178, 14, 56);
-  --maroon-light: #a05060;
-  --maroon-dark: #600010;
-  --white: #ffffff;
-  --off-white: #f8f8f8;
-  --grey-light: #e5e5e5;
-  --grey: #9e9e9e;
-  --grey-dark: #616161;
-  --black: #212121;
-  --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  --shadow-hover: 0 6px 12px rgba(0, 0, 0, 0.15);
-  --transition: all 0.3s ease;
-  --radius: 8px;
-  --background-shade: #f9f6f4;
-  --text-color: #333333;
-  --secondary-text-color: #555555;
-  --minibackground: rgb(234, 217, 217);
-  /* 8000200b */
-  --app-background: #ffedd2;
-}
+@import "./Styles/theme.css";
 
-* {
+/* ==========================================================================
+   Global base — element defaults only. Component looks live in CSS modules.
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: " Montserrat Family";
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
 }
 
 body {
-  background-color: var(--app-background);
-  color: var(--black);
+  background-color: var(--ru-bg);
+  color: var(--ru-ink);
+  font-family: var(--ru-font-body);
+  font-size: var(--ru-text-base);
   line-height: 1.6;
-  margin: 0;
-  padding: 0;
-}
-
-button {
-  cursor: pointer;
-  border: none;
-  background-color: var(--maroon-primary);
-  color: var(--white);
-  padding: 8px 16px;
-  border-radius: var(--radius);
-  font-weight: 500;
-  transition: var(--transition);
-}
-
-button:hover {
-  background-color: var(--maroon-dark);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-hover);
-}
-
-input,
-select,
-textarea {
-  padding: 10px;
-  border: 1px solid var(--grey);
-  border-radius: var(--radius);
-  width: 100%;
-  font-size: 1rem;
-  transition: var(--transition);
-}
-
-input:focus,
-select:focus,
-textarea:focus {
-  outline: none;
-  border-color: var(--maroon-primary);
-  box-shadow: 0 0 0 2px rgba(128, 0, 32, 0.2);
-}
-
-a {
-  color: var(--maroon-primary);
-  text-decoration: none;
-  transition: var(--transition);
-}
-
-a:hover {
-  color: var(--maroon-dark);
-  text-decoration: underline;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1,
@@ -88,29 +35,96 @@ h3,
 h4,
 h5,
 h6 {
-  color: var(--black);
-  margin-bottom: 0.5rem;
+  font-family: var(--ru-font-display);
+  color: var(--ru-ink);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+p {
+  color: var(--ru-ink-soft);
+}
+
+a {
+  color: var(--ru-primary);
+  text-decoration: none;
+  transition: color var(--ru-transition);
+}
+
+a:hover {
+  color: var(--ru-primary-hover);
+  text-decoration: underline;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+  font-size: var(--ru-text-sm);
+  font-weight: 600;
+  color: var(--ru-on-primary);
+  background-color: var(--ru-primary);
+  padding: 0.625rem 1.125rem;
+  border-radius: var(--ru-radius-sm);
+  transition: background-color var(--ru-transition),
+    box-shadow var(--ru-transition), transform var(--ru-transition);
+}
+
+button:hover:not(:disabled) {
+  background-color: var(--ru-primary-hover);
+  box-shadow: var(--ru-shadow);
+}
+
+button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 0.625rem 0.75rem;
+  font-family: inherit;
+  font-size: var(--ru-text-sm);
+  color: var(--ru-ink);
+  background-color: var(--ru-white);
+  border: 1px solid var(--ru-border);
+  border-radius: var(--ru-radius-sm);
+  transition: border-color var(--ru-transition), box-shadow var(--ru-transition);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--ru-primary);
+  box-shadow: var(--ru-ring);
+}
+
+/* Visible keyboard focus everywhere, without ringing on mouse clicks. */
+:focus-visible {
+  outline: 2px solid var(--ru-primary);
+  outline-offset: 2px;
 }
 
 ul {
   list-style-position: inside;
-  margin-bottom: 1rem;
+}
+
+img {
+  max-width: 100%;
 }
 
 .container {
-  max-width: 1200px;
+  max-width: var(--ru-content-max);
   margin: 0 auto;
-  padding: 0 1rem;
-}
-
-/* Ensure body and html take full height for footer positioning */
-html,
-body {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
+  padding: 0 var(--ru-space-4);
 }
 
 #root {
@@ -131,4 +145,27 @@ main {
   flex: 1;
   width: 100%;
   min-height: 0;
+}
+
+/* Warm scrollbars so overflow areas match the palette. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--ru-maroon-200) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--ru-maroon-200);
+  border-radius: var(--ru-radius-pill);
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--ru-maroon-500);
+  background-clip: content-box;
 }

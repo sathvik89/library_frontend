@@ -1,253 +1,178 @@
-:root {
-  --maroon-primary: #800000;
-  --white: #ffffff;
-  --radius: 8px;
-  --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-.maincontainer {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  grid-gap: 1.5rem;
-  padding: 0.5rem 2rem;
-  /* max-width: 1200px; */
-  width: 100%;
-  margin: 0 auto;
+/* Student dashboard — layout only. Chrome comes from DashboardShell. */
+
+/* ---------- Profile menu in the top bar ---------- */
+
+.profileWrap {
+  position: relative;
 }
 
-.mainHeading {
-  margin-top: 0;
-}
-.logoDiv {
-  width: 110px;
-  /* text-align: center; */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-@media (max-width: 480px) {
-  .logoDiv {
-    width: 150px;
-  }
-  .buttondiv {
-    width: 150px;
-  }
-}
-.imagestyle {
-  width: 100%;
-  height: auto;
-}
-.buttonImage {
-  width: 100%;
-  height: auto;
-  border-radius: 50px;
-  border: 5px solid var(--minibackground);
-}
-.buttondiv {
-  width: 100px;
-  border-radius: 50px;
-}
-.mainHeading {
-  grid-column: 1 / -1;
-  text-align: center;
-  font-size: 2.5rem;
-  color: var(--white);
-  margin-bottom: 1rem;
-  font-weight: 900;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  background-color: #800000;
-}
-/* .logoAndSearch {
+.profileButton {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border-radius: var(--ru-radius-pill);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  overflow: hidden;
+  transition: border-color var(--ru-transition),
+    background-color var(--ru-transition);
 }
 
-.homeImage {
-  width: 150px;
-  height: auto;
-  margin-bottom: 40px;
-} */
-/* .homeImage {
+.profileButton:hover {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: var(--ru-white);
+  box-shadow: none;
+}
+
+.profileButton img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profileMenu {
   position: absolute;
-  top: 7.5rem;
-  left: 7rem;
-  width: 150px;
-  height: auto;
-} */
-
-.searchbar {
-  grid-column: 1 / -1;
-  margin-bottom: 1.5rem;
-  width: 100%;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 200;
+  min-width: 220px;
+  background: var(--ru-surface);
+  border: 1px solid var(--ru-border);
+  border-radius: var(--ru-radius);
+  box-shadow: var(--ru-shadow-lg);
+  overflow: hidden;
 }
 
-/* .date {
-  grid-column: 1 / -1;
+/* ---------- Search row ---------- */
+
+.searchRow {
   display: flex;
-  justify-content: left;
-  width: 100%;
-  padding: 20px;
-} */
-/* </div>
-<div className={styles.date}> */
-
-.librarytime {
-  grid-column: 1 / 7;
-  background-color: var(--white);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 1.5rem;
+  align-items: center;
+  gap: var(--ru-space-4);
+  flex-wrap: wrap;
+  margin-bottom: var(--ru-space-5);
 }
 
-.news {
-  grid-column: 7 / -1;
-  background-color: var(--white);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 1.5rem;
+.searchBox {
+  flex: 1;
+  min-width: 280px;
 }
 
-.latestbooks {
-  grid-column: 1 / -1;
-  background-color: var(--white);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 1.5rem;
-  margin-top: 1rem;
+/* ---------- Quick actions ---------- */
+
+.quickGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--ru-space-4);
+  margin-bottom: var(--ru-space-6);
 }
 
-.allbooks {
-  grid-column: 1 / 9;
-  background-color: var(--white);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 1.5rem;
-  margin-top: 1rem;
-  max-height: 1013px;
-  overflow-y: scroll;
-  scrollbar-width: thin;
-  scrollbar-color: var(--maroon-primary) var(--grey-dark);
-}
-
-.ebooks {
-  grid-column: 9 / -1;
-  background-color: var(--white);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 1.5rem;
-  margin-top: 1rem;
-}
-
-.population {
-  grid-column: 1 / 7;
-  background-color: var(--white);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 1rem;
-  margin-top: 1rem;
+.quickCard {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+  gap: var(--ru-space-1);
+  text-align: left;
+  padding: var(--ru-space-5);
+  background: var(--ru-surface);
+  color: var(--ru-ink);
+  border: 1px solid var(--ru-border);
+  border-radius: var(--ru-radius);
+  box-shadow: var(--ru-shadow-sm);
+  transition: box-shadow var(--ru-transition), transform var(--ru-transition),
+    border-color var(--ru-transition), background-color var(--ru-transition);
+}
+
+.quickCard:hover {
+  background: var(--ru-surface);
+  border-color: var(--ru-maroon-200);
+  box-shadow: var(--ru-shadow-md);
+  transform: translateY(-2px);
+}
+
+/* Tinted badge so the icon reads as deliberate, not a loose glyph. */
+.quickIcon {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
-}
-.innerPop {
-  background-color: var(--minibackground);
-  padding: 90px;
-  border-radius: var(--radius);
-  border: 2px solid maroon;
-}
-
-.population p {
-  margin-bottom: 1rem;
-  font-weight: 500;
+  width: 40px;
+  height: 40px;
+  margin-bottom: var(--ru-space-3);
+  border-radius: var(--ru-radius);
+  background: var(--ru-maroon-50);
+  color: var(--ru-primary);
+  font-size: 1.15rem;
+  line-height: 1;
+  transition: background-color var(--ru-transition), color var(--ru-transition);
 }
 
-.population button {
-  width: 50%;
-  height: auto;
+.quickCard:hover .quickIcon {
+  background: var(--ru-primary);
+  color: var(--ru-white);
 }
 
-.rules {
-  grid-column: 7 / -1;
-  background-color: var(--white);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 1.5rem;
-  margin-top: 1rem;
+.quickTitle {
+  font-family: var(--ru-font-display);
+  font-size: var(--ru-text-lg);
+  font-weight: 600;
+  color: var(--ru-maroon-800);
 }
 
-.feedback {
-  grid-column: 1 / 7;
-  background-color: var(--white);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 1.5rem;
-  margin-top: 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+.quickDesc {
+  font-size: var(--ru-text-sm);
+  font-weight: 400;
+  color: var(--ru-ink-faint);
+  line-height: 1.4;
 }
 
-.feedback p {
-  margin-bottom: 1rem;
-  font-weight: 500;
+/* ---------- Content grids ---------- */
+
+.twoCol {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--ru-space-5);
+  align-items: start;
 }
 
-.feedback button {
-  width: 50%;
+/* Wide list of books beside the narrower e-book rail. */
+.booksCol {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--ru-space-5);
+  align-items: start;
 }
 
-.help {
-  grid-column: 7 / -1;
-  background-color: var(--white);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 1.5rem;
-  margin-top: 1rem;
-}
-
-.previous {
-  grid-column: 1 / -1;
-  display: flex;
-  justify-content: space-between;
-  margin-top: 2rem;
+.scrollArea {
+  max-height: 620px;
+  overflow-y: auto;
+  padding-right: var(--ru-space-2);
 }
 
 @media (max-width: 992px) {
-  .maincontainer {
-    max-width: 100vw;
-    padding: 1.5rem 0.25rem;
-  }
-  .librarytime,
-  .news {
-    grid-column: 1 / -1;
-  }
-
-  .allbooks,
-  .ebooks {
-    grid-column: 1 / -1;
-  }
-
-  .population,
-  .rules,
-  .feedback,
-  .help {
-    grid-column: 1 / -1;
+  .twoCol,
+  .booksCol {
+    grid-template-columns: 1fr;
   }
 }
 
 @media (max-width: 768px) {
-  .maincontainer {
-    padding: 0.5rem 1.25rem;
-    max-width: 100vw;
+  .searchRow {
+    gap: var(--ru-space-3);
   }
-  .mainHeading {
-    font-size: 2rem;
+
+  .quickGrid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--ru-space-3);
+  }
+
+  .quickCard {
+    padding: var(--ru-space-4);
+  }
+
+  .quickTitle {
+    font-size: var(--ru-text-base);
   }
 }

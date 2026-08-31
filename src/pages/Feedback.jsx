@@ -3,6 +3,7 @@ import PreviousButton from "@/components/common/PreviousButton";
 import styles from "@/Styles/Feedback.module.css";
 import RU from "@/assets/images/books/RUimage.png";
 import { toast } from 'react-hot-toast';
+import { CheckCircleFilled } from "@ant-design/icons";
 export default function FeedBack() {
   const [feed, setFeed] = useState(false);
   function handleSubmit(e) {
@@ -16,7 +17,10 @@ export default function FeedBack() {
         <img src={RU} className={styles.feedImage} alt="" />
         <h1 className={styles.titlefeed}>Feedback form</h1>
         {feed ? (
-          <h1 style={{ marginBottom: "20px" }}>Thankyou for your feedback 🙏🏻</h1>
+          <h1 style={{ marginBottom: "20px", display: "flex", alignItems: "center", justifyContent: "center", gap: 10 }}>
+            <CheckCircleFilled style={{ color: "var(--ru-success)" }} />
+            Thank you for your feedback
+          </h1>
         ) : (
           <form onSubmit={handleSubmit} className={styles.formFeedback}>
           <div>

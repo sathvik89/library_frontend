@@ -3,7 +3,7 @@ import { Table, Spin, Empty, message, Tag, Pagination, Button, Space, Modal } fr
 import { DeleteOutlined } from "@ant-design/icons";
 import { getAllUsers, deleteUser } from "@/api/services/userService";
 import UsersFilterBar from "@/components/users/UsersFilterBar";
-import styles from "@/Styles/AdminDashboard.module.css";
+import styles from "@/Styles/DataTable.module.css";
 import { toast } from "react-hot-toast";
 
 const { confirm } = Modal;
@@ -98,6 +98,8 @@ export default function UsersTable() {
       content: "This action cannot be undone.",
       okText: "Yes, Delete",
       okType: "danger",
+      // Static modals sit outside ConfigProvider, so state the button style here.
+      okButtonProps: { danger: true, type: "primary" },
       cancelText: "No",
       onOk: async () => {
         try {

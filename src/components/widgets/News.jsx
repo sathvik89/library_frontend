@@ -17,7 +17,6 @@ export default function News() {
 
   return (
     <section className={styles.newsMain}>
-      <h2 className={styles.titleNews}>Today's Top Headlines</h2>
       <div className={styles.newsList}>
         {newstoday.map((item, index) => (
           <article key={index} className={styles.newsItem}>

@@ -8,6 +8,15 @@
   padding: 2rem;
   animation: fadeIn 0.6s ease-out;
 }
+/* The inner <section> was shrink-wrapping to the wide title, which pushed the
+   narrower form off-centre. Centre its children explicitly. */
+.mainLogin > section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
 .passwordWrapper {
   position: relative;
   width: 100%;
@@ -40,10 +49,11 @@
 }
 
 .formLogin {
-  background-color: var(--minibackground);
-  padding: 2rem;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  background-color: var(--ru-surface);
+  border: 1px solid var(--ru-border);
+  padding: var(--ru-space-6);
+  border-radius: var(--ru-radius-lg);
+  box-shadow: var(--ru-shadow-md);
   width: 100%;
   max-width: 400px;
   animation: fadeIn 1s ease-out;
@@ -61,27 +71,28 @@
   display: block;
   width: 100%;
   padding: 0.75rem;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  font-size: var(--ru-text-sm);
+  border: 1px solid var(--ru-border);
+  border-radius: var(--ru-radius-sm);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .formLogin input:focus {
-  transform: scale(1.01);
-  box-shadow: 0 0 6px rgba(128, 0, 0, 0.3);
+  border-color: var(--ru-primary);
+  box-shadow: var(--ru-ring);
   outline: none;
 }
 
 .Loginsubmit {
   width: 100%;
   padding: 0.75rem;
-  font-size: 1rem;
+  font-size: var(--ru-text-base);
+  font-weight: 600;
   margin-top: 1rem;
-  color: #fff;
-  background-color: var(--maroon-primary);
+  color: var(--ru-on-primary);
+  background-color: var(--ru-primary);
   border: none;
-  border-radius: 4px;
+  border-radius: var(--ru-radius-sm);
   cursor: pointer;
   transition: background-color 0.2s ease, transform 0.2s ease;
 }

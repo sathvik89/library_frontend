@@ -1,8 +1,8 @@
 
 .mainBooksContainer {
   width: 100%;
-  background-color: var(--minibackground);
-  padding: 20px;
+  background: transparent;
+  padding: 0;
 }
 
 .heading {
@@ -47,4 +47,15 @@
   .heading {
     font-size: 1.5rem;
   }
+}
+
+/* Let the strip run to the card edge and scroll rather than clipping a card. */
+.BooksList {
+  scroll-snap-type: x proximity;
+  padding-bottom: var(--ru-space-3);
+}
+
+.BooksList > * {
+  scroll-snap-align: start;
+  flex: 0 0 auto;
 }

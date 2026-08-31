@@ -1,39 +1,77 @@
-import React, { useState } from "react";
-import { Card } from "antd";
-import Logoutbutton from "@/components/common/Logoutbutton";
-import PreviousButton from "@/components/common/PreviousButton";
+import React, { useEffect, useState } from "react";
 import BooksTable from "@/components/books/BooksTable";
-import styles from "@/Styles/LibrarianDashboard.module.css";
+import DashboardShell, {
+  StatCard,
+  StatRow,
+} from "@/components/layout/DashboardShell";
+import { getAllBooks } from "@/api/services/bookService";
+import { getCurrentUser } from "@/api/services/authService";
 
 export default function LibrarianDashboard() {
+  const [me, setMe] = useState(null);
+  const [stats, setStats] = useState({
+    books: null,
+    available: null,
+    outOfStock: null,
+  });
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const total = async (params) => {
+      try {
+        const res = await getAllBooks({ ...params, limit: 1 });
+        return res.data?.pagination?.total ?? 0;
+      } catch {
+        return 0;
+      }
+    };
+
+    (async () => {
+      try {
+        const meRes = await getCurrentUser();
+        if (!cancelled) setMe(meRes.data);
+      } catch {
+        /* the shell just shows no name */
+      }
+
+      const [books, available, outOfStock] = await Promise.all([
+        total({}),
+        total({ availability: "available" }),
+        total({ availability: "unavailable" }),
+      ]);
+
+      if (!cancelled) setStats({ books, available, outOfStock });
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   return (
-    <div className={styles.container}>
-      <h1 className={styles.heading}>Librarian Dashboard</h1>
-      <p className={styles.subheading}>
-        Welcome! Manage books, reservations, and daily library operations.
-      </p>
-
-      <div className={styles.cardsContainer}>
-        <Card title="Book Management" className={styles.dashboardCard}>
-          <p>Add, update, and manage library books and inventory.</p>
-        </Card>
-
-        <Card title="Reservations" className={styles.dashboardCard}>
-          <p>View and manage book reservations and checkouts.</p>
-        </Card>
-
-        <Card title="Daily Operations" className={styles.dashboardCard}>
-          <p>Handle daily tasks like returns, renewals, and member assistance.</p>
-        </Card>
-      </div>
+    <DashboardShell
+      eyebrow="Circulation desk"
+      title="Librarian Dashboard"
+      subtitle="Add titles, manage copies and keep the catalogue accurate."
+      role={me?.role ?? "LIBRARIAN"}
+      userName={me?.userName}
+    >
+      <StatRow>
+        <StatCard label="Titles in catalogue" value={stats.books} />
+        <StatCard
+          label="Available now"
+          value={stats.available}
+          hint="titles with a free copy"
+        />
+        <StatCard
+          label="All copies out"
+          value={stats.outOfStock}
+          hint="nothing on the shelf"
+        />
+      </StatRow>
 
       <BooksTable />
-
-      <div className={styles.actionsContainer}>
-        <PreviousButton />
-        <Logoutbutton />
-      </div>
-    </div>
+    </DashboardShell>
   );
 }
-

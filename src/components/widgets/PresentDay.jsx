@@ -4,7 +4,7 @@ export default function PresentDay() {
   return (
     <time className={styles.mainPresentday}>
       <span className={styles.date}>
-        Date: {`${d.getDate()} / ${d.getMonth()} / ${d.getFullYear()}`}
+        Date: {`${d.getDate()} / ${d.getMonth() + 1} / ${d.getFullYear()}`}
       </span>
       <span className={styles.day}>
         Day:{" "}

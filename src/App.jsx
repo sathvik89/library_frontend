@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React from "react";
+import { ConfigProvider } from "antd";
 import StudentDashboard from "@/pages/Dashboard/Student/StudentDashboard";
 import Login from "@/pages/Auth/Login";
 import Navi from "@/components/layout/Navi";
@@ -23,7 +24,31 @@ import PrivacyPassword from "@/pages/Settings/PrivacyPassword";
 import AdminDashboard from "@/pages/Dashboard/Admin/AdminDashboard";
 import LibrarianDashboard from "@/pages/Dashboard/Librarian/LibrarianDashboard";
 import ViewAllBooks from "@/pages/Books/ViewAllBooks";
-import ProtectedRoute from "@/routes/ProtectedRoute"; 
+import ProtectedRoute from "@/routes/ProtectedRoute";
+
+// Ant Design ships blue by default; point its tokens at the university palette
+// so tables, tags, modals and buttons match the rest of the app.
+const antdTheme = {
+  token: {
+    colorPrimary: "#a51c30",
+    colorLink: "#a51c30",
+    colorInfo: "#a51c30",
+    colorSuccess: "#2f7a4d",
+    colorWarning: "#9a6a12",
+    colorError: "#b3261e",
+    colorText: "#2a211e",
+    colorTextSecondary: "#5c4f49",
+    colorBorder: "#ece2d8",
+    colorBgContainer: "#ffffff",
+    borderRadius: 8,
+    fontFamily:
+      '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+  },
+  components: {
+    Table: { headerBg: "#fdf1de", headerColor: "#5c0f1b", rowHoverBg: "#fdf0f2" },
+    Modal: { titleFontSize: 18 },
+  },
+};
 
 export default function App() {
   const [available, setavailabe] = React.useState(220);
@@ -39,6 +64,7 @@ export default function App() {
   }
 
   return (
+    <ConfigProvider theme={antdTheme}>
       <BrowserRouter>
         <SearchProvider>
           <Navi />
@@ -102,5 +128,6 @@ export default function App() {
           <RightsReserved />
         </SearchProvider>
       </BrowserRouter>
+    </ConfigProvider>
   );
 }

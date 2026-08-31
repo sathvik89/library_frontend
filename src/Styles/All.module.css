@@ -1,15 +1,13 @@
 .containerAllbook {
   width: 100%;
-  padding: 1rem;
-  background-color: var(--minibackground);
-  overflow-x: auto;
+  padding: 0;
+  background: transparent;
 }
 .headerRow {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
-  padding: 0 5px;
-  margin-bottom: 20px;
+  margin-bottom: var(--ru-space-4);
 }
 
 .viewAllBtn {

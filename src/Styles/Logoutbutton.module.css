@@ -1,28 +1,61 @@
+/* Solid — for light backgrounds. */
 .logoutContainer {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 1rem;
+  margin-top: var(--ru-space-4);
 }
 
 .logoutButton {
-  background-color: var(--white);
-  color: var(--maroon-primary);
+  background-color: var(--ru-primary);
+  color: var(--ru-on-primary);
   border: none;
-  border-radius: var(--radius);
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
+  border-radius: var(--ru-radius-sm);
+  padding: 0.625rem 1.25rem;
+  font-size: var(--ru-text-sm);
   font-weight: 600;
   cursor: pointer;
-  box-shadow: var(--shadow);
-  transition: background-color 0.3s ease;
+  box-shadow: var(--ru-shadow-sm);
+  transition: background-color var(--ru-transition),
+    box-shadow var(--ru-transition);
 }
 
 .logoutButton:hover {
-  background-color: #600000;
-  color: white;
+  background-color: var(--ru-primary-hover);
+  box-shadow: var(--ru-shadow);
 }
 
 .logoutButton:active {
-  transform: scale(0.98);
+  transform: translateY(1px);
+}
+
+/* Ghost — for the maroon top bar. */
+.ghostContainer {
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+
+.ghostButton {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--ru-white);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: var(--ru-radius-sm);
+  padding: 0.4rem 0.9rem;
+  font-size: var(--ru-text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color var(--ru-transition),
+    border-color var(--ru-transition);
+}
+
+.ghostButton:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: none;
+}
+
+.ghostButton:active {
+  transform: translateY(1px);
 }

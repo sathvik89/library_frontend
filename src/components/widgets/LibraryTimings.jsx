@@ -6,8 +6,6 @@ export default function LibraryTimings() {
 
   return (
     <section className={styles.mainLibrarytime}>
-      <h2 className={styles.libraryTitle}>Library Timings</h2>
-      
       <ul className={styles.librarylist}>
         <li>
           <strong>Monday to Saturday:</strong> {weekdayTimings}

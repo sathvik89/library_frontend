@@ -1,60 +1,57 @@
 .mainSearch {
   width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 1.5rem;
-  gap: 0.5rem;
+  align-items: stretch;
+  gap: var(--ru-space-2);
+  margin-bottom: 0;
 }
 
 .mainSearch input {
-  max-width: 500px;
+  flex: 1;
   width: 100%;
-  border: 2px solid var(--grey-light);
-  border-radius: var(--radius);
-  padding: 0.75rem 1rem;
-  font-size: 1rem;
-  color: var(--grey-dark);
-  transition: var(--transition);
+  max-width: none;
+  border: 1px solid var(--ru-border);
+  border-radius: var(--ru-radius-sm);
+  padding: 0.7rem 1rem;
+  font-size: var(--ru-text-sm);
+  color: var(--ru-ink);
+  background: var(--ru-white);
+  transition: border-color var(--ru-transition), box-shadow var(--ru-transition);
   outline: none;
 }
 
 .mainSearch input::placeholder {
-  color: black;
+  color: var(--ru-ink-faint);
 }
 
 .mainSearch input:focus {
-  border-color: var(--maroon-primary);
-  box-shadow: 0 0 0 3px rgba(128, 0, 32, 0.2);
+  border-color: var(--ru-primary);
+  box-shadow: var(--ru-ring);
 }
 
 .mainSearch button {
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  color: var(--white);
-  background-color: var(--maroon-primary);
+  padding: 0.7rem 1.5rem;
+  font-size: var(--ru-text-sm);
+  font-weight: 600;
+  color: var(--ru-on-primary);
+  background-color: var(--ru-primary);
   border: none;
-  border-radius: var(--radius);
+  border-radius: var(--ru-radius-sm);
   cursor: pointer;
-  transition: var(--transition);
+  white-space: nowrap;
+  transition: background-color var(--ru-transition);
 }
 
 .mainSearch button:hover {
-  background-color: #600000;
+  background-color: var(--ru-primary-hover);
 }
 
 @media (max-width: 768px) {
   .mainSearch {
     flex-direction: column;
-    align-items: stretch;
-  }
-
-  .mainSearch input {
-    width: 100%;
   }
 
   .mainSearch button {
     width: 100%;
-    margin-top: 0.5rem;
   }
 }

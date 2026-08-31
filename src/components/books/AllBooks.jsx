@@ -110,8 +110,6 @@ export default function Allbooks() {
   return (
     <section className={styles.containerAllbook}>
       <div className={styles.headerRow}>
-        <h1 className={styles.headingAll}>All Books</h1>
-
         <button className={styles.viewAllBtn} onClick={() => navi("/ViewAllBooks")}>
           View All
         </button>

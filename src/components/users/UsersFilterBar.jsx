@@ -1,7 +1,7 @@
 import React from "react";
 import { Input, Select, Space, Button } from "antd";
 import { SearchOutlined, ClearOutlined } from "@ant-design/icons";
-import styles from "@/Styles/AdminDashboard.module.css";
+import styles from "@/Styles/DataTable.module.css";
 
 const { Search } = Input;
 const { Option } = Select;

@@ -1,8 +1,7 @@
 .container {
   width: 100%;
-  padding: 1.5rem;
-  background-color: var(--minibackground);
-  border-radius: var(--radius);
+  padding: 0;
+  background: transparent;
 }
 
 .heading {

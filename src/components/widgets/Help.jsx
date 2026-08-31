@@ -3,7 +3,6 @@ import styles from "@/Styles/Help.module.css";
 export default function Help() {
   return (
     <section className={styles.helpmain}>
-      <h5>Need help?</h5>
       <p>
         Visit our <a href="/help-center">Help Center</a> or contact the
         librarian.

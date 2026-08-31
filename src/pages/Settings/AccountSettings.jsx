@@ -2,6 +2,7 @@ import logo from "@/assets/images/books/RUimage.png";
 import icon from "@/assets/images/books/ProfileIcon.png";
 import { useNavigate } from "react-router-dom";
 import styles from "@/Styles/Settings.module.css";
+import { CheckCircleFilled, GlobalOutlined } from "@ant-design/icons";
 
 export default function AccountSettings() {
   const navi = useNavigate();
@@ -17,10 +18,14 @@ export default function AccountSettings() {
         </header>
         <section className={styles.infoList}>
           <div className={styles.infoCard}>
-            Account Verification <span style={{color: 'green', fontSize: '1.3em'}}>Verified ✅</span>
+            Account Verification <span style={{color: 'var(--ru-success)', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: 6}}>
+              <CheckCircleFilled /> Verified
+            </span>
           </div>
           <div className={styles.infoCard}>
-            Regional Settings <span style={{color: '#a51c30', fontWeight: 600}}>Asia 🌏</span>
+            Regional Settings <span style={{color: 'var(--ru-primary)', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: 6}}>
+              <GlobalOutlined /> Asia
+            </span>
           </div>
           <div className={styles.infoCard}>
             Language <span style={{color: '#a51c30', fontWeight: 600}}>English</span>

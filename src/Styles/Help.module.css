@@ -1,15 +1,14 @@
 .helpmain {
-  width: 100%;
-  text-align: center;
-}
-
-.helpmain h5 {
-  color: var(--maroon-primary);
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ru-space-2);
 }
 
 .helpmain p {
-  font-size: 0.95rem;
-  margin-bottom: 0.5rem;
+  font-size: var(--ru-text-sm);
+  color: var(--ru-ink-soft);
+}
+
+.helpmain a {
+  font-weight: 600;
 }

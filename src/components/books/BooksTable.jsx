@@ -7,7 +7,7 @@ import AddbookModal from "./AddbookModal";
 import BookDetailsModal from "./BookDetailsModal";
 import EditBookModal from "./EditBookModal";
 import BookFilters from "./BookFilters";
-import styles from "@/Styles/AdminDashboard.module.css";
+import styles from "@/Styles/DataTable.module.css";
 
 export default function BooksTable() {
   const [books, setBooks] = useState([]);
@@ -241,12 +241,18 @@ export default function BooksTable() {
       <div className={styles.tableSection}>
         <h2 className={styles.tableSectionTitle}>Books Inventory</h2>
         
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-             <BookFilters 
-                filters={booksFilters} 
-                onFilterChange={setBooksFilters} 
-             />
-             <Button type="primary" onClick={() => setBookModalOpen(true)}>Add New Book</Button>
+        <div className={styles.toolbar}>
+          <BookFilters
+            filters={booksFilters}
+            onFilterChange={setBooksFilters}
+          />
+          <Button
+            type="primary"
+            size="large"
+            onClick={() => setBookModalOpen(true)}
+          >
+            Add New Book
+          </Button>
         </div>
 
         {booksLoading ? (
