@@ -1,61 +1,30 @@
-
-.mainBooksContainer {
-  width: 100%;
-  background: transparent;
-  padding: 0;
-}
-
-.heading {
-  color: var(--maroon-primary);
-  font-size: 1.8rem;
-  margin-bottom: 1.5rem;
-  text-align: center;
-}
+/* Latest collection — a horizontal shelf of real catalogue cards. */
 
 .BooksList {
   display: flex;
+  gap: var(--ru-space-4);
   overflow-x: auto;
-  gap: 1.5rem;
-  padding: 0.5rem 0;
-  scrollbar-width: thin;
-  scrollbar-color: var(--maroon-light) var(--grey-light);
-}
-
-.BooksList::-webkit-scrollbar {
-  height: 8px;
-}
-
-.BooksList::-webkit-scrollbar-track {
-  background: var(--grey-light);
-  border-radius: 10px;
-}
-
-.BooksList::-webkit-scrollbar-thumb {
-  background-color: var(--maroon-light);
-  border-radius: 10px;
-}
-
-.noMatch {
-  width: 100%;
-  text-align: center;
-  padding: 2rem;
-  color: var(--grey-dark);
-  font-style: italic;
-}
-
-@media (max-width: 768px) {
-  .heading {
-    font-size: 1.5rem;
-  }
-}
-
-/* Let the strip run to the card edge and scroll rather than clipping a card. */
-.BooksList {
-  scroll-snap-type: x proximity;
   padding-bottom: var(--ru-space-3);
+  scroll-snap-type: x proximity;
 }
 
-.BooksList > * {
+.cardWrap {
+  flex: 0 0 220px;
   scroll-snap-align: start;
-  flex: 0 0 auto;
+}
+
+.stateBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  background: var(--ru-skin-50);
+  border: 1px dashed var(--ru-skin-300);
+  border-radius: var(--ru-radius);
+}
+
+@media (max-width: 640px) {
+  .cardWrap {
+    flex-basis: 170px;
+  }
 }

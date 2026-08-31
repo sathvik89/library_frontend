@@ -61,3 +61,36 @@
   color: var(--grey-dark);
   font-style: italic;
 }
+
+
+/* --- real-data states --- */
+.stateBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  padding: var(--ru-space-4);
+  background: var(--ru-skin-50);
+  border: 1px dashed var(--ru-skin-300);
+  border-radius: var(--ru-radius);
+  text-align: center;
+}
+
+.emptyHint {
+  font-size: var(--ru-text-xs);
+  color: var(--ru-ink-faint);
+}
+
+.bookAuthor {
+  font-size: var(--ru-text-xs);
+  color: var(--ru-ink-faint);
+  margin-bottom: var(--ru-space-2);
+}
+
+.bookLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ru-space-2);
+  font-weight: 600;
+  font-size: var(--ru-text-sm);
+}

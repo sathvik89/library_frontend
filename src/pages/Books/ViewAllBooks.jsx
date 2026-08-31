@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Spin, Empty, message, Table, Tag } from "antd";
 import styles from "@/Styles/ViewAllBooks.module.css";
 import { getAllBooks } from "@/api/services/bookService";
@@ -7,6 +8,10 @@ import BookFilters from "@/components/books/BookFilters";
 import PreviousButton from "@/components/common/PreviousButton";
 
 function ViewAllBooks() {
+  // Arriving from the dashboard search: /ViewAllBooks?search=harry
+  const [searchParams] = useSearchParams();
+  const initialSearch = searchParams.get("search") || "";
+
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -15,7 +20,7 @@ function ViewAllBooks() {
   const [filters, setFilters] = useState({
     page: 1,
     limit: 10,
-    search: "",
+    search: initialSearch,
     genre: "",
     availability: "",
     sortBy: "",
@@ -25,7 +30,7 @@ function ViewAllBooks() {
     pageSize: 10,
     total: 0,
   });
-  const [searchInput, setSearchInput] = useState("");
+  const [searchInput, setSearchInput] = useState(initialSearch);
   const debounceTimerRef = useRef(null);
 
   // debounce effect for search input

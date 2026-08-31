@@ -8,22 +8,32 @@ function BookCard({ book, onCardClick }) {
   const handleClick = () => {
     onCardClick(book);
   };
-  const imageUrl = book.coverImg || "https://via.placeholder.com/200x300?text=No+Image";
+
+  // 4 of the seeded titles have no cover. Draw the fallback ourselves rather
+  // than leaning on an external placeholder service that may not load.
+  const cover = book.coverImg ? (
+    <img
+      alt={book.title}
+      src={book.coverImg}
+      className={styles.bookImage}
+      loading="lazy"
+      onError={(e) => {
+        e.target.style.display = "none";
+        e.target.parentElement.classList.add(styles.noCover);
+      }}
+    />
+  ) : null;
 
   return (
     <Card
       hoverable
       className={styles.bookCard}
       cover={
-        <div className={styles.imageContainer}>
-          <img
-            alt={book.title}
-            src={imageUrl}
-            className={styles.bookImage}
-            onError={(e) => {
-              e.target.src = "https://via.placeholder.com/200x300?text=No+Image";
-            }}
-          />
+        <div
+          className={`${styles.imageContainer} ${cover ? "" : styles.noCover}`}
+        >
+          {cover}
+          <BookOutlined className={styles.coverFallbackIcon} />
         </div>
       }
       onClick={handleClick}
@@ -36,17 +46,19 @@ function BookCard({ book, onCardClick }) {
         }
         description={
           <div className={styles.metaContent}>
-            <div className={styles.author}>
-              <strong>Author:</strong> {book.authorName || "N/A"}
-            </div>
+            <div className={styles.author}>{book.authorName || "Unknown author"}</div>
             <div className={styles.genre}>
-              <BookOutlined /> {book.genre || "N/A"}
+              <BookOutlined /> {(book.genre || "N/A").replace(/_/g, " ")}
             </div>
             <div className={styles.availability}>
-              <span className={book.availableCopies > 0 ? styles.available : styles.unavailable}>
+              <span
+                className={
+                  book.availableCopies > 0 ? styles.available : styles.unavailable
+                }
+              >
                 {book.availableCopies > 0
-                  ? `${book.availableCopies} Available`
-                  : "Out of Stock"}
+                  ? `${book.availableCopies} available`
+                  : "All copies out"}
               </span>
             </div>
           </div>
@@ -57,4 +69,3 @@ function BookCard({ book, onCardClick }) {
 }
 
 export default BookCard;
-

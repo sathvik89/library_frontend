@@ -1,107 +1,91 @@
-import { useContext } from "react";
-import { SearchContext } from "@/context/SearchContext";
-import Book from "@/components/books/Book";
-import book1Image from "@/assets/images/books/book1.png";
-import book2Image from "@/assets/images/books/book2.png";
-import book3Image from "@/assets/images/books/book3.png";
-import book4Image from "@/assets/images/books/book4.png";
-import book5Image from "@/assets/images/books/book5.png";
-import book6Image from "@/assets/images/books/book6.png";
-import book7Image from "@/assets/images/books/book7.png";
-import book8Image from "@/assets/images/books/book8.png";
-import book9Image from "@/assets/images/books/book9.png";
+import { useEffect, useState } from "react";
+import { Empty, Spin } from "antd";
+import BookCard from "@/components/books/BookCard";
+import BookModal from "@/components/books/BookModal";
+import { getAllBooks } from "@/api/services/bookService";
 import styles from "@/Styles/Books.module.css";
 
+const LATEST_COUNT = 8;
+
+/** The newest titles in the catalogue. Highest id = most recently added. */
 export default function Books() {
-  const { searchQuery } = useContext(SearchContext);
+  const [books, setBooks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [selectedBookId, setSelectedBookId] = useState(null);
 
-  const books = [
-    {
-      title: "Zana and the bumbling genie",
-      description:
-        "A Magical Tale of Friendship, Loyalty and Hope | Girl's Fight for Sight | Heartwarming Story of Brave Girl | Genie's Lost Magic",
-      location: "Location : Block: A, Row :1",
-      imageURL: book1Image,
-    },
-    {
-      title: "Wolf King",
-      description:
-        "Discover the epic fantasy adventure series as Drew Ferran learns he's the last of a long line of Werewolves - and rightful ruler of a land governed by Werelords.",
-      location: "Location : Block: D, Row :4",
-      imageURL: book2Image,
-    },
-    {
-      title: "The Whisperwicks: The Impossible Trials of Benjamiah Creek",
-      description:
-        "The spell-binding world-building of Philip Pullman with the page-turning kid appeal of Skandar and the Unicorn Thief. Discover a world of magic and secrets, friendship and unimaginable quests in this spectacular new fantasy series from the most exciting new voice in children's books.",
-      location: "Location : Block: B, Row :1",
-      imageURL: book3Image,
-    },
-    {
-      title: "The Indian Stock Market Simplified",
-      description: "A Beginner's Guide to Investing and Trading",
-      location: "Location : Block: A, Row :3",
-      imageURL: book4Image,
-    },
-    {
-      title: "Brick by Brick",
-      description:
-        "From Middle-Class Roots to Entrepreneurial Success - A Roadmap for Startups, Business Growth, Leadership & Innovation | Learn to Build, Scale & Succeed in the Competitive Business World",
-      location: "Location : Block: C, Row :4",
-      imageURL: book5Image,
-    },
-    {
-      title: "500 Tips for Startup Folks",
-      description:
-        "While there are many books that talk about broader startup topics, Mayank has distilled his learning and tried to focus on the 'how'. This startup-execution toolkit has actionable tips on 'how' things can be done faster and better. 500 Tips for Startup Folks covers more than 100 topics that are extremely relevant to startup founders, entrepreneurs and employees",
-      location: "Location : Block: B, Row :1",
-      imageURL: book6Image,
-    },
-    {
-      title: "Tinkle Double Double Digest No .2 [Paperback] RAJNI THINDIATH",
-      description:
-        "Tinkle double double Digest no .2. It's a pack of 2 double Digest in single title. The hilarious characters like suppandi, Shikari Shambu, Kalia the Crow, makes books more interesting.",
-      location: "Location : Block: D, Row :9",
-      imageURL: book7Image,
-    },
-    {
-      title: "Tinkle Double Double Digest No .98",
-      description: "Children's Comic Book Series",
-      location: "Location : Block: A, Row :2",
-      imageURL: book8Image,
-    },
-    {
-      title: "The Psychology of Money",
-      description:
-        "Timeless lessons on wealth, greed, and happiness doing well with money isn't necessarily about what you know. It's about how you behave. And behavior is hard to teach, even to really smart people. How to manage money, invest it, and make business decisions are typically considered to involve a lot of mathematical calculations, where data and formulae tell us exactly what to do. But in the real world, people don't make financial decisions on a spreadsheet.",
-      location: "Location : Block: C, Row :2",
-      imageURL: book9Image,
-    },
-  ];
+  useEffect(() => {
+    let cancelled = false;
 
-  const filteredBooks = books.filter((book) =>
-    book.title.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+    (async () => {
+      setLoading(true);
+      setError("");
+      try {
+        const res = await getAllBooks({
+          limit: LATEST_COUNT,
+          sortBy: "id_desc",
+        });
+        if (cancelled) return;
+        if (res.data?.success) {
+          setBooks(res.data.data || []);
+        } else {
+          setError(res.data?.message || "Could not load the latest books.");
+        }
+      } catch (err) {
+        if (cancelled) return;
+        console.error("Latest collection error:", err);
+        setError(
+          err?.response?.data?.message || "Could not load the latest books."
+        );
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  if (loading) {
+    return (
+      <div className={styles.stateBox}>
+        <Spin />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className={styles.stateBox}>
+        <Empty description={error} />
+      </div>
+    );
+  }
+
+  if (books.length === 0) {
+    return (
+      <div className={styles.stateBox}>
+        <Empty description="No books in the catalogue yet." />
+      </div>
+    );
+  }
 
   return (
-    <section className={styles.mainBooksContainer}>
+    <>
       <div className={styles.BooksList}>
-        {filteredBooks.length > 0 ? (
-          filteredBooks.map((book, index) => (
-            <Book
-              key={index}
-              title={book.title}
-              description={book.description}
-              location={book.location}
-              imageURL={book.imageURL}
-            />
-          ))
-        ) : (
-          <p className={styles.noMatch}>
-            No books found matching "{searchQuery}".
-          </p>
-        )}
+        {books.map((book) => (
+          <div className={styles.cardWrap} key={book.id}>
+            <BookCard book={book} onCardClick={(b) => setSelectedBookId(b.id)} />
+          </div>
+        ))}
       </div>
-    </section>
+
+      <BookModal
+        bookId={selectedBookId}
+        open={selectedBookId !== null}
+        onClose={() => setSelectedBookId(null)}
+      />
+    </>
   );
 }

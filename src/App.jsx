@@ -10,7 +10,6 @@ import ReserveSeat from "@/pages/SeatReserve";
 import FeedBack from "@/pages/Feedback";
 import Mainpage from "@/pages/Home/Mainpage";
 import RightsReserved from "@/components/layout/Footer";
-import { SearchProvider } from "@/context/SearchContext";
 import ProfileList from "@/pages/Profile/ProfileList";
 import Profile from "@/pages/Profile/Profile";
 import Billings from "@/pages/Billings";
@@ -66,7 +65,6 @@ export default function App() {
   return (
     <ConfigProvider theme={antdTheme}>
       <BrowserRouter>
-        <SearchProvider>
           <Navi />
           <main>
             <Routes>
@@ -126,7 +124,6 @@ export default function App() {
             </Routes>
           </main>
           <RightsReserved />
-        </SearchProvider>
       </BrowserRouter>
     </ConfigProvider>
   );

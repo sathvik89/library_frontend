@@ -52,8 +52,11 @@ export default function StudentDashboard() {
     setProfileOpen((prev) => !prev);
   }
 
+  // The dashboard only shows the 8 newest titles, so searching here hands the
+  // query to the catalogue page, which does it properly against the API.
   function handleSearch() {
-    // filtering is handled by the Books list below
+    const q = inputValue.trim();
+    navigate(q ? `/ViewAllBooks?search=${encodeURIComponent(q)}` : "/ViewAllBooks");
   }
 
   const activeLoans =

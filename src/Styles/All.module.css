@@ -1,87 +1,130 @@
+/* "All books" — a slice of the real catalogue; full list is on /ViewAllBooks. */
+
 .containerAllbook {
   width: 100%;
   padding: 0;
   background: transparent;
 }
+
 .headerRow {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
+  gap: var(--ru-space-3);
   margin-bottom: var(--ru-space-4);
 }
 
-.viewAllBtn {
-  /* No overriding your global button styles */
-  margin-right: 15px; /* small clean spacing */
+.countNote {
+  font-size: var(--ru-text-xs);
+  color: var(--ru-ink-faint);
 }
 
-.headingAll {
-  color: var(--maroon-primary);
-  font-size: 1.8rem;
-  margin-bottom: 1.5rem;
-  text-align: center;
-  white-space: nowrap;
+.viewAllBtn {
+  margin-left: auto;
 }
 
 .bookCard {
   display: flex;
   flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 1rem;
-  background-color: var(--white);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 1rem;
-  margin-bottom: 1rem;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  min-width: 320px;
-  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--ru-space-4);
+  background-color: var(--ru-surface);
+  border: 1px solid var(--ru-border);
+  border-radius: var(--ru-radius);
+  box-shadow: var(--ru-shadow-sm);
+  padding: var(--ru-space-4);
+  margin-bottom: var(--ru-space-3);
+  cursor: pointer;
+  transition: transform var(--ru-transition), box-shadow var(--ru-transition),
+    border-color var(--ru-transition);
 }
 
 .bookCard:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+  border-color: var(--ru-maroon-200);
+  box-shadow: var(--ru-shadow-md);
 }
 
-.bookimages img {
-  width: 120px;
-  height: 160px;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  border: 2px solid rgb(113, 7, 7);
-  transition: transform 0.5s ease, opacity 0.3s ease;
+.bookimages img,
+.noCover {
+  width: 92px;
+  height: 132px;
+  flex-shrink: 0;
+  border-radius: var(--ru-radius-sm);
+  object-fit: cover;
+  border: 1px solid var(--ru-skin-300);
+  transition: transform var(--ru-transition);
+}
+
+.noCover {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ru-skin-200);
+  color: var(--ru-maroon-200);
+  font-size: 1.5rem;
 }
 
 .bookCard:hover .bookimages img {
-  transform: scale(1.05);
-  opacity: 0.9;
+  transform: scale(1.03);
 }
 
 .bookdesci {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  color: var(--grey-dark);
   flex: 1;
-  min-width: 200px;
+  min-width: 0;
+  gap: var(--ru-space-1);
 }
 
 .bookTitle {
-  font-size: 1.2rem;
-  color: var(--maroon-primary);
-  margin-bottom: 0.5rem;
+  font-size: var(--ru-text-lg);
+  color: var(--ru-maroon-800);
+  margin-bottom: var(--ru-space-1);
 }
 
 .bookDescription {
-  font-size: 0.9rem;
-  color: var(--grey-dark);
-  margin-bottom: 0.5rem;
+  font-size: var(--ru-text-sm);
+  color: var(--ru-ink-soft);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .bookDetails {
-  font-size: 0.85rem;
-  color: var(--black);
+  font-size: var(--ru-text-xs);
+  color: var(--ru-ink-faint);
+}
+
+.bookDetails strong {
+  color: var(--ru-ink-soft);
+}
+
+.available,
+.unavailable {
+  font-size: var(--ru-text-xs);
+  font-weight: 600;
+  margin-top: var(--ru-space-1);
+}
+
+.available {
+  color: var(--ru-success);
+}
+
+.unavailable {
+  color: var(--ru-danger);
+}
+
+.stateBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  background: var(--ru-skin-50);
+  border: 1px dashed var(--ru-skin-300);
+  border-radius: var(--ru-radius);
 }
 
 @media (max-width: 768px) {
@@ -89,25 +132,9 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    min-width: 280px;
-  }
-
-  .bookimages img {
-    width: 100px;
-    height: 140px;
   }
 
   .bookdesci {
-    padding-left: 0;
-    margin-top: 0.5rem;
-  }
-
-  .bookTitle {
-    font-size: 1.1rem;
-  }
-
-  .bookDescription,
-  .bookDetails {
-    font-size: 0.85rem;
+    align-items: center;
   }
 }

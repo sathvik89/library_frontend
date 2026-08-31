@@ -7,6 +7,7 @@ export default function Search({ value, onChange, onSearch }) {
         placeholder=" Search for a book..."
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        onKeyDown={(e) => e.key === "Enter" && onSearch()}
         className={styles.searchInput}
       />
       <button onClick={onSearch} className={styles.searchButton}>
