@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "@/Styles/Login.module.css";
+import styles from "@/Styles/Signup.module.css";
 import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
 
 import PreviousButton from "@/components/common/PreviousButton";
@@ -72,135 +72,152 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   }
 
   return (
-    <main className={styles.mainLogin}>
+    <main className={styles.mainSignup}>
       <section>
         <img src={RU} alt="" className={styles.imageRU} />
-        <h1 className={styles.titleLogin}>
-          Library Management System - Sign Up
-        </h1>
-        <form onSubmit={handleSubmit} className={styles.formLogin}>
-          <label htmlFor="username">
-            Username:
-            <input
-              id="username"
-              type="text"
-              value={username}
-              placeholder="Enter your username"
-              onChange={(e) => setUsername(e.target.value)}
-              disabled={loading}
-              name="username"
-            />
-          </label>
-          <br />
-          <label htmlFor="email">
-            Email:
-            <input
-              id="email"
-              type="email"
-              value={email}
-              placeholder="Enter your email"
-              onChange={(e) => setEmail(e.target.value)}
-              disabled={loading}
-              name="email"
-            />
-          </label>
-          <br />
-          <label htmlFor="password">
-  Password:
-  <div className={styles.passwordWrapper}>
-    <input
-      id="password"
-      type={showPassword ? "text" : "password"}
-      value={password}
-      placeholder="Set Password"
-      onChange={(e) => setPassword(e.target.value)}
-      disabled={loading}
-      name="password"
-    />
+        <h1 className={styles.titleSignup}>Create your account</h1>
+        <p className={styles.subtitle}>
+          Library Management System &middot; Rishihood University
+        </p>
 
-    <span
-      className={styles.eyeIcon}
-      onClick={() => setShowPassword(!showPassword)}
-    >
-      {showPassword ? <EyeInvisibleOutlined /> : <EyeOutlined />}
-    </span>
-  </div>
-</label>
-<label htmlFor="confirmPassword">
-  Confirm Password:
-  <div className={styles.passwordWrapper}>
-    <input
-      id="confirmPassword"
-      type={showConfirmPassword ? "text" : "password"}
-      value={confirmPassword}
-      placeholder="Confirm your password"
-      onChange={(e) => setConfirmPassword(e.target.value)}
-      disabled={loading}
-      name="confirmPassword"
-    />
+        <form onSubmit={handleSubmit} className={styles.formSignup}>
+          <div className={styles.grid}>
+            <label htmlFor="username" className={styles.field}>
+              Username
+              <input
+                id="username"
+                type="text"
+                value={username}
+                placeholder="Enter your username"
+                onChange={(e) => setUsername(e.target.value)}
+                disabled={loading}
+                name="username"
+              />
+            </label>
 
-    <span
-      className={styles.eyeIcon}
-      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-    >
-      {showConfirmPassword ? <EyeInvisibleOutlined /> : <EyeOutlined />}
-    </span>
-  </div>
-</label>
+            <label htmlFor="email" className={styles.field}>
+              Email
+              <input
+                id="email"
+                type="email"
+                value={email}
+                placeholder="Enter your email"
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={loading}
+                name="email"
+              />
+            </label>
 
+            <label htmlFor="password" className={styles.field}>
+              Password
+              <div className={styles.passwordWrapper}>
+                <input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  placeholder="Set password"
+                  onChange={(e) => setPassword(e.target.value)}
+                  disabled={loading}
+                  name="password"
+                />
+                <span
+                  className={styles.eyeIcon}
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+                </span>
+              </div>
+            </label>
 
-          <br />
-          <label htmlFor="phone">
-            Phone (optional):
-            <input
-              id="phone"
-              type="tel"
-              value={phone}
-              placeholder="Enter your phone"
-              onChange={(e) => setPhone(e.target.value)}
-              disabled={loading}
-              name="phone"
-            />
-          </label>
-          <br />
-          <label htmlFor="rollNo">
-            Roll Number (optional):
-            <input
-              id="rollNo"
-              type="number"
-              value={rollNo}
-              placeholder="Enter your roll number"
-              onChange={(e) => setRollNo(e.target.value)}
-              disabled={loading}
-              name="rollNo"
-            />
-          </label>
-          <br />
-          <label htmlFor="role">
-            Role (optional):
-            <select
-              id="role"
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              disabled={loading}
-              name="role"
+            <label htmlFor="confirmPassword" className={styles.field}>
+              Confirm password
+              <div className={styles.passwordWrapper}>
+                <input
+                  id="confirmPassword"
+                  type={showConfirmPassword ? "text" : "password"}
+                  value={confirmPassword}
+                  placeholder="Confirm your password"
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  disabled={loading}
+                  name="confirmPassword"
+                />
+                <span
+                  className={styles.eyeIcon}
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                >
+                  {showConfirmPassword ? (
+                    <EyeInvisibleOutlined />
+                  ) : (
+                    <EyeOutlined />
+                  )}
+                </span>
+              </div>
+            </label>
+
+            <div className={styles.divider} />
+
+            <label htmlFor="phone" className={styles.field}>
+              <span className={styles.labelText}>
+                Phone <span className={styles.optional}>(optional)</span>
+              </span>
+              <input
+                id="phone"
+                type="tel"
+                value={phone}
+                placeholder="Enter your phone"
+                onChange={(e) => setPhone(e.target.value)}
+                disabled={loading}
+                name="phone"
+              />
+            </label>
+
+            <label htmlFor="rollNo" className={styles.field}>
+              <span className={styles.labelText}>
+                Roll number <span className={styles.optional}>(optional)</span>
+              </span>
+              <input
+                id="rollNo"
+                type="number"
+                value={rollNo}
+                placeholder="Enter your roll number"
+                onChange={(e) => setRollNo(e.target.value)}
+                disabled={loading}
+                name="rollNo"
+              />
+            </label>
+
+            <label
+              htmlFor="role"
+              className={`${styles.field} ${styles.fullWidth}`}
             >
-              <option value="">Select role</option>
-              <option value="STUDENT">Student</option>
-              <option value="ADMIN">Admin</option>
-              <option value="LIBRARIAN">Librarian</option>
-            </select>
-          </label>
-          <br />
-          <button
-            type="submit"
-            className={styles.Loginsubmit}
-            disabled={loading}
-          >
-            {loading ? "Signing up..." : "Sign Up"}
-          </button>
+              <span className={styles.labelText}>
+                Role <span className={styles.optional}>(optional)</span>
+              </span>
+              <select
+                id="role"
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                disabled={loading}
+                name="role"
+              >
+                <option value="">Select role</option>
+                <option value="STUDENT">Student</option>
+                <option value="ADMIN">Admin</option>
+                <option value="LIBRARIAN">Librarian</option>
+              </select>
+            </label>
+
+            <button
+              type="submit"
+              className={styles.Signupsubmit}
+              disabled={loading}
+            >
+              {loading ? "Signing up..." : "Sign Up"}
+            </button>
+          </div>
         </form>
-        <div style={{ marginTop: "20px" }}>
+
+        <div className={styles.footerRow}>
           <PreviousButton navi={"/"} />
         </div>
       </section>

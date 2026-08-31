@@ -1,0 +1,191 @@
+/* Signup has seven fields. Login's single 400px column made that a long
+   scroll, so this lays them out two-up on a wider card. */
+
+.mainSignup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 94vh;
+  background-color: var(--ru-bg);
+  padding: var(--ru-space-6) var(--ru-space-5);
+  animation: fadeIn 0.5s ease-out;
+}
+
+.mainSignup > section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.imageRU {
+  position: absolute;
+  top: var(--ru-space-5);
+  right: var(--ru-space-5);
+  width: auto;
+  max-width: 160px;
+  height: auto;
+  object-fit: contain;
+}
+
+.titleSignup {
+  color: var(--ru-maroon-800);
+  font-size: var(--ru-text-3xl);
+  margin-bottom: var(--ru-space-2);
+  text-align: center;
+}
+
+.subtitle {
+  color: var(--ru-ink-soft);
+  font-size: var(--ru-text-sm);
+  margin-bottom: var(--ru-space-5);
+  text-align: center;
+}
+
+.formSignup {
+  background-color: var(--ru-surface);
+  border: 1px solid var(--ru-border);
+  padding: var(--ru-space-6);
+  border-radius: var(--ru-radius-lg);
+  box-shadow: var(--ru-shadow-md);
+  width: 100%;
+  max-width: 720px;
+}
+
+/* Two columns of fields; .fullWidth items span both. */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--ru-space-4) var(--ru-space-5);
+}
+
+.fullWidth {
+  grid-column: 1 / -1;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ru-space-2);
+  font-size: var(--ru-text-sm);
+  font-weight: 500;
+  color: var(--ru-ink);
+}
+
+/* Keeps "Phone (optional)" on one line -- a bare text node beside a span
+   would each become their own flex item in the column layout. */
+.labelText {
+  display: inline;
+}
+
+.optional {
+  color: var(--ru-ink-faint);
+  font-weight: 400;
+}
+
+.formSignup input,
+.formSignup select {
+  width: 100%;
+  margin: 0;
+  padding: 0.6rem 0.75rem;
+  font-size: var(--ru-text-sm);
+  border: 1px solid var(--ru-border);
+  border-radius: var(--ru-radius-sm);
+  background: var(--ru-white);
+  transition: border-color var(--ru-transition), box-shadow var(--ru-transition);
+}
+
+.formSignup input:focus,
+.formSignup select:focus {
+  border-color: var(--ru-primary);
+  box-shadow: var(--ru-ring);
+  outline: none;
+}
+
+.passwordWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.passwordWrapper input {
+  padding-right: 38px;
+}
+
+.eyeIcon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 16px;
+  color: var(--ru-ink-faint);
+  user-select: none;
+}
+
+.eyeIcon:hover {
+  color: var(--ru-primary);
+}
+
+.divider {
+  grid-column: 1 / -1;
+  height: 1px;
+  background: var(--ru-border);
+  margin: var(--ru-space-2) 0;
+}
+
+.Signupsubmit {
+  grid-column: 1 / -1;
+  width: 100%;
+  padding: 0.7rem;
+  margin-top: var(--ru-space-2);
+  font-size: var(--ru-text-base);
+  font-weight: 600;
+  color: var(--ru-on-primary);
+  background-color: var(--ru-primary);
+  border: none;
+  border-radius: var(--ru-radius-sm);
+  cursor: pointer;
+  transition: background-color var(--ru-transition);
+}
+
+.Signupsubmit:hover:not(:disabled) {
+  background-color: var(--ru-primary-hover);
+}
+
+.footerRow {
+  margin-top: var(--ru-space-5);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: var(--ru-space-3);
+  }
+
+  .titleSignup {
+    font-size: var(--ru-text-2xl);
+  }
+
+  .formSignup {
+    padding: var(--ru-space-5);
+  }
+
+  /* No room to float the crest on a phone -- put it above the title. */
+  .imageRU {
+    position: static;
+    max-width: 130px;
+    margin: 0 auto var(--ru-space-4);
+  }
+}
