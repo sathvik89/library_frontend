@@ -10,15 +10,15 @@ import ReserveSeat from "@/pages/SeatReserve";
 import FeedBack from "@/pages/Feedback";
 import Mainpage from "@/pages/Home/Mainpage";
 import RightsReserved from "@/components/layout/Footer";
-import ProfileList from "@/pages/Profile/ProfileList";
 import Profile from "@/pages/Profile/Profile";
 import Billings from "@/pages/Billings";
 import Settings from "@/pages/Settings/Settings";
 import Historyy from "@/pages/History";
+import Notifications from "@/pages/Notifications";
 import ProfileEdit from "@/pages/Profile/ProfileEdit";
 import AccountSettings from "@/pages/Settings/AccountSettings";
 import SubscriptionDetails from "@/pages/Settings/SubscriptionDetails";
-import Notifications from "@/pages/Settings/Notifications";
+import NotificationSettings from "@/pages/Settings/Notifications";
 import PrivacyPassword from "@/pages/Settings/PrivacyPassword";
 import AdminDashboard from "@/pages/Dashboard/Admin/AdminDashboard";
 import LibrarianDashboard from "@/pages/Dashboard/Librarian/LibrarianDashboard";
@@ -108,7 +108,6 @@ export default function App() {
                 }
               />
               <Route path="/feedback" element={<FeedBack />} />
-              <Route path="/MenuList" element={<ProfileList />} />
 
               <Route path="/profile" element={<Profile />} />
               <Route path="/profileEdit" element={<ProfileEdit />} />
@@ -116,10 +115,11 @@ export default function App() {
 
               <Route path="/billings" element={<Billings />} />
               <Route path="/history" element={<Historyy />} />
+              <Route path="/notifications" element={<Notifications />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="/settings/account" element={<AccountSettings />} />
               <Route path="/settings/subscription" element={<SubscriptionDetails />} />
-              <Route path="/settings/notifications" element={<Notifications />} />
+              <Route path="/settings/notifications" element={<NotificationSettings />} />
               <Route path="/settings/privacy" element={<PrivacyPassword />} />
             </Routes>
           </main>

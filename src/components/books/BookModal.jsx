@@ -11,6 +11,7 @@ import {
 import { toast } from "react-hot-toast";
 import { getBookById } from "@/api/services/bookService";
 import { reserveBook } from "@/api/services/reservationService";
+import { getUserId } from "@/utils/getRole";
 import styles from "@/Styles/BookModal.module.css";
 
 const { Title, Paragraph } = Typography;
@@ -19,6 +20,12 @@ function BookModal({ bookId, open, onClose }) {
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(false);
   const [reserving, setReserving] = useState(false);
+
+  // Your own hold on this book, if you have one.
+  const myId = getUserId();
+  const myReservation = book?.reservations?.find(
+    (r) => r.userID === myId && r.isActive
+  );
 
   const fetchBookDetails = useCallback(async () => {
     if (!bookId) return;
@@ -69,6 +76,13 @@ function BookModal({ bookId, open, onClose }) {
       if (response.data?.success) {
         const successMsg = response.data?.message || "Book reserved successfully!";
         toast.success(successMsg);
+
+        // Flip the button straight away instead of waiting for a reload.
+        setBook((prev) =>
+          prev
+            ? { ...prev, reservations: [...(prev.reservations || []), response.data.data] }
+            : prev
+        );
       } else {
         const errorMsg = response.data?.message || "Failed to reserve book.";
         toast.error(errorMsg);
@@ -201,16 +215,29 @@ function BookModal({ bookId, open, onClose }) {
 
 
             <div style={{ marginTop: "16px" }}>
-              <Button
-                type="primary"
-                icon={<CheckCircleOutlined />}
-                onClick={handleReserveBook}
-                loading={reserving}
-                size="large"
-                block
-              >
-                Reserve Book
-              </Button>
+              {myReservation ? (
+                <div className={styles.reservedBox}>
+                  <span className={styles.reservedBadge}>
+                    <CheckCircleOutlined /> Reserved by you
+                  </span>
+                  <span className={styles.reservedNote}>
+                    {myReservation.queuePosition > 1
+                      ? `You are number ${myReservation.queuePosition} in the queue. We will let you know when it is ready.`
+                      : "Collect it from the library desk."}
+                  </span>
+                </div>
+              ) : (
+                <Button
+                  type="primary"
+                  icon={<CheckCircleOutlined />}
+                  onClick={handleReserveBook}
+                  loading={reserving}
+                  size="large"
+                  block
+                >
+                  Reserve Book
+                </Button>
+              )}
             </div>
 
           {book.description && (

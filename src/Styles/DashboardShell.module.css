@@ -321,3 +321,33 @@
     padding: var(--ru-space-4);
   }
 }
+
+/* Tiles that open something get a hover lift and a "View" cue. */
+.statCardButton {
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  width: 100%;
+}
+
+.statCardButton:hover {
+  border-color: var(--ru-maroon-200);
+  box-shadow: var(--ru-shadow-md);
+}
+
+.statMore {
+  position: absolute;
+  top: var(--ru-space-4);
+  right: var(--ru-space-4);
+  font-size: var(--ru-text-xs);
+  font-weight: 600;
+  color: var(--ru-primary);
+  opacity: 0;
+  transition: opacity var(--ru-transition);
+}
+
+.statCardButton:hover .statMore,
+.statCardButton:focus-visible .statMore {
+  opacity: 1;
+}

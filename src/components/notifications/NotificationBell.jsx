@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Badge, Button, Drawer, Empty, Spin } from "antd";
 import { BellOutlined } from "@ant-design/icons";
 import { toast } from "react-hot-toast";
@@ -7,33 +8,11 @@ import {
   markAllNotificationsRead,
   markNotificationRead,
 } from "@/api/services/notificationService";
+import MessageList from "@/components/notifications/MessageList";
 import styles from "@/Styles/NotificationBell.module.css";
 
-// "2 hours ago", "Yesterday", "12 Sept" — whichever reads most naturally.
-function whenText(date) {
-  const then = new Date(date);
-  const mins = Math.round((Date.now() - then) / 60000);
-
-  if (mins < 1) return "Just now";
-  if (mins < 60) return `${mins} minute${mins === 1 ? "" : "s"} ago`;
-
-  const hours = Math.round(mins / 60);
-  if (hours < 24) return `${hours} hour${hours === 1 ? "" : "s"} ago`;
-
-  const days = Math.round(hours / 24);
-  if (days === 1) return "Yesterday";
-  if (days < 7) return `${days} days ago`;
-
-  return then.toLocaleDateString(undefined, { day: "numeric", month: "short" });
-}
-
-const KIND = {
-  BOOKING_REMINDER: { label: "Reservation", className: "kindReservation" },
-  DUE_REMINDER: { label: "Your books", className: "kindBooks" },
-  ANNOUNCEMENT: { label: "Library news", className: "kindNews" },
-};
-
 export default function NotificationBell() {
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState([]);
   const [unread, setUnread] = useState(0);
@@ -99,25 +78,6 @@ export default function NotificationBell() {
   const fresh = items.filter((n) => !n.isRead);
   const earlier = items.filter((n) => n.isRead);
 
-  const renderItem = (item) => {
-    const kind = KIND[item.type] ?? KIND.ANNOUNCEMENT;
-    return (
-      <li
-        key={item.notificationID}
-        className={`${styles.item} ${item.isRead ? "" : styles.itemNew}`}
-        onClick={() => handleRead(item)}
-      >
-        <div className={styles.itemHead}>
-          <span className={`${styles.kind} ${styles[kind.className]}`}>
-            {kind.label}
-          </span>
-          <span className={styles.when}>{whenText(item.scheduledTime)}</span>
-        </div>
-        <p className={styles.message}>{item.messagePayload}</p>
-      </li>
-    );
-  };
-
   return (
     <>
       <button
@@ -168,15 +128,25 @@ export default function NotificationBell() {
             {fresh.length > 0 && (
               <section className={styles.group}>
                 <h4 className={styles.groupTitle}>New</h4>
-                <ul className={styles.list}>{fresh.map(renderItem)}</ul>
+                <MessageList items={fresh.slice(0, 5)} onRead={handleRead} />
               </section>
             )}
             {earlier.length > 0 && (
               <section className={styles.group}>
                 <h4 className={styles.groupTitle}>Earlier</h4>
-                <ul className={styles.list}>{earlier.map(renderItem)}</ul>
+                <MessageList items={earlier.slice(0, 3)} />
               </section>
             )}
+
+            <Button
+              block
+              onClick={() => {
+                setOpen(false);
+                navigate("/notifications");
+              }}
+            >
+              See all notifications
+            </Button>
           </>
         )}
       </Drawer>

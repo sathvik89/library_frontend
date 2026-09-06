@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "@/Styles/DashboardShell.module.css";
-import Logoutbutton from "@/components/common/Logoutbutton";
+import AccountMenu from "@/components/layout/AccountMenu";
 import NotificationBell from "@/components/notifications/NotificationBell";
 import logo from "@/assets/images/books/RULOGO.png";
 
@@ -32,11 +32,10 @@ export default function DashboardShell({
         <div className={styles.topbarSpacer} />
 
         <div className={styles.topbarActions}>
-          {userName && <span className={styles.userName}>{userName}</span>}
+          {role && <span className={styles.rolePill}>{role}</span>}
           {actions}
           <NotificationBell />
-          {role && <span className={styles.rolePill}>{role}</span>}
-          <Logoutbutton variant="ghost" />
+          <AccountMenu userName={userName} role={role} />
         </div>
       </header>
 
@@ -56,9 +55,10 @@ export default function DashboardShell({
 }
 
 /** A single headline number. Shows a shimmer while `value` is null. */
-export function StatCard({ label, value, hint }) {
-  return (
-    <div className={styles.statCard}>
+// Give it an onClick and it becomes a button that opens the detail behind it.
+export function StatCard({ label, value, hint, onClick }) {
+  const body = (
+    <>
       <div className={styles.statLabel}>{label}</div>
       <div className={styles.statValue}>
         {value === null || value === undefined ? (
@@ -68,7 +68,20 @@ export function StatCard({ label, value, hint }) {
         )}
       </div>
       {hint && <div className={styles.statHint}>{hint}</div>}
-    </div>
+      {onClick && <span className={styles.statMore}>View</span>}
+    </>
+  );
+
+  if (!onClick) return <div className={styles.statCard}>{body}</div>;
+
+  return (
+    <button
+      type="button"
+      className={`${styles.statCard} ${styles.statCardButton}`}
+      onClick={onClick}
+    >
+      {body}
+    </button>
   );
 }
 

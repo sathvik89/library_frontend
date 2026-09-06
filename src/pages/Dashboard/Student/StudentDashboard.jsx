@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Books from "@/pages/Books/Books.jsx";
 import Search from "@/components/common/Search.jsx";
@@ -9,7 +9,6 @@ import Rules from "@/components/widgets/Rules.jsx";
 import LibraryTimings from "@/components/widgets/LibraryTimings.jsx";
 import PresentDay from "@/components/widgets/PresentDay.jsx";
 import News from "@/components/widgets/News.jsx";
-import ProfileList from "@/pages/Profile/ProfileList.jsx";
 import DashboardShell, {
   Section,
   StatCard,
@@ -21,38 +20,31 @@ import {
   HistoryOutlined,
   MessageOutlined,
 } from "@ant-design/icons";
+import { Modal } from "antd";
 import MyLoans from "@/components/loans/MyLoans";
+import MyReservations from "@/components/loans/MyReservations";
 import { getCurrentUser } from "@/api/services/authService";
 import styles from "@/Styles/StudentDashboard.module.css";
-import profile from "@/assets/images/books/ProfileIcon.png";
-
-export const myMenuContext = createContext();
 
 export default function StudentDashboard() {
   const navigate = useNavigate();
-  const [profileOpen, setProfileOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [me, setMe] = useState(null);
   const [loanSummary, setLoanSummary] = useState(null);
+  const [panel, setPanel] = useState(null); // which tile was opened
 
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      try {
-        const res = await getCurrentUser();
-        if (!cancelled) setMe(res.data);
-      } catch {
-        /* stats fall back to zero */
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
+  const loadMe = useCallback(async () => {
+    try {
+      const res = await getCurrentUser();
+      setMe(res.data);
+    } catch {
+      /* stats fall back to zero */
+    }
   }, []);
 
-  function handleShow() {
-    setProfileOpen((prev) => !prev);
-  }
+  useEffect(() => {
+    loadMe();
+  }, [loadMe]);
 
   // The dashboard only shows the 8 newest titles, so searching here hands the
   // query to the catalogue page, which does it properly against the API.
@@ -66,7 +58,6 @@ export default function StudentDashboard() {
   const outstandingFine = loanSummary?.outstandingFine ?? 0;
   const reservations =
     me?.reservations?.filter((r) => r.isActive).length ?? null;
-  const seatBookings = me?.seatBookings?.length ?? null;
   const unread =
     me?.notifications?.filter((n) => !n.isRead).length ?? null;
 
@@ -79,39 +70,32 @@ export default function StudentDashboard() {
       subtitle="Your borrowings, the catalogue and everything happening in the library today."
       role={me?.role ?? "STUDENT"}
       userName={me?.userName}
-      actions={
-        <div className={styles.profileWrap}>
-          <button
-            onClick={handleShow}
-            className={styles.profileButton}
-            aria-label="Open profile menu"
-            aria-expanded={profileOpen}
-          >
-            <img src={profile} alt="" />
-          </button>
-          <myMenuContext.Provider value={{ handleShow }}>
-            {profileOpen && (
-              <div className={styles.profileMenu}>
-                <ProfileList />
-              </div>
-            )}
-          </myMenuContext.Provider>
-        </div>
-      }
     >
       <StatRow>
         <StatCard
           label="Books you have"
           value={activeLoans}
-          hint={
-            overdueLoans > 0
-              ? `${overdueLoans} late · ₹${outstandingFine} to pay`
-              : "borrowed right now"
-          }
+          hint={overdueLoans > 0 ? `${overdueLoans} of them late` : "borrowed right now"}
+          onClick={() => setPanel("loans")}
         />
-        <StatCard label="Books you reserved" value={reservations} hint="waiting for you" />
-        <StatCard label="Seats you booked" value={seatBookings} />
-        <StatCard label="New messages" value={unread} hint="not read yet" />
+        <StatCard
+          label="Books you reserved"
+          value={reservations}
+          hint="waiting for you"
+          onClick={() => setPanel("reservations")}
+        />
+        <StatCard
+          label="Late fee"
+          value={outstandingFine === null ? null : `₹${outstandingFine}`}
+          hint={outstandingFine > 0 ? "pay at the desk" : "nothing owed"}
+          onClick={() => setPanel("loans")}
+        />
+        <StatCard
+          label="Messages"
+          value={unread}
+          hint="not read yet"
+          onClick={() => navigate("/notifications")}
+        />
       </StatRow>
 
       {/* Search + today, side by side */}
@@ -212,6 +196,26 @@ export default function StudentDashboard() {
           <Help />
         </Section>
       </div>
+      <Modal
+        open={panel === "loans"}
+        onCancel={() => setPanel(null)}
+        title="Books you have"
+        footer={null}
+        width={620}
+      >
+        <MyLoans onSummary={setLoanSummary} />
+      </Modal>
+
+      <Modal
+        open={panel === "reservations"}
+        onCancel={() => setPanel(null)}
+        title="Books you reserved"
+        footer={null}
+        width={620}
+      >
+        <MyReservations reservations={me?.reservations} onChanged={loadMe} />
+      </Modal>
+
     </DashboardShell>
   );
 }

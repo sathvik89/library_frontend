@@ -104,3 +104,30 @@
   }
 }
 
+
+/* Shown instead of the reserve button once you already hold this book. */
+.reservedBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ru-space-2);
+  padding: var(--ru-space-4);
+  background: var(--ru-success-bg);
+  border: 1px solid var(--ru-success);
+  border-radius: var(--ru-radius-sm);
+  text-align: center;
+}
+
+.reservedBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ru-space-2);
+  font-size: var(--ru-text-base);
+  font-weight: 600;
+  color: var(--ru-success);
+}
+
+.reservedNote {
+  font-size: var(--ru-text-sm);
+  color: var(--ru-ink-soft);
+}

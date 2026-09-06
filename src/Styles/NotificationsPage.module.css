@@ -1,0 +1,68 @@
+/* Messages, on their own page. */
+
+.page {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: var(--ru-space-6) var(--ru-space-5) var(--ru-space-7);
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--ru-space-4);
+  margin-bottom: var(--ru-space-5);
+}
+
+.eyebrow {
+  font-size: var(--ru-text-xs);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ru-primary);
+  margin-bottom: var(--ru-space-2);
+}
+
+.heading {
+  font-size: var(--ru-text-3xl);
+  color: var(--ru-maroon-900);
+  margin-bottom: var(--ru-space-2);
+}
+
+.sub {
+  font-size: var(--ru-text-base);
+  color: var(--ru-ink-soft);
+}
+
+.logo {
+  max-width: 130px;
+  height: auto;
+  flex-shrink: 0;
+}
+
+.card {
+  background: var(--ru-surface);
+  border: 1px solid var(--ru-border);
+  border-radius: var(--ru-radius-lg);
+  box-shadow: var(--ru-shadow-sm);
+  padding: var(--ru-space-5);
+}
+
+.footerRow {
+  margin-top: var(--ru-space-5);
+}
+
+@media (max-width: 768px) {
+  .page {
+    padding: var(--ru-space-5) var(--ru-space-4) var(--ru-space-6);
+  }
+  .heading {
+    font-size: var(--ru-text-2xl);
+  }
+  .logo {
+    max-width: 90px;
+  }
+  .card {
+    padding: var(--ru-space-4);
+  }
+}

@@ -15,3 +15,14 @@ export function getUserRole() {
   }
 }
 
+
+export function getUserId() {
+  try {
+    const token = localStorage.getItem("token");
+    if (!token) return null;
+    return jwtDecode(token).userID ?? null;
+  } catch (error) {
+    console.error("Error decoding token:", error);
+    return null;
+  }
+}

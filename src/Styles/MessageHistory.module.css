@@ -1,0 +1,45 @@
+/* The full message record shown on the dashboard. */
+
+.groupHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ru-space-3);
+  margin-bottom: var(--ru-space-3);
+}
+
+.groupTitle {
+  font-size: var(--ru-text-xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ru-ink-faint);
+  margin: 0;
+}
+
+.earlierTitle {
+  margin: var(--ru-space-5) 0 var(--ru-space-3);
+}
+
+/* Keeps a long history from stretching the page. */
+.scroll {
+  max-height: 420px;
+  overflow-y: auto;
+  padding-right: var(--ru-space-2);
+}
+
+.stateBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  background: var(--ru-skin-50);
+  border: 1px dashed var(--ru-skin-300);
+  border-radius: var(--ru-radius);
+  text-align: center;
+}
+
+.hint {
+  font-size: var(--ru-text-xs);
+  color: var(--ru-ink-faint);
+}

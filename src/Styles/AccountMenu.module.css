@@ -1,0 +1,68 @@
+/* The account control in the top bar. */
+
+.trigger {
+  display: flex;
+  align-items: center;
+  gap: var(--ru-space-2);
+  padding: 4px 10px 4px 4px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: var(--ru-radius-pill);
+  cursor: pointer;
+  transition: background-color var(--ru-transition), border-color var(--ru-transition);
+}
+
+.trigger:hover {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: var(--ru-white);
+  box-shadow: none;
+}
+
+.avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--ru-radius-pill);
+  object-fit: cover;
+  background: var(--ru-white);
+}
+
+.name {
+  font-size: var(--ru-text-sm);
+  font-weight: 600;
+  color: var(--ru-white);
+  max-width: 130px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chevron {
+  font-size: 10px;
+  color: var(--ru-maroon-200);
+}
+
+.who {
+  display: flex;
+  flex-direction: column;
+  padding: 2px 0;
+}
+
+.who strong {
+  color: var(--ru-ink);
+  font-size: var(--ru-text-sm);
+}
+
+.who span {
+  font-size: var(--ru-text-xs);
+  color: var(--ru-ink-faint);
+  text-transform: capitalize;
+}
+
+@media (max-width: 768px) {
+  .name {
+    display: none;
+  }
+  .trigger {
+    padding: 4px 8px 4px 4px;
+  }
+}
