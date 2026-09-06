@@ -8,3 +8,15 @@ export const reserveBook = async (bookId) => {
   return response;
 };
 
+
+/** The holds queue — staff only. */
+export const getReservations = async (params = {}) => {
+  setupAxiosHeaders();
+  return axios.get(API_ENDPOINTS.RESERVATIONS.LIST, { params });
+};
+
+/** Cancel a hold. The holder or staff may do this. */
+export const cancelReservation = async (reservationId) => {
+  setupAxiosHeaders();
+  return axios.delete(API_ENDPOINTS.RESERVATIONS.CANCEL(reservationId));
+};

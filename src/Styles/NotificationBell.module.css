@@ -1,0 +1,85 @@
+/* Bell in the top bar, and the panel it opens. */
+
+.bell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border-radius: var(--ru-radius-pill);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  cursor: pointer;
+  transition: background-color var(--ru-transition), border-color var(--ru-transition);
+}
+
+.bell:hover {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: var(--ru-white);
+  box-shadow: none;
+}
+
+.bellIcon { color: var(--ru-white); font-size: 1rem; }
+
+.centre {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 240px;
+  text-align: center;
+}
+
+.hint { font-size: var(--ru-text-xs); color: var(--ru-ink-faint); }
+
+.group { margin-bottom: var(--ru-space-5); }
+
+.groupTitle {
+  font-size: var(--ru-text-xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ru-ink-faint);
+  margin-bottom: var(--ru-space-3);
+}
+
+.list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--ru-space-2); }
+
+.item {
+  padding: var(--ru-space-3);
+  background: var(--ru-surface);
+  border: 1px solid var(--ru-border);
+  border-radius: var(--ru-radius-sm);
+  cursor: default;
+}
+
+/* Unread messages get the maroon edge so the eye lands on them first. */
+.itemNew {
+  border-left: 3px solid var(--ru-primary);
+  background: var(--ru-maroon-50);
+  cursor: pointer;
+}
+
+.itemHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ru-space-2);
+  margin-bottom: var(--ru-space-2);
+}
+
+.kind {
+  font-size: var(--ru-text-xs);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 1px 8px;
+  border-radius: var(--ru-radius-pill);
+}
+
+.kindReservation { background: var(--ru-maroon-100); color: var(--ru-maroon-800); }
+.kindBooks { background: var(--ru-warning-bg); color: var(--ru-warning); }
+.kindNews { background: var(--ru-success-bg); color: var(--ru-success); }
+
+.when { font-size: var(--ru-text-xs); color: var(--ru-ink-faint); white-space: nowrap; }
+
+.message { font-size: var(--ru-text-sm); color: var(--ru-ink); line-height: 1.5; margin: 0; }

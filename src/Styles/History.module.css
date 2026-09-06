@@ -1,248 +1,159 @@
-.mainContainer {
-  min-height: 94.64vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
-  background: var(--app-background, #fdf1de);
-}
+/* Borrowing history — a real table of the member's loans. */
 
-.logoContainer {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 2.5rem;
-}
-
-.logo {
-  width: 240px;
-  height: auto;
-}
-
-.historyCard {
-  background-color: var(--app-background, #fdf1de);
-  width: 100%;
-  max-width: 600px;
-  border-radius: var(--radius, 18px);
-  padding: 1.2rem 1.1rem 1.1rem 1.1rem;
-  box-shadow: var(--shadow, 0 2px 8px rgba(0,0,0,0.08));
-  display: flex;
-  flex-direction: column;
-  border: 1px solid maroon;
-  align-items: center;
-}
-
-.headerSection {
-  background-color: var(--maroon-primary, #a51c30);
-  color: var(--white, #fff);
-  width: 100%;
-  text-align: center;
-  padding: 0.8rem 0.5rem;
-  border-radius: var(--radius, 12px);
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-bottom: 1.1rem;
-}
-
-.profileIcon {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-}
-
-.headerTitle {
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: var(--white, #fff);
-}
-
-.recentsLabel {
-  color: #a51c30;
-  font-size: 1.1rem;
-  font-weight: 500;
-  margin: 1.2rem 0 0.5rem 0.5rem;
-  align-self: flex-start;
-}
-
-.recentsScroll {
-  display: flex;
-  flex-direction: row;
-  gap: 1.2rem;
-  overflow-x: auto;
-  width: 100%;
-  padding-bottom: 0.7rem;
-  margin-bottom: 1.2rem;
-  scrollbar-width: thin;
-}
-
-.recentCard {
-  background: #e9d6c3;
-  border-radius: 16px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-  min-width: 320px;
-  max-width: 340px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 1rem 1.2rem;
-  gap: 1.1rem;
-  border: 1px solid #d6a1a1;
-}
-
-.bookImage {
-  width: 90px;
-  height: 120px;
-  border-radius: 8px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.09);
-}
-
-.bookDetails {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-}
-
-.bookTitle {
-  font-size: 1.15rem;
-  font-weight: bold;
-  color: #a51c30;
-}
-
-.bookMeta {
-  font-size: 0.98rem;
-  color: #3a2c1a;
-}
-
-.tableWrapper {
-  width: 100%;
-  margin-bottom: 1.1rem;
-  display: flex;
-  padding: 0.5rem;
-  justify-content: center;
-}
-
-.historyTable {
-  width: 98%;
-  max-width: 520px;
-  border-spacing: 0 0.4rem;
-  background: transparent;
+.page {
+  max-width: var(--ru-content-max);
   margin: 0 auto;
+  padding: var(--ru-space-6) var(--ru-space-5) var(--ru-space-7);
 }
 
-.historyTable th {
-  background: var(--maroon-primary, #a51c30);
-  color: var(--white, #fff);
-  font-size: 1.05rem;
-  font-weight: 500;
-  padding: 0.55rem 0.3rem;
-  text-align: center;
-  border: 1px solid white;
-  font-family: inherit;
-}
-
-.historyTable td {
-  background: #f0bfbf;
-  color: var(--maroon-dark, #3a2c1a);
-  font-size: 0.98rem;
-  padding: 0.5rem 0.3rem;
-  border: 1px solid maroon;
-  font-family: inherit;
-}
-
-.tableRow:not(:last-child) td {
-  border-bottom: 1px solid #d6a1a1;
-}
-
-.buttonSection {
+.header {
   display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--ru-space-4);
+  margin-bottom: var(--ru-space-5);
+}
+
+.eyebrow {
+  font-size: var(--ru-text-xs);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ru-primary);
+  margin-bottom: var(--ru-space-2);
+}
+
+.heading { font-size: var(--ru-text-3xl); color: var(--ru-maroon-900); margin-bottom: var(--ru-space-2); }
+.sub { font-size: var(--ru-text-base); color: var(--ru-ink-soft); }
+.logo { max-width: 140px; height: auto; flex-shrink: 0; }
+
+/* ---------- summary tiles ---------- */
+
+.summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--ru-space-4);
+  margin-bottom: var(--ru-space-6);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--ru-space-4);
+  background: var(--ru-surface);
+  border: 1px solid var(--ru-border);
+  border-left: 3px solid var(--ru-primary);
+  border-radius: var(--ru-radius);
+  box-shadow: var(--ru-shadow-sm);
+}
+
+.statBad { border-left-color: var(--ru-danger); }
+
+.statLabel {
+  font-size: var(--ru-text-xs);
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ru-ink-faint);
+}
+
+.statValue {
+  font-family: var(--ru-font-display);
+  font-size: var(--ru-text-2xl);
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--ru-maroon-800);
+  font-variant-numeric: tabular-nums;
+}
+
+.statBad .statValue { color: var(--ru-danger); }
+.statHint { font-size: var(--ru-text-xs); color: var(--ru-ink-faint); }
+
+/* ---------- sections ---------- */
+
+.section { margin-bottom: var(--ru-space-6); }
+
+.sectionTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--ru-space-3);
+  font-size: var(--ru-text-xl);
+  color: var(--ru-maroon-800);
+  margin-bottom: var(--ru-space-3);
+}
+
+.count {
+  font-family: var(--ru-font-body);
+  font-size: var(--ru-text-xs);
+  font-weight: 700;
+  color: var(--ru-on-primary);
+  background: var(--ru-primary);
+  border-radius: var(--ru-radius-pill);
+  padding: 1px 9px;
+}
+
+.emptyLine { font-size: var(--ru-text-sm); color: var(--ru-ink-faint); }
+
+.tableWrap {
+  overflow-x: auto;
+  background: var(--ru-surface);
+  border: 1px solid var(--ru-border);
+  border-radius: var(--ru-radius);
+  box-shadow: var(--ru-shadow-sm);
+}
+
+/* ---------- cells ---------- */
+
+.bookCell { display: flex; align-items: center; gap: var(--ru-space-3); min-width: 0; }
+
+.cover {
+  width: 38px;
+  height: 54px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
   justify-content: center;
-  margin: 0.7rem 0 0.2rem 0;
+  background: var(--ru-skin-100);
+  border: 1px solid var(--ru-skin-300);
+  border-radius: var(--ru-radius-sm);
+  overflow: hidden;
+}
+.cover img { width: 100%; height: 100%; object-fit: cover; }
+.coverIcon { color: var(--ru-maroon-200); }
+
+.bookText { display: flex; flex-direction: column; min-width: 0; }
+.bookText strong { font-size: var(--ru-text-sm); font-weight: 600; color: var(--ru-ink); }
+.bookText span { font-size: var(--ru-text-xs); color: var(--ru-ink-faint); }
+
+.barcode { font-size: var(--ru-text-xs); color: var(--ru-ink-faint); }
+.date { font-size: var(--ru-text-sm); color: var(--ru-ink-soft); white-space: nowrap; }
+
+.dueCell { display: flex; flex-direction: column; gap: 1px; }
+.dueOk { font-size: var(--ru-text-xs); color: var(--ru-ink-faint); }
+.dueSoon { font-size: var(--ru-text-xs); font-weight: 600; color: var(--ru-warning); }
+.dueOver { font-size: var(--ru-text-xs); font-weight: 700; color: var(--ru-danger); }
+
+.fine { font-size: var(--ru-text-sm); font-weight: 700; color: var(--ru-danger); font-variant-numeric: tabular-nums; }
+.noFine { color: var(--ru-ink-faint); }
+
+.stateBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  background: var(--ru-skin-50);
+  border: 1px dashed var(--ru-skin-300);
+  border-radius: var(--ru-radius-lg);
+  text-align: center;
 }
 
-.goBackButton {
-  background-color: var(--maroon-primary, #a51c30);
-  color: var(--white, #fff);
-  font-size: 1.08rem;
-  border: none;
-  border-radius: var(--radius, 12px);
-  padding: 0.6rem 1.3rem;
-  cursor: pointer;
-  transition: var(--transition, background 0.2s);
-  font-family: inherit;
-  margin-bottom: 0.5rem;
-}
-.goBackButton:hover {
-  background-color: var(--maroon-dark, #8d1827);
-}
+.hint { font-size: var(--ru-text-xs); color: var(--ru-ink-faint); }
 
-@media (min-width: 768px) {
-  .historyCard {
-    padding: 1.5rem 1.5rem 1.2rem 1.5rem;
-    max-width: 650px;
-  }
-  .headerTitle {
-    font-size: 1.35rem;
-  }
-  .historyTable th, .historyTable td {
-    font-size: 1.08rem;
-  }
-  .historyTable {
-    max-width: 600px;
-  }
-  .recentCard {
-    min-width: 340px;
-    max-width: 370px;
-  }
+.footerRow { margin-top: var(--ru-space-5); }
+
+@media (max-width: 768px) {
+  .page { padding: var(--ru-space-5) var(--ru-space-4) var(--ru-space-6); }
+  .heading { font-size: var(--ru-text-2xl); }
+  .logo { max-width: 90px; }
 }
-
-@media (max-width: 600px) {
-  .mainContainer {
-    padding: 0.5rem 0 70px 0;
-  }
-  .logo {
-    width: 180px;
-  }
-  .historyCard {
-    padding: 0.7rem 0.3rem 0.7rem 0.3rem;
-    max-width: 98vw;
-  }
-  .headerSection {
-    padding: 0.5rem 0.2rem;
-    gap: 0.3rem;
-  }
-  .profileIcon {
-    width: 24px;
-    height: 24px;
-  }
-  .headerTitle {
-    font-size: 1rem;
-  }
-  .tableWrapper {
-    margin-bottom: 0.7rem;
-  }
-  .historyTable th, .historyTable td {
-    font-size: 0.89rem;
-    padding: 0.35rem 0.1rem;
-  }
-  .historyTable {
-    max-width: 98vw;
-  }
-  .goBackButton {
-    font-size: 0.92rem;
-    padding: 0.4rem 0.7rem;
-  }
-
-  .recentCard {
-    min-width: 220px;
-    max-width: 260px;
-    padding: 0.7rem 0.5rem;
-  }
-  .bookImage {
-    width: 60px;
-    height: 80px;
-  }
-} 

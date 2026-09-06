@@ -1,0 +1,64 @@
+/* A student's current borrowing, shown on their dashboard. */
+
+.list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--ru-space-3); }
+
+.item {
+  display: grid;
+  grid-template-columns: 46px 1fr auto;
+  gap: var(--ru-space-4);
+  align-items: center;
+  padding: var(--ru-space-3);
+  background: var(--ru-surface);
+  border: 1px solid var(--ru-border);
+  border-left: 3px solid var(--ru-maroon-200);
+  border-radius: var(--ru-radius-sm);
+}
+
+.itemOver { border-left-color: var(--ru-danger); background: var(--ru-danger-bg); }
+
+.cover {
+  width: 46px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ru-skin-100);
+  border: 1px solid var(--ru-skin-300);
+  border-radius: var(--ru-radius-sm);
+  overflow: hidden;
+}
+.cover img { width: 100%; height: 100%; object-fit: cover; }
+.coverIcon { color: var(--ru-maroon-200); }
+
+.body { display: flex; flex-direction: column; min-width: 0; gap: 1px; }
+
+.title {
+  font-size: var(--ru-text-sm);
+  font-weight: 600;
+  color: var(--ru-ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.author { font-size: var(--ru-text-xs); color: var(--ru-ink-faint); }
+
+.due { font-size: var(--ru-text-xs); color: var(--ru-ink-soft); margin-top: 2px; }
+.dueSoon { font-size: var(--ru-text-xs); font-weight: 600; color: var(--ru-warning); margin-top: 2px; }
+.dueOver { font-size: var(--ru-text-xs); font-weight: 700; color: var(--ru-danger); margin-top: 2px; }
+.dueDate { font-weight: 400; color: var(--ru-ink-faint); }
+
+.fine { font-size: var(--ru-text-xs); font-weight: 600; color: var(--ru-danger); }
+
+.stateBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 170px;
+  background: var(--ru-skin-50);
+  border: 1px dashed var(--ru-skin-300);
+  border-radius: var(--ru-radius);
+  text-align: center;
+}
+
+.hint { font-size: var(--ru-text-xs); color: var(--ru-ink-faint); }

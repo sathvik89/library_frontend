@@ -23,6 +23,20 @@ export const API_ENDPOINTS = {
   },
   RESERVATIONS: {
     RESERVE: (bookId) => `${API_BASE_URL}/reservations/${bookId}`,
+    LIST: `${API_BASE_URL}/reservations`,
+    CANCEL: (reservationId) => `${API_BASE_URL}/reservations/${reservationId}`,
+  },
+  NOTIFICATIONS: {
+    LIST: `${API_BASE_URL}/notifications`,
+    READ: (id) => `${API_BASE_URL}/notifications/${id}/read`,
+    READ_ALL: `${API_BASE_URL}/notifications/read-all`,
+  },
+  LOANS: {
+    MINE: `${API_BASE_URL}/loans/me`,
+    LIST: `${API_BASE_URL}/loans`,
+    ISSUE: `${API_BASE_URL}/loans/issue`,
+    RETURN: (loanId) => `${API_BASE_URL}/loans/${loanId}/return`,
+    RENEW: (loanId) => `${API_BASE_URL}/loans/${loanId}/renew`,
   },
 
 };

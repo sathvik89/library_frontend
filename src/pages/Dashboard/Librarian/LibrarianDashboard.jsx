@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import BooksTable from "@/components/books/BooksTable";
+import CirculationDesk from "@/components/loans/CirculationDesk";
 import DashboardShell, {
   StatCard,
   StatRow,
@@ -70,6 +71,8 @@ export default function LibrarianDashboard() {
           hint="nothing on the shelf"
         />
       </StatRow>
+
+      <CirculationDesk />
 
       <BooksTable />
     </DashboardShell>

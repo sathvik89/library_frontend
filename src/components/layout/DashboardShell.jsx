@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "@/Styles/DashboardShell.module.css";
 import Logoutbutton from "@/components/common/Logoutbutton";
+import NotificationBell from "@/components/notifications/NotificationBell";
 import logo from "@/assets/images/books/RULOGO.png";
 
 /**
@@ -33,6 +34,7 @@ export default function DashboardShell({
         <div className={styles.topbarActions}>
           {userName && <span className={styles.userName}>{userName}</span>}
           {actions}
+          <NotificationBell />
           {role && <span className={styles.rolePill}>{role}</span>}
           <Logoutbutton variant="ghost" />
         </div>

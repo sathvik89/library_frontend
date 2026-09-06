@@ -21,6 +21,7 @@ import {
   HistoryOutlined,
   MessageOutlined,
 } from "@ant-design/icons";
+import MyLoans from "@/components/loans/MyLoans";
 import { getCurrentUser } from "@/api/services/authService";
 import styles from "@/Styles/StudentDashboard.module.css";
 import profile from "@/assets/images/books/ProfileIcon.png";
@@ -32,6 +33,7 @@ export default function StudentDashboard() {
   const [profileOpen, setProfileOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [me, setMe] = useState(null);
+  const [loanSummary, setLoanSummary] = useState(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -59,8 +61,9 @@ export default function StudentDashboard() {
     navigate(q ? `/ViewAllBooks?search=${encodeURIComponent(q)}` : "/ViewAllBooks");
   }
 
-  const activeLoans =
-    me?.loans?.filter((l) => l.status === "ACTIVE").length ?? null;
+  const activeLoans = loanSummary?.active ?? null;
+  const overdueLoans = loanSummary?.overdue ?? 0;
+  const outstandingFine = loanSummary?.outstandingFine ?? 0;
   const reservations =
     me?.reservations?.filter((r) => r.isActive).length ?? null;
   const seatBookings = me?.seatBookings?.length ?? null;
@@ -97,10 +100,18 @@ export default function StudentDashboard() {
       }
     >
       <StatRow>
-        <StatCard label="Books with you" value={activeLoans} hint="currently on loan" />
-        <StatCard label="Reservations" value={reservations} hint="active holds" />
-        <StatCard label="Seat bookings" value={seatBookings} />
-        <StatCard label="Notifications" value={unread} hint="unread" />
+        <StatCard
+          label="Books you have"
+          value={activeLoans}
+          hint={
+            overdueLoans > 0
+              ? `${overdueLoans} late · ₹${outstandingFine} to pay`
+              : "borrowed right now"
+          }
+        />
+        <StatCard label="Books you reserved" value={reservations} hint="waiting for you" />
+        <StatCard label="Seats you booked" value={seatBookings} />
+        <StatCard label="New messages" value={unread} hint="not read yet" />
       </StatRow>
 
       {/* Search + today, side by side */}
@@ -167,6 +178,13 @@ export default function StudentDashboard() {
           <News />
         </Section>
       </div>
+
+      <Section
+        title="Books you have"
+        description="When each is due back, and what you owe if late"
+      >
+        <MyLoans onSummary={setLoanSummary} />
+      </Section>
 
       <Section
         title="Latest collection"
