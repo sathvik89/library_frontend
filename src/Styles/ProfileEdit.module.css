@@ -1,134 +1,147 @@
+/* Edit profile. Same card shape as the other account pages. */
+
 .mainContainer {
-  min-height: 94.64vh;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: var(--ru-space-6) var(--ru-space-5) var(--ru-space-7);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
-  color: var(--white);
 }
 
 .logoContainer {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 4rem;
+  margin-bottom: var(--ru-space-5);
 }
 
 .logo {
-  width: 240px;
+  max-width: 150px;
   height: auto;
 }
 
 .profileCard {
-  background-color: var(--app-background);
   width: 100%;
-  max-width: 500px;
-  border-radius: var(--radius);
-  padding: 1.5rem;
-  box-shadow: var(--shadow);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border: 1px solid maroon;
+  background: var(--ru-surface);
+  border: 1px solid var(--ru-border);
+  border-radius: var(--ru-radius-lg);
+  box-shadow: var(--ru-shadow-md);
+  overflow: hidden;
 }
 
 .profileHeader {
-  background-color: var(--maroon-primary);
-  color: var(--white);
-  width: 100%;
-  text-align: center;
-  padding: 1rem;
-  border-radius: var(--radius);
   display: flex;
   align-items: center;
-  flex-direction: row;
-  justify-content: center;
-  gap: 0.5rem;
+  gap: var(--ru-space-3);
+  padding: var(--ru-space-4) var(--ru-space-5);
+  background: var(--ru-maroon-800);
 }
 
 .profileIcon {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--ru-radius-pill);
+  object-fit: cover;
+  background: var(--ru-white);
+  border: 2px solid rgba(255, 255, 255, 0.35);
 }
 
 .profileTitle {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: var(--white);
+  font-size: var(--ru-text-xl);
+  color: var(--ru-white);
+  margin: 0;
 }
 
 .formSection {
-  width: 100%;
-  margin-top: 1rem;
+  padding: var(--ru-space-5);
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--ru-space-4);
 }
 
 .formGroup {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: var(--ru-space-2);
 }
 
 .label {
-  font-weight: 500;
-  color: var(--maroon-dark);
+  font-size: var(--ru-text-xs);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ru-ink-faint);
 }
 
 .input {
-  padding: 0.75rem 1rem;
-  border-radius: var(--radius);
-  border: 1px solid var(--maroon-dark);
-  font-size: 1rem;
-  background-color: #fff;
-  color: var(--maroon-dark);
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  font-family: inherit;
+  font-size: var(--ru-text-sm);
+  color: var(--ru-ink);
+  background: var(--ru-white);
+  border: 1px solid var(--ru-border);
+  border-radius: var(--ru-radius-sm);
+  transition: border-color var(--ru-transition), box-shadow var(--ru-transition);
 }
 
 .input:focus {
   outline: none;
-  border-color: var(--maroon-primary);
-  box-shadow: 0 0 0 2px rgba(128, 0, 0, 0.2);
+  border-color: var(--ru-primary);
+  box-shadow: var(--ru-ring);
+}
+
+.input:disabled {
+  background: var(--ru-skin-50);
+  color: var(--ru-ink-faint);
+  cursor: not-allowed;
 }
 
 .buttonGroup {
-  width: 100%;
   display: flex;
-  justify-content: flex-end;
-  gap: 0.5rem;
-  margin-top: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--ru-space-3);
+  padding: var(--ru-space-4) var(--ru-space-5) var(--ru-space-5);
+  border-top: 1px solid var(--ru-border);
+  background: var(--ru-skin-50);
+}
+
+.saveButton,
+.cancelButton {
+  padding: 0.55rem 1.2rem;
+  font-size: var(--ru-text-sm);
+  font-weight: 600;
+  border: none;
+  border-radius: var(--ru-radius-sm);
+  cursor: pointer;
+  transition: background-color var(--ru-transition);
 }
 
 .saveButton {
-  padding: 0.5rem 1.25rem;
-  background-color: var(--app-background);
-  color: var(--maroon-dark);
-  font-weight: 500;
-  border-radius: var(--radius);
-  transition: var(--transition);
-  box-shadow: var(--shadow);
-  border: 1px solid var(--maroon-dark);
+  background: var(--ru-primary);
+  color: var(--ru-on-primary);
 }
 
 .saveButton:hover {
-  color: var(--white);
-  background-color: var(--maroon-dark);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-hover);
+  background: var(--ru-primary-hover);
 }
 
 .cancelButton {
-  padding: 0.5rem 1.25rem;
-  background-color: var(--maroon-dark);
-  color: var(--white);
-  font-weight: 500;
-  border-radius: var(--radius);
-  border: none;
-  transition: var(--transition);
+  background: var(--ru-skin-200);
+  color: var(--ru-maroon-800);
 }
 
 .cancelButton:hover {
-  background-color: #4b0000;
+  background: var(--ru-skin-300);
+}
+
+@media (max-width: 640px) {
+  .mainContainer {
+    padding: var(--ru-space-5) var(--ru-space-4) var(--ru-space-6);
+  }
+  .logo {
+    max-width: 110px;
+  }
+  .formSection {
+    padding: var(--ru-space-4);
+  }
 }

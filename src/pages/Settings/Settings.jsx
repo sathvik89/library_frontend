@@ -116,10 +116,10 @@ export default function Settings() {
         </header>
         <nav className={styles.options}>
           <button className={styles.optionButton} onClick={() => navigate("/settings/account")}>Manage your account</button>
-          <button className={styles.optionButton} onClick={() => navigate("/settings/subscription")}>subscription details</button>
+          <button className={styles.optionButton} onClick={() => navigate("/settings/subscription")}>Subscription details</button>
           <button className={styles.optionButton} onClick={() => setShowNoti(true)}>Notifications</button>
           <button className={styles.optionButton} onClick={() => setShowPass(true)}>Change password</button>
-          <button className={styles.optionButton} onClick={() => navigate("/settings/privacy")}>Privacy and password</button>
+          <button className={styles.optionButton} onClick={() => navigate("/settings/privacy")}>Privacy policy</button>
         </nav>
         <div className={styles.buttonSection}>
         <button className={styles.goBackButton} onClick={() => navigate("/studentDashboard")}>Go Back</button>  

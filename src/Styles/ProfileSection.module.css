@@ -1,168 +1,155 @@
+/* Profile. Shares its shape with Billing and Settings: logo, card, maroon
+   header, then rows. */
+
 .mainContainer {
-  min-height: 94.64vh;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: var(--ru-space-6) var(--ru-space-5) var(--ru-space-7);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
-  color: var(--white);
 }
-.buttonGroup {
-    display: flex;
-  flex-wrap: wrap; /* For small screens */
-  gap: 1rem;
-  justify-content: space-around;
-  width: 100%;
-  margin-top: 1rem;
-}
-
-/* .editButton, */
-.goBackButton {
-   margin-top: 0.5rem;
-  margin-bottom: 1rem;
-  padding: 0.6rem 1.25rem;
-  border-radius: var(--radius);
-  border: none;
-  cursor: pointer;
-  transition: var(--transition);
-  color: var(--white);
-  font-size: 1rem;
-}
-
-.editButton {
-    align-self: flex-end;
-  margin-top: 0.5rem;
-  margin-bottom: 1rem;
-  padding: 0.5rem 1.25rem;
-  background-color: var(--app-background);
-  color: var(--maroon-dark);
-  font-weight: 500;
-  border-radius: var(--radius);
-  transition: var(--transition);
-  box-shadow: var(--shadow);
-  border: 1px solid var(--maroon-dark);
-}
-
-.goBackButton {
-  background-color: var(--grey-dark);
-  transform: translateY(-2px);
-}
-
 
 .logoContainer {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 4rem;
+  margin-bottom: var(--ru-space-5);
 }
 
 .logo {
-  width: 240px;
+  max-width: 150px;
   height: auto;
 }
 
 .profileCard {
-  background-color: var(--app-background);
   width: 100%;
-  max-width: 500px;
-  border-radius: var(--radius);
-  padding: 1.5rem;
-  box-shadow: var(--shadow);
-  display: flex;
-  flex-direction: column;
-  border: 1px solid maroon;
-  align-items: center;
+  background: var(--ru-surface);
+  border: 1px solid var(--ru-border);
+  border-radius: var(--ru-radius-lg);
+  box-shadow: var(--ru-shadow-md);
+  overflow: hidden;
 }
 
 .profileHeader {
-  background-color: var(--maroon-primary);
-  color: var(--white);
-  width: 100%;
-  text-align: center;
-  padding: 1rem;
-  border-radius: var(--radius);
   display: flex;
   align-items: center;
-  flex-direction: row;
-  justify-content: center;
-  gap: 0.5rem;
+  gap: var(--ru-space-3);
+  padding: var(--ru-space-4) var(--ru-space-5);
+  background: var(--ru-maroon-800);
 }
 
 .profileIcon {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--ru-radius-pill);
+  object-fit: cover;
+  background: var(--ru-white);
+  border: 2px solid rgba(255, 255, 255, 0.35);
 }
 
 .profileTitle {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: var(--white);
+  font-size: var(--ru-text-xl);
+  color: var(--ru-white);
+  margin: 0;
 }
 
 .nameSection {
-  margin: 1rem 0;
-  font-size: 1.25rem;
-  color: var(--maroon-dark);
+  padding: var(--ru-space-5) var(--ru-space-5) var(--ru-space-3);
+  font-family: var(--ru-font-display);
+  font-size: var(--ru-text-2xl);
   font-weight: 600;
-}
-
-.infoSection {
-  width: 100%;
-  margin-bottom: 1rem;
-}
-
-.infoItem {
-  background-color: var(--maroon-primary);
-  color: var(--white);
-  padding: 0.75rem 1rem;
-  margin-bottom: 0.5rem;
-  border-radius: var(--radius);
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-.label {
-  font-weight: 500;
-}
-
-.editButton:hover {
-    color: var(--white);
-  background-color: var(--maroon-dark);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-hover);
-}
-
-.backButtonContainer {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-.footer {
-  margin-top: auto;
-  padding: 1rem 0;
-  font-size: 0.85rem;
-  color: var(--secondary-text-color);
+  color: var(--ru-maroon-800);
   text-align: center;
 }
 
-/* Responsive tweaks */
-@media (min-width: 768px) {
-  .profileCard {
-    padding: 2rem;
-  }
+.infoSection {
+  padding: 0 var(--ru-space-5) var(--ru-space-4);
+}
 
-  .profileTitle {
-    font-size: 2rem;
-  }
+.infoItem {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--ru-space-4);
+  padding: var(--ru-space-3) 0;
+  border-bottom: 1px solid var(--ru-border);
+  font-size: var(--ru-text-sm);
+  color: var(--ru-ink);
+}
 
-  .nameSection {
-    font-size: 1.5rem;
-  }
+.infoItem:last-child {
+  border-bottom: none;
+}
 
+.label {
+  font-size: var(--ru-text-xs);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ru-ink-faint);
+  flex-shrink: 0;
+}
+
+.buttonGroup,
+.buttonSection,
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--ru-space-3);
+  padding: var(--ru-space-4) var(--ru-space-5) var(--ru-space-5);
+  border-top: 1px solid var(--ru-border);
+  background: var(--ru-skin-50);
+}
+
+.editButton,
+.goBackButton,
+.backButton {
+  padding: 0.55rem 1.2rem;
+  font-size: var(--ru-text-sm);
+  font-weight: 600;
+  border: none;
+  border-radius: var(--ru-radius-sm);
+  cursor: pointer;
+  transition: background-color var(--ru-transition);
+}
+
+.editButton {
+  background: var(--ru-primary);
+  color: var(--ru-on-primary);
+}
+
+.editButton:hover {
+  background: var(--ru-primary-hover);
+}
+
+.goBackButton,
+.backButton {
+  background: var(--ru-skin-200);
+  color: var(--ru-maroon-800);
+}
+
+.goBackButton:hover,
+.backButton:hover {
+  background: var(--ru-skin-300);
+}
+
+.loadingContainer,
+.errorContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 320px;
+  width: 100%;
+}
+
+@media (max-width: 640px) {
+  .mainContainer {
+    padding: var(--ru-space-5) var(--ru-space-4) var(--ru-space-6);
+  }
+  .logo {
+    max-width: 110px;
+  }
   .infoItem {
-    font-size: 1rem;
+    flex-direction: column;
+    gap: 2px;
   }
 }
